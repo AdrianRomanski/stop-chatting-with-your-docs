@@ -1,0 +1,25 @@
+{
+  "name": "chatbot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build",
+    "export": "slidev export --timeout 60000"
+  },
+  "dependencies": {
+    "@fontsource/geist-mono": "^5.3.0",
+    "@fontsource/geist-sans": "^5.3.0",
+    "@iconify-json/solar": "^1.2.0",
+    "@slidev/cli": "^53.0.0",
+    "uqr": "^0.1.3",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.63.0"
+  },
+  "talkKit": {
+    "commit": "39e7f5c",
+    "copied": "2026-10-20"
+  }
+}

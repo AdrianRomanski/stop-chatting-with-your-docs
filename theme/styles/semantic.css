@@ -1,0 +1,182 @@
+/*
+ * Slide roles on top of the design tokens (tokens.css).
+ *
+ * A talk picks its mode once (`colorSchema: light | dark` in the headmatter). Every layout puts a
+ * scheme class and a surface class on its root, so one slide can override the mode (`scheme:`) or
+ * sit on a different background (`surface:`). Components only ever read these --kt-* roles, never a
+ * raw color, which is what makes every page type work in both modes.
+ *
+ * Mapping to the PushBased Google Slides themes ("Theme Colors" and "Color Contrast" slides):
+ *   Text BG 1 = neutral-900, Text BG 2 = neutral-50, Text BG 4 = neutral-200,
+ *   Accent 1 = primary-700, Accent 2 = secondary-700, Accent 3 = primary-400, "Accent4" = secondary-400.
+ * Values marked "derived" are not in the guide and were derived from it (see docs/design-system.md).
+ */
+
+/* ---- type scale: the Google themes' point sizes on the 980 px slide canvas (1 pt = 1.361 px) ---- */
+:root {
+  --kt-text-footer: 10px;   /* Footer 7 pt */
+  --kt-text-hint: 14px;     /* Hints 10 pt, Heading 3 10 pt */
+  --kt-text-details: 20px;  /* Details 15 pt, Heading 2 15 pt */
+  --kt-text-body: 24px;     /* Body 18 pt */
+  --kt-text-title: 38px;    /* Heading 1 28 pt */
+  --kt-display-xs: 56px;    /* Big Text 30–120 pt (41–163 px) */
+  --kt-display-s: 80px;
+  --kt-display-m: 112px;
+  --kt-display-l: 140px;
+  --kt-display-xl: 163px;
+
+  /* derived: the guide sets no letter spacing; these are the NG Vienna deck's values for big text */
+  --kt-track-display: -0.04em;
+  --kt-track-title: -0.02em;
+  --kt-track-label: 0.16em;
+
+  --kt-radius-card: var(--radius-xl);
+  --kt-radius-code: 14px;   /* the code box of the design guide's snippet generator */
+  --kt-gutter: 72px;        /* left/right slide padding */
+}
+
+/* ---- light: the Base and Speaker Google themes ------------------------------------------- */
+:root,
+.kt-scheme-light {
+  --kt-bg: var(--color-neutral-50);
+  --kt-bg-image: none;
+  --kt-fg: var(--color-neutral-900);
+  --kt-heading: var(--color-primary-700);
+  --kt-subheading: var(--color-secondary-700);
+  --kt-hot: var(--color-secondary-700);
+  --kt-cool: var(--color-primary-700);
+  /* talk addition: the blue of "bold" in kb-template's graph view */
+  --kt-info: var(--color-info-600);
+  /* a11y: no text lighter than neutral-500 on light (review comment in the Base theme) */
+  --kt-muted: var(--color-neutral-600);
+  --kt-subtle: var(--color-neutral-500);
+  --kt-line: var(--color-neutral-200);
+  --kt-line-strong: var(--color-neutral-300);
+  --kt-card: #ffffff;
+  --kt-card-line: var(--color-neutral-200);
+  --kt-dot: rgba(105, 39, 218, 0.1);
+  --kt-pill-bg: var(--color-primary-50);
+  --kt-pill-fg: var(--color-neutral-700);
+  --kt-tint-primary: var(--color-primary-50);
+  --kt-tint-secondary: var(--color-secondary-50);
+  --kt-tint-success: var(--color-success-50);
+  --kt-tint-warning: var(--color-warning-50);
+  --kt-tint-neutral: var(--color-neutral-100);
+  --kt-good: var(--color-success-700);
+  --kt-bad: var(--color-secondary-700);
+  --kt-warn: var(--color-warning-600);
+  /* derived: the guide references --shadow-md but defines no shadows; taken from the code box */
+  --kt-shadow: 0 4px 16px rgba(15, 23, 42, 0.16);
+  --kt-shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.18), 0 3px 8px rgba(15, 23, 42, 0.12);
+  --kt-code-bg: var(--color-neutral-25);
+  --kt-code-fg: var(--color-neutral-900);
+  --kt-code-line: var(--color-neutral-200);
+  --kt-code-label: var(--color-neutral-500);
+  /* the official color logo (PB_clean_color / horizontal color) */
+  --kt-logo-a: #2D0064;
+  --kt-logo-b: #FF003C;
+}
+
+/* ---- dark: the NG Vienna deck, rebuilt from tokens ---------------------------------------- */
+html.dark,
+.kt-scheme-dark {
+  --kt-bg: var(--color-neutral-950);
+  /* derived: an ink gradient from primary-900/950 into neutral-950 */
+  --kt-bg-image: radial-gradient(120% 95% at 82% 8%,
+      color-mix(in oklab, var(--color-primary-900) 55%, var(--color-primary-950)) 0%,
+      color-mix(in oklab, var(--color-primary-950) 55%, var(--color-neutral-950)) 42%,
+      var(--color-neutral-950) 100%);
+  --kt-fg: var(--color-neutral-50);
+  --kt-heading: var(--color-neutral-25);
+  --kt-subheading: var(--color-primary-300);
+  /* the better red: secondary-400 reads on dark, secondary-700 does not */
+  --kt-hot: var(--color-secondary-400);
+  /* the guide: prefer primary 200–400 on dark surfaces */
+  --kt-cool: var(--color-primary-300);
+  --kt-info: var(--color-info-400);
+  --kt-muted: var(--color-neutral-300);
+  --kt-subtle: var(--color-neutral-400);
+  --kt-line: color-mix(in srgb, var(--color-primary-300) 22%, transparent);
+  --kt-line-strong: color-mix(in srgb, var(--color-primary-300) 40%, transparent);
+  --kt-card: color-mix(in srgb, #ffffff 5%, transparent);
+  --kt-card-line: color-mix(in srgb, var(--color-primary-300) 30%, transparent);
+  --kt-dot: rgba(255, 255, 255, 0.1);
+  --kt-pill-bg: color-mix(in srgb, #ffffff 8%, transparent);
+  --kt-pill-fg: var(--color-neutral-300);
+  --kt-tint-primary: color-mix(in srgb, var(--color-primary-400) 16%, transparent);
+  --kt-tint-secondary: color-mix(in srgb, var(--color-secondary-400) 16%, transparent);
+  --kt-tint-success: color-mix(in srgb, var(--color-success-400) 14%, transparent);
+  --kt-tint-warning: color-mix(in srgb, var(--color-warning-400) 14%, transparent);
+  --kt-tint-neutral: color-mix(in srgb, #ffffff 7%, transparent);
+  --kt-good: var(--color-success-400);
+  --kt-bad: var(--color-secondary-400);
+  --kt-warn: var(--color-warning-400);
+  --kt-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  --kt-shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.5);
+  --kt-code-bg: var(--color-neutral-950);
+  --kt-code-fg: var(--color-neutral-25);
+  --kt-code-line: color-mix(in srgb, var(--color-primary-300) 22%, transparent);
+  --kt-code-label: var(--color-neutral-400);
+  /* the official white logo */
+  --kt-logo-a: #ffffff;
+  --kt-logo-b: #ffffff;
+}
+
+/* ---- surfaces: which background a slide sits on ------------------------------------------- */
+
+/* soft: the "Blank Light Gradients" layout (circle gradients, background only) */
+.kt-surface-soft.kt-scheme-light {
+  --kt-bg-image:
+    radial-gradient(circle at 8% 10%, var(--color-secondary-50) 0, transparent 34%),
+    radial-gradient(circle at 92% 88%, var(--color-primary-50) 0, transparent 40%),
+    radial-gradient(circle at 70% 18%, var(--color-neutral-100) 0, transparent 30%);
+}
+
+.kt-surface-soft.kt-scheme-dark {
+  --kt-bg-image:
+    radial-gradient(circle at 10% 12%, color-mix(in srgb, var(--color-secondary-700) 22%, transparent) 0, transparent 34%),
+    radial-gradient(circle at 90% 86%, color-mix(in srgb, var(--color-primary-500) 26%, transparent) 0, transparent 42%),
+    var(--color-neutral-950);
+}
+
+/* accent-1 / accent-2: "Blank Accent 1/2" — the same in both modes, text is Text BG 2 */
+.kt-surface-accent-1,
+.kt-surface-accent-2 {
+  --kt-fg: var(--color-neutral-50);
+  --kt-heading: var(--color-neutral-25);
+  --kt-subheading: var(--color-secondary-100);
+  --kt-hot: var(--color-secondary-200);
+  --kt-cool: var(--color-primary-200);
+  --kt-info: var(--color-info-300);
+  --kt-muted: color-mix(in srgb, #ffffff 82%, transparent);
+  --kt-subtle: color-mix(in srgb, #ffffff 66%, transparent);
+  --kt-line: color-mix(in srgb, #ffffff 24%, transparent);
+  --kt-line-strong: color-mix(in srgb, #ffffff 40%, transparent);
+  --kt-card: color-mix(in srgb, #ffffff 9%, transparent);
+  --kt-card-line: color-mix(in srgb, #ffffff 24%, transparent);
+  --kt-dot: rgba(255, 255, 255, 0.1);
+  --kt-pill-bg: color-mix(in srgb, #ffffff 12%, transparent);
+  --kt-pill-fg: color-mix(in srgb, #ffffff 86%, transparent);
+  --kt-good: var(--color-success-300);
+  --kt-bad: var(--color-secondary-200);
+  --kt-logo-a: #ffffff;
+  --kt-logo-b: #ffffff;
+}
+
+.kt-surface-accent-1 {
+  --kt-bg: var(--color-primary-700);
+  /* derived: the flat Accent 1 with a light corner, as on the NG Vienna "purple" slides */
+  --kt-bg-image: radial-gradient(125% 110% at 88% 0%, var(--color-primary-500) 0%, var(--color-primary-700) 36%, var(--color-primary-900) 100%);
+}
+
+.kt-surface-accent-2 {
+  --kt-bg: var(--color-secondary-700);
+  --kt-bg-image: radial-gradient(125% 110% at 88% 0%, var(--color-secondary-500) 0%, var(--color-secondary-700) 42%, var(--color-secondary-900) 100%);
+}
+
+/* ---- the slide box ---------------------------------------------------------------------- */
+.kt-slide {
+  background-color: var(--kt-bg);
+  background-image: var(--kt-bg-image);
+  color: var(--kt-fg);
+}

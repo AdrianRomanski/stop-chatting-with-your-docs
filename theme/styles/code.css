@@ -1,0 +1,119 @@
+/*
+ * Code and terminal boxes. Chrome from the design guide's snippet generator: 14 px radius,
+ * traffic lights, label top-right; #0D121C dark / #FCFCFD light. The box follows its slide's
+ * scheme — also when one slide overrides the talk's mode — so the token colors do too.
+ */
+
+/* Slidev renders both shiki themes into each span; pick the one of the slide's scheme */
+.kt-scheme-light .shiki,
+.kt-scheme-light .shiki span {
+  color: var(--shiki-light) !important;
+  font-style: var(--shiki-light-font-style, inherit) !important;
+}
+
+.kt-scheme-dark .shiki,
+.kt-scheme-dark .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style, inherit) !important;
+}
+
+.kt-slide pre.shiki,
+.kt-slide .slidev-code {
+  margin: 0;
+  background: transparent !important;
+  font-family: var(--font-family-mono);
+}
+
+.kt-slide .slidev-code-wrapper { margin: 0; }
+
+.kt-code,
+.kt-term {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--kt-radius-code);
+  background: var(--kt-code-bg);
+  color: var(--kt-code-fg);
+  box-shadow: var(--kt-shadow), inset 0 0 0 1px var(--kt-code-line);
+  text-align: left;
+  min-width: 0;
+}
+
+.kt-code__bar,
+.kt-term__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px 4px;
+}
+
+.kt-code__bar > i,
+.kt-term__bar > i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 95, 87, 0.9);
+}
+
+.kt-code__bar > i:nth-child(2),
+.kt-term__bar > i:nth-child(2) { background: rgba(254, 188, 46, 0.9); }
+
+.kt-code__bar > i:nth-child(3),
+.kt-term__bar > i:nth-child(3) { background: rgba(40, 200, 64, 0.9); }
+
+.kt-code__file,
+.kt-term__label {
+  margin-left: auto;
+  padding-left: 12px;
+  white-space: nowrap;
+  font: 500 12.5px var(--font-family-mono);
+  color: var(--kt-code-label);
+}
+
+/* where the code runs */
+.kt-code__where {
+  margin-left: 10px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font: 700 11px/1.2 var(--font-family-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.kt-code__where.is-both { background: var(--color-primary-500); }
+.kt-code__where.is-server { background: var(--color-secondary-700); }
+.kt-code__where.is-browser { background: var(--color-success-700); }
+.kt-code__where.is-domain { background: var(--color-primary-500); }
+.kt-code__where.is-adapter { background: var(--color-secondary-700); }
+.kt-code__where.is-app { background: var(--color-success-700); }
+
+.kt-code--primary { box-shadow: var(--kt-shadow), inset 0 3px 0 var(--color-primary-500), inset 0 0 0 1px var(--kt-code-line); }
+.kt-code--good { box-shadow: var(--kt-shadow), inset 0 3px 0 var(--color-success-500), inset 0 0 0 1px var(--kt-code-line); }
+.kt-code--bad { box-shadow: var(--kt-shadow), inset 0 3px 0 var(--color-secondary-500), inset 0 0 0 1px var(--kt-code-line); }
+
+.kt-code__body pre {
+  padding: 6px 22px 16px !important;
+  /* a slide never shows a scrollbar: keep lines short instead */
+  scrollbar-width: none;
+}
+
+.kt-code__body pre::-webkit-scrollbar { display: none; }
+
+.kt-code--sm pre, .kt-code--sm code { font-size: 14px !important; line-height: 1.55 !important; }
+.kt-code--md pre, .kt-code--md code { font-size: 17px !important; line-height: 1.55 !important; }
+.kt-code--lg pre, .kt-code--lg code { font-size: 20px !important; line-height: 1.5 !important; }
+
+/* a word marked with `// @hl word` */
+.kt-slide .kt-hl {
+  padding: 1px 4px;
+  border-radius: var(--radius-base);
+  background: color-mix(in srgb, var(--color-secondary-400) 22%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--color-secondary-400);
+  font-weight: 700;
+}
+
+.kt-code--good .kt-hl {
+  background: color-mix(in srgb, var(--color-success-400) 18%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--color-success-500);
+}

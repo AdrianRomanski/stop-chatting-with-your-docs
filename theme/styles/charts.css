@@ -1,0 +1,40 @@
+/*
+ * Charts of the Base theme: progress bars, stacked bars, vertical and horizontal bars, grouped bars.
+ * The theme rules out line, area, pie and ring charts and anything complex: keep the number of
+ * elements low. Bars grow once when the slide is shown (the components drive `.is-on`).
+ */
+.kt-fill--primary { background: var(--kt-c-primary); color: var(--kt-c-primary); }
+.kt-fill--primary-soft { background: var(--kt-c-primary-soft); color: var(--kt-c-primary-soft); }
+.kt-fill--secondary { background: var(--kt-c-secondary); color: var(--kt-c-secondary); }
+.kt-fill--secondary-soft { background: var(--kt-c-secondary-soft); color: var(--kt-c-secondary-soft); }
+.kt-fill--success { background: var(--kt-c-success); color: var(--kt-c-success); }
+.kt-fill--warning { background: var(--kt-c-warning); color: var(--kt-c-warning); }
+.kt-fill--neutral { background: var(--kt-c-neutral); color: var(--kt-c-neutral); }
+.kt-fill--track { background: var(--kt-c-track); color: var(--kt-fg); }
+
+.kt-text--primary { color: var(--kt-c-primary); }
+.kt-text--primary-soft { color: var(--kt-c-primary-soft); }
+.kt-text--secondary { color: var(--kt-c-secondary); }
+.kt-text--secondary-soft { color: var(--kt-c-secondary-soft); }
+.kt-text--success { color: var(--kt-c-success); }
+.kt-text--warning { color: var(--kt-c-warning); }
+.kt-text--neutral { color: var(--kt-c-neutral); }
+.kt-text--track { color: var(--kt-fg); }
+
+.kt-grow {
+  transition: width 0.9s cubic-bezier(0.25, 0.8, 0.3, 1), height 0.9s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.kt-chart-title {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--kt-fg);
+}
+
+.kt-chart-note {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+}

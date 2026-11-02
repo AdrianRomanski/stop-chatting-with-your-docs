@@ -1,0 +1,49 @@
+name: Deploy slides to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # The site lives under /<repo-name>/, so Slidev needs that base path.
+      - run: npx slidev build --base /${{ github.event.repository.name }}/
+      # Vite only rewrites asset URLs in templates; '/images/…' strings in component data
+      # and the headmatter (speaker photo) still point at the domain root. Prefix them.
+      - run: |
+          grep -rlE "[\"'\`]/images/" dist | xargs -r sed -i -E "s#([\"'\`])/images/#\1/${REPO}/images/#g"
+        env:
+          REPO: ${{ github.event.repository.name }}
+      # Slidev routes slides client-side (/<repo>/5); serve the app for unknown paths too.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

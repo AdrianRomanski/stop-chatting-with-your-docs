@@ -1,0 +1,16 @@
+# Allowlist: the repo holds only what GitHub Pages needs to build the deck.
+# Everything else (talk/, research/, .claude/, agent docs, drafts) stays local.
+/*
+!/.github/
+!/.gitignore
+!/components/
+!/pages/
+!/public/
+!/theme/
+!/package.json
+!/package-lock.json
+!/slides.md
+!/style.css
+
+.DS_Store
+*.local

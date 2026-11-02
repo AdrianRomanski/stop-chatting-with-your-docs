@@ -1,0 +1,250 @@
+/*
+ * Typography and markdown on every slide, plus the master layout's structure. Colors come from the
+ * --kt-* roles (semantic.css) only, so everything here works in light and dark.
+ */
+
+.slidev-layout.kt-slide {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 56px var(--kt-gutter) 64px;
+  font-family: var(--font-family-sans);
+  font-size: var(--kt-text-details);
+  line-height: 1.45;
+}
+
+.kt-align-top { justify-content: flex-start; align-items: stretch; text-align: left; }
+.kt-align-center { justify-content: center; align-items: center; text-align: center; }
+.kt-align-left { justify-content: center; align-items: flex-start; text-align: left; }
+
+.kt-slide__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.kt-slide__body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.kt-align-top .kt-slide__body { width: 100%; }
+
+/* a faint dot grid fading in towards the lower right: texture, not decoration (dark tones) */
+.kt-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(var(--kt-dot) 1px, transparent 1.3px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(125deg, transparent 15%, #000 75%);
+  mask-image: linear-gradient(125deg, transparent 15%, #000 75%);
+  pointer-events: none;
+}
+
+/* ---- kicker and caption: the two small mono lines of a slide -------------------------------- */
+.kt-kicker {
+  position: absolute;
+  top: 34px;
+  left: var(--kt-gutter);
+  z-index: 2;
+  font: 600 13px/1 var(--font-family-mono);
+  letter-spacing: var(--kt-track-label);
+  text-transform: uppercase;
+  color: var(--kt-subtle);
+}
+
+.kt-caption {
+  position: absolute;
+  bottom: 26px;
+  left: var(--kt-gutter);
+  right: 140px;
+  z-index: 2;
+  font: 12px/1.3 var(--font-family-mono);
+  color: var(--kt-subtle);
+}
+
+/* ---- headings ------------------------------------------------------------------------- */
+.kt-slide h1,
+.kt-slide h2,
+.kt-slide h3 {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  color: var(--kt-heading);
+}
+
+/* the title of a content slide: Heading 1, 28 pt */
+.kt-slide h1 {
+  font-size: var(--kt-text-title);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: var(--kt-track-title);
+}
+
+/* big text (30–120 pt): statements, section titles, numbers */
+.kt-slide h1.xs, .kt-slide h1.s, .kt-slide h1.m, .kt-slide h1.l, .kt-slide h1.xl {
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: var(--kt-track-display);
+}
+
+.kt-slide h1.xs { font-size: var(--kt-display-xs); line-height: 1.02; letter-spacing: -0.035em; }
+.kt-slide h1.s { font-size: var(--kt-display-s); line-height: 1; }
+.kt-slide h1.m { font-size: var(--kt-display-m); }
+.kt-slide h1.l { font-size: var(--kt-display-l); letter-spacing: -0.05em; }
+.kt-slide h1.xl { font-size: var(--kt-display-xl); letter-spacing: -0.05em; }
+
+/* the red subtitle under a title, as in the Base theme */
+.kt-slide h1 + h2 {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--kt-subheading);
+}
+
+.kt-slide h2 { font-size: var(--kt-text-body); font-weight: 700; line-height: 1.2; }
+.kt-slide h3 { font-size: var(--kt-text-details); font-weight: 700; line-height: 1.25; color: var(--kt-fg); }
+
+/* content slides: the title sits top-left and the content follows */
+.kt-align-top .kt-slide__body > h1:first-child { margin-bottom: 26px; }
+
+/* two-color words */
+.kt-slide .hot { color: var(--kt-hot); }
+.kt-slide .cool { color: var(--kt-cool); }
+.kt-slide .dim { color: var(--kt-subtle); }
+
+/* ---- text ----------------------------------------------------------------------------- */
+.kt-slide p { margin: 0 0 12px; }
+
+/* theme-default fades a paragraph after an h1; this theme doesn't */
+.kt-slide h1 + p { opacity: 1; }
+
+.kt-slide strong { font-weight: 700; color: inherit; }
+.kt-slide em { font-style: italic; }
+
+/* underline is for links only (Base theme, "Font Style") */
+.kt-slide a {
+  color: var(--kt-cool);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  border: 0;
+}
+
+.kt-lead { font-size: var(--kt-text-body); line-height: 1.4; color: var(--kt-fg); }
+.kt-details { font-size: var(--kt-text-details); color: var(--kt-muted); }
+.kt-hint-text { font-size: var(--kt-text-hint); color: var(--kt-muted); }
+.kt-mono { font-family: var(--font-family-mono); }
+
+/* a line under a statement or a number */
+.kt-subline {
+  margin-top: 14px;
+  font: 600 22px var(--font-family-mono);
+  letter-spacing: 0.06em;
+  color: var(--kt-muted);
+}
+
+/* ---- lists: the square markers of the Base theme ---------------------------------------- */
+.kt-slide ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kt-slide ul > li {
+  position: relative;
+  margin: 0 0 10px;
+  padding-left: 26px;
+}
+
+.kt-slide ul > li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.5em;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--kt-cool);
+}
+
+.kt-slide ol { margin: 0; padding-left: 26px; }
+.kt-slide ol > li { margin: 0 0 10px; padding-left: 4px; }
+.kt-slide ol > li::marker { font-weight: 700; color: var(--kt-cool); }
+
+/* ---- inline code ----------------------------------------------------------------------- */
+.kt-slide :not(pre) > code {
+  padding: 1px 6px;
+  border-radius: var(--radius-base);
+  font-family: var(--font-family-mono);
+  font-size: 0.88em;
+  background: var(--kt-tint-primary);
+  color: var(--kt-cool);
+}
+
+/* ---- tables: the Base theme's tinted header ------------------------------------------- */
+.kt-slide table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+  background: var(--kt-card);
+  border: 1px solid var(--kt-card-line);
+}
+
+.kt-slide th {
+  padding: 10px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--kt-cool);
+  background: var(--kt-tint-primary);
+  border-bottom: 1px solid var(--kt-card-line);
+}
+
+.kt-slide td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--kt-line);
+  color: var(--kt-fg);
+}
+
+.kt-slide tr:last-child td { border-bottom: 0; }
+
+.kt-table--secondary th { color: var(--kt-hot); background: var(--kt-tint-secondary); }
+.kt-table--neutral th { color: var(--kt-fg); background: var(--kt-tint-neutral); }
+
+/* ---- small layout helpers ------------------------------------------------------------- */
+.kt-grid-2, .kt-grid-3, .kt-grid-4 { display: grid; gap: 20px; }
+.kt-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kt-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kt-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.kt-stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.kt-row { display: flex; align-items: center; gap: 16px; }
+.kt-center { display: flex; justify-content: center; align-items: center; }
+
+/* ---- motion: children fade in one after the other when the slide is shown ------------- */
+.kt-stagger > * {
+  opacity: 0;
+  animation: kt-in 0.45s ease-out forwards;
+}
+
+.kt-stagger > *:nth-child(1) { animation-delay: 0.15s; }
+.kt-stagger > *:nth-child(2) { animation-delay: 0.35s; }
+.kt-stagger > *:nth-child(3) { animation-delay: 0.55s; }
+.kt-stagger > *:nth-child(4) { animation-delay: 0.75s; }
+.kt-stagger > *:nth-child(5) { animation-delay: 0.95s; }
+.kt-stagger > *:nth-child(6) { animation-delay: 1.15s; }
+.kt-stagger > *:nth-child(7) { animation-delay: 1.35s; }
+.kt-stagger > *:nth-child(8) { animation-delay: 1.55s; }
+.kt-stagger > *:nth-child(n + 9) { animation-delay: 1.75s; }
+
+@keyframes kt-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-stagger > * { opacity: 1; animation: none; }
+}

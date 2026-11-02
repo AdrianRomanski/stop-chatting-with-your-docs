@@ -1,0 +1,18 @@
+/* This talk's own styles; the kit's live in theme/. */
+
+/* the C · O · D · E slides: the step in the kicker, big and bright */
+.kt-code-step .kt-kicker {
+  top: 22px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--kt-hot);
+}
+
+/* who said the quote in a quote headline */
+.kt-quote-by {
+  margin-top: 10px;
+  text-align: center;
+  font: 600 20px var(--font-family-mono);
+  letter-spacing: 0.06em;
+  color: var(--kt-subtle);
+}

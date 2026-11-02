@@ -1,0 +1,199 @@
+/*
+ * Small styling-only elements (no component needed) and the color roles of charts and boxes.
+ */
+
+/* ---- tones: one name per color role, resolved per scheme ------------------------------- */
+.kt-scheme-light {
+  --kt-c-primary: var(--color-primary-700);
+  --kt-c-primary-soft: var(--color-primary-400);
+  --kt-c-secondary: var(--color-secondary-700);
+  --kt-c-secondary-soft: var(--color-secondary-400);
+  --kt-c-success: var(--color-success-700);
+  --kt-c-warning: var(--color-warning-500);
+  --kt-c-neutral: var(--color-neutral-500);
+  --kt-c-track: var(--color-neutral-200);
+}
+
+.kt-scheme-dark {
+  --kt-c-primary: var(--color-primary-500);
+  --kt-c-primary-soft: var(--color-primary-300);
+  --kt-c-secondary: var(--color-secondary-500);
+  --kt-c-secondary-soft: var(--color-secondary-300);
+  --kt-c-success: var(--color-success-500);
+  --kt-c-warning: var(--color-warning-400);
+  --kt-c-neutral: var(--color-neutral-500);
+  --kt-c-track: color-mix(in srgb, #ffffff 10%, transparent);
+}
+
+.kt-surface-accent-1,
+.kt-surface-accent-2 {
+  --kt-c-primary: var(--color-primary-200);
+  --kt-c-primary-soft: var(--color-primary-300);
+  --kt-c-secondary: var(--color-secondary-200);
+  --kt-c-secondary-soft: var(--color-secondary-100);
+  --kt-c-track: color-mix(in srgb, #ffffff 18%, transparent);
+}
+
+/* ---- pill: one line of numbers under a statement ---------------------------------------- */
+.kt-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 12px 20px;
+  border-radius: var(--radius-xl);
+  background: var(--kt-pill-bg);
+  font-size: 22px;
+  color: var(--kt-pill-fg);
+}
+
+.kt-pill b {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--kt-heading);
+}
+
+.kt-pill i {
+  font-style: normal;
+  color: var(--kt-hot);
+}
+
+/* ---- a claim struck out, the measured value under it ------------------------------------ */
+.kt-claim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.kt-claim small {
+  font: 600 13px/1 var(--font-family-mono);
+  letter-spacing: var(--kt-track-label);
+  text-transform: uppercase;
+  color: var(--kt-subtle);
+}
+
+.kt-claim .was {
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  color: var(--kt-subtle);
+  text-decoration: line-through;
+  text-decoration-thickness: 8px;
+  text-decoration-color: var(--color-secondary-500);
+}
+
+.kt-claim .is {
+  font-size: 140px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--kt-heading);
+}
+
+/* ---- before → after, one line each ---------------------------------------------------- */
+.kt-ba {
+  display: grid;
+  grid-template-columns: auto 30px auto;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.kt-ba > i {
+  font-style: normal;
+  font-size: 18px;
+  text-align: center;
+  color: var(--kt-subtle);
+}
+
+.kt-slide .kt-ba code {
+  padding: 11px 16px;
+  border-radius: 10px;
+  font: 600 16px/1 var(--font-family-mono);
+  white-space: nowrap;
+}
+
+.kt-slide .kt-ba code.is-bad {
+  color: var(--kt-subtle);
+  background: transparent;
+  text-decoration: line-through;
+  text-decoration-color: var(--color-secondary-500);
+  text-decoration-thickness: 2px;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-secondary-400) 55%, transparent);
+}
+
+.kt-slide .kt-ba code.is-good {
+  color: var(--kt-fg);
+  background: var(--kt-tint-primary);
+  box-shadow: inset 0 0 0 1.5px var(--kt-c-primary-soft);
+}
+
+/* ---- a full-slide code box with a hint strip (Speaker theme) ---------------------------- */
+.kt-codefull {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+/* the code fills the slide, so the slide (not the body) is its box */
+.kt-slide__body:has(.kt-codefull) { position: static; }
+
+.kt-codefull > .kt-code {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.kt-codefull > .kt-code .kt-code__bar {
+  padding: 18px 26px 8px;
+}
+
+.kt-codefull > .kt-code pre {
+  padding: 26px 64px !important;
+}
+
+.kt-codefull__hint {
+  padding: 22px var(--kt-gutter) 30px;
+  text-align: center;
+  font-size: 20px;
+  background: var(--kt-bg);
+  color: var(--kt-fg);
+}
+
+/* ---- the "live demo" badge ----------------------------------------------------------- */
+.kt-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  font: 600 14px/1 var(--font-family-mono);
+  letter-spacing: var(--kt-track-label);
+  text-transform: uppercase;
+  color: var(--kt-hot);
+}
+
+.kt-live i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-secondary-500);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-secondary-500) 25%, transparent);
+  animation: kt-live 1.4s ease-in-out infinite;
+}
+
+@keyframes kt-live {
+  50% { opacity: 0.35; }
+}
+
+/* ---- an image with a shadow (team pictures, illustrations) ----------------------------- */
+.kt-picture {
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: var(--kt-shadow);
+}

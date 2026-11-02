@@ -1,0 +1,28 @@
+{
+  "name": "slidev-theme-talk-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The PushBased talk theme for Slidev: design-system tokens, light and dark, the page types and UI elements of the talk kit.",
+  "keywords": ["slidev-theme", "slidev"],
+  "engines": {
+    "slidev": ">=53.0.0"
+  },
+  "slidev": {
+    "highlighter": "shiki",
+    "defaults": {
+      "fonts": {
+        "provider": "none",
+        "sans": "Geist Sans",
+        "mono": "Geist Mono",
+        "local": "Geist Sans,Geist Mono"
+      },
+      "aspectRatio": "16/9",
+      "canvasWidth": 980,
+      "transition": "fade",
+      "mdc": true,
+      "themeConfig": {
+        "frame": true
+      }
+    }
+  }
+}
