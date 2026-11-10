@@ -88,7 +88,7 @@ kicker: the way out
 
 <!--
 ⏱ 1:00 · script line 25: [STAGE MasteryStairs "the way out"] Mastery takes the *stairs* ⏱ 60s [^mastery-steps] [^protege]
-A step every 4.5 s (STEP_DT in MasteryStairs.vue): I land on Read at 0:02, Group 0:06, Generate 0:11, Retrieve 0:15, Elaborate 0:20, Space 0:24 (each book appears under its steps once I've climbed them: Second Brain at Read, Make It Stick at Space, Feynman's Mental Models at TEACH), TEACH 0:29; the card top left shows what I do on each step. At the meeting the stairs shrink into the corner with their names kept. The meeting at 0:30, the team reacts from 0:34, Julia's question at 0:38, all done by 0:40.
+A step every 4.5 s (STEP_DT in MasteryStairs.vue): I land on Read at 0:02, Group 0:06, Generate 0:11, Retrieve 0:15, Elaborate 0:20, Space 0:24 (each book appears under its steps once I've climbed them: Second Brain at Read, Make It Stick at Space, Feynman's Mental Models and Tomorrowmind, under the whole climb, at TEACH), TEACH 0:29; the card top left shows what I do on each step. At the meeting the stairs shrink into the corner with their names kept. The meeting at 0:30, the team reacts from 0:34, Julia's question at 0:38, all done by 0:40.
 
 So how do you get from fluency to mastery? Not by reading more. You climb. (me on the ground, before the first step) The stairs combine three books, and I did every step on that architecture document.
 
@@ -107,6 +107,8 @@ So how do you get from fluency to mastery? Not by reading more. You climb. (me o
 Group, Generate, Retrieve, Elaborate, Space: five techniques, all from the second book, Make It Stick. (its cover appears below) Every step is harder than the last. That's the point: when learning is harder, it's stronger, and it lasts longer.
 
 And the top step comes from the third book: teach it. Explain it to someone else. Richard Feynman's trick (his photo), and it has a name: the Protégé Effect. That's Richard Feynman's Mental Models (its cover appears below). You learn it best when you have to teach it. (TEACH, flag)
+
+(the fourth cover, under the whole climb) And under all of it, one more book: Tomorrowmind. Use AI as a coach, not a crutch. That's what every step is about.
 
 (0:30) So I climbed. And at the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. What builds on what. (✓)
 

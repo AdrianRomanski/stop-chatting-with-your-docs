@@ -66,14 +66,16 @@ const STRIPES = [
   ['teach', 'tm'],
 ].map(keys => keys.flatMap((k, j) => [{ k, o: j / keys.length }, { k, o: (j + 1) / keys.length }]))
 
-// --- the three books under the climb: which steps each one gives ---
+// --- the books under the climb: which steps each one gives; Tomorrowmind under all of them ---
 const books = [
   { key: 'basb', from: steps[0].x, to: steps[0].x + STEP_W, land: 0, cover: '/images/books/building-a-second-brain.webp',
     x: 40, title: ['Building a', 'Second Brain'], by: 'Tiago Forte' },
   { key: 'mis', from: steps[1].x, to: steps[5].x + STEP_W, land: 5, cover: '/images/books/make-it-stick.jpg',
-    x: 380, title: ['Make It Stick'], by: 'Brown, Roediger, McDaniel' },
+    x: 280, title: ['Make It Stick'], by: 'Brown, Roediger, McDaniel' },
   { key: 'rfmm', from: SUMMIT.x, to: SUMMIT.x + STEP_W, land: 6, cover: '/images/books/richard-feynmans-mental-models.jpg',
     x: 742, title: ["Feynman's", 'Mental Models'], by: 'Peter Hollins' },
+  { key: 'tm', from: steps[0].x, to: SUMMIT.x + STEP_W, land: 6, cover: '/images/books/tomorrowmind.webp',
+    x: 552, title: ['Tomorrowmind'], by: 'Kellerman, Seligman', low: true },
 ]
 const COVER = { w: 42, h: 64, y: GROUND + 12 }
 
@@ -247,7 +249,7 @@ const CLAP_AT = ASK_AT + 5.6
       </g>
       <!-- three books, combined: under each, the steps it gives; it shows once I've climbed them -->
       <g v-for="b in books" :key="b.key" class="kt-mstairs__book" :class="{ 'is-on': landedOn(b.land) }">
-        <path :d="`M${b.from + 4} ${GROUND + 5} H ${b.to - 4}`" class="kt-mstairs__bracket" :class="`is-${b.key}`" />
+        <path :d="`M${b.from + 4} ${GROUND + ((b as any).low ? 10 : 5)} H ${b.to - 4}`" class="kt-mstairs__bracket" :class="`is-${b.key}`" />
         <image :href="b.cover" :x="b.x" :y="COVER.y" :width="COVER.w" :height="COVER.h" preserveAspectRatio="xMidYMid slice" />
         <rect :x="b.x" :y="COVER.y" :width="COVER.w" :height="COVER.h" rx="2" class="kt-mstairs__coverline" />
         <text v-for="(l, j) in b.title" :key="l" :x="b.x + COVER.w + 8" :y="COVER.y + 18 + j * 15" class="kt-mstairs__booktitle">{{ l }}</text>
@@ -525,6 +527,7 @@ const CLAP_AT = ASK_AT + 5.6
 .kt-mstairs__bracket { fill: none; stroke-width: 3; stroke-linecap: round; }
 .kt-mstairs__bracket.is-basb { stroke: var(--kt-info); }
 .kt-mstairs__bracket.is-mis { stroke: var(--kt-good); }
+.kt-mstairs__bracket.is-tm { stroke: var(--kt-heading); stroke-width: 2; }
 .kt-mstairs__bracket.is-rfmm { stroke: var(--kt-warn); }
 .kt-mstairs__coverline { fill: none; stroke: var(--kt-line-strong); stroke-width: 1; }
 .kt-mstairs__booktitle { font-size: 13px; font-weight: 800; fill: var(--kt-heading); }

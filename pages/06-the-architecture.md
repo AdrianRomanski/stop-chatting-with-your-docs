@@ -26,19 +26,21 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:35 · script: [STAGE GroupLayers "climb step 2 · coach group"] Sort the book into *layers* | coach group on Building a Second Brain: ten concepts, unsorted, fly into four layers I name (Capture, Organize, Distill, Express, top to bottom), builds-on arrows up the stack, one cycle refused, the rules ticked, Gemma's question ⏱ 35s
+⏱ 0:50 · script: [STAGE GroupLayers "climb step 2 · coach group"] Sort the book into *layers* | coach group on Building a Second Brain: ten concepts, unsorted, fly into four layers I name (Capture, Organize, Distill, Express, top to bottom), builds-on arrows up the stack, one cycle refused, the rules ticked, Gemma's question ⏱ 35s
 
 Before the coach pushes me, two quieter steps. (2, Group) First, Group: coach group, on the whole book.
 
 (the tray) Synthesize left me ten concept notes from Building a Second Brain. A list. Unsorted. Hard to remember.
 
-(the layers) So I add layers and name them myself. Here I named them after the book: Capture, Organize, Distill, Express. The names are mine to pick. (the chips fly) Every concept goes into exactly one. Distillation, the one we followed, lands in Distill.
+(the layers) So I add layers and name them myself. Here I named them after the book: Capture, Organize, Distill, Express. The names are mine to pick. (the chips fly) Every concept goes into exactly one. Green: it belongs there. Distillation, the one we followed, lands in Distill.
+
+(two go red) But I'm not perfect. Executive summary went into Capture, Hemingway bridge into Organize. (Gemma) Gemma doesn't fix it for me. It asks: is Executive summary something you capture, or distill? (I move it, green) Distill, of course. Then: is Hemingway bridge about organizing, or expressing? (green) Expressing. Gemma asks; I move it.
 
 (the arrows) And each layer builds on the one above it: you can't organize what you never captured.
 
 (the red arrow) Draw one arrow too many, Capture building on Express, and the code refuses it: it prints the loop. (the ticks) Two to seven groups, every concept in one, no cycles. Checked in code, not by a model.
 
-(Gemma's question) Gemma may ask me up to three questions about my structure. It never suggests a group: the frame has to be mine.
+That's the rule in the code: Gemma may ask up to three questions about my structure, but a question that proposes a group or a move gets dropped. The frame has to be mine.
 -->
 
 ---
