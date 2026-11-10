@@ -1,0 +1,236 @@
+<script setup lang="ts">
+import { computed, useId } from 'vue'
+import { useTimeline } from '../theme/composables/useTimeline'
+
+/**
+ * Climb step 3, Generate, as `coach generate Distillation` runs it (ai-performance-coach domain generate.ts,
+ * application generating.ts; kb-template's "From memory" draw mode is the same flow). Five beats, lit
+ * one by one in a bar on top: title only → guess → reveal → mark → check.
+ * 1. The concept note, on the right, is closed: only its title shows; its Reveal button is grey,
+ *    "guess first" (reveal() before submit() throws).
+ * 2. My guess types into the pad on the left, one line per idea; a counter runs to 16 words (10 at
+ *    least, or /idk); "attempted ✓" is stamped.
+ * 3. Reveal turns on and opens the note: three of its real core assertions (as on ConceptNote).
+ * 4. I mark each one against my guess, a line from the guess's line to it: got it, wrong, got it. The
+ *    wrong one needs a correction in my own words (no 6 words copied from the assertion): it types in.
+ * 5. Gemma 12B checks every "got it" against the words of my guess (coveredAssertions): both hold, ✓
+ *    under the phrase. An unsupported "got it" would turn into "missed".
+ * Then: guess before the reveal ✓ (attemptCameFirst) · not graded · ✓ Generate on the climb · back tomorrow.
+ * No props.
+ */
+const { t, at } = useTimeline(14)
+const uid = useId()
+const id = (name: string) => `kt-gen-${name}-${uid}`
+
+const B = { title: 0.2, guess: 1.0, reveal: 5.0, mark: 6.9, check: 10.9, done: 12.4 }
+const beats = [
+  { n: 1, name: 'title only', at: B.title },
+  { n: 2, name: 'guess', at: B.guess },
+  { n: 3, name: 'reveal', at: B.reveal },
+  { n: 4, name: 'mark', at: B.mark },
+  { n: 5, name: 'check', at: B.check },
+].map((b, i) => ({ ...b, x: i * 176 }))
+const beat = computed(() => beats.reduce((n, b) => (at(b.at) ? b.n : n), 0))
+
+// the guess, one line per idea; each line meets one assertion
+const lines = ['I bold what I find interesting,', 'then highlight whole paragraphs,', 'and write a summary on top.']
+const GX = 0
+const GY = 112 // first line's baseline
+const LINE = 32
+const TYPE: [number, number] = [B.guess + 0.3, B.guess + 3.3]
+const total = lines.join(' ').length
+const typed = computed(() => {
+  let left = Math.round(total * Math.min(1, Math.max(0, (t.value - TYPE[0]) / (TYPE[1] - TYPE[0]))))
+  return lines.map(l => {
+    const s = l.slice(0, Math.max(0, left))
+    left -= l.length + 1
+    return s
+  })
+})
+const words = computed(() => typed.value.join(' ').trim().split(/\s+/).filter(Boolean).length)
+const ATTEMPT = TYPE[1] + 0.3
+
+// the note, on the right
+const NX = 488
+const NW = 392
+const rows = [
+  { text: ['The learner identifies interesting', 'text by bolding it.'], mark: 'got', check: true },
+  { text: ['The learner then highlights portions', 'of the bolded text.'], mark: 'wrong', check: false },
+  { text: ['The learner creates a fourth layer', 'consisting of a summary.'], mark: 'got', check: true },
+].map((r, i) => ({
+  ...r,
+  i,
+  y: 98 + i * 64,
+  in: B.reveal + 0.7 + i * 0.3,
+  marked: B.mark + 0.2 + i * 0.6,
+  checked: B.check + 0.4 + i * 0.4,
+}))
+const fix = 'Only parts of the bold get highlighted, not whole paragraphs.'
+const FIX: [number, number] = [rows[2].marked + 0.5, rows[2].marked + 2.5]
+const fixTyped = computed(() => fix.slice(0, Math.round(fix.length * Math.min(1, Math.max(0, (t.value - FIX[0]) / (FIX[1] - FIX[0]))))))
+// where a guess line ends, roughly (13.5px sans)
+const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
+</script>
+
+<template>
+  <svg class="kt-gen" viewBox="0 0 880 410" role="img"
+    aria-label="Generate, with coach generate on the Distillation concept note, in five beats. One, title only: the note is closed, and its reveal button waits: guess first. Two, guess: I type, before I look: I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Sixteen words, ten at least. Three, reveal: the note opens on three of its core assertions. Four, mark: I mark each one against my guess. Bolding interesting text: got it. Highlighting portions of the bold: wrong, and I correct it in my own words: only parts of the bold get highlighted, not whole paragraphs. A summary as a fourth layer: got it. Five, check: Gemma 12B checks each got it against the words of my guess; both hold. The guess came before the reveal. Not graded. Generate ticks on the climb, and the idea comes back tomorrow.">
+    <defs>
+      <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1 L 9 5 L 1 9" class="kt-gen__head" />
+      </marker>
+    </defs>
+
+    <!-- the five beats -->
+    <g v-for="b in beats" :key="b.n" class="kt-gen__beat" :class="{ 'is-on': beat >= b.n, 'is-now': beat === b.n }">
+      <rect :x="b.x" y="0" width="168" height="30" rx="15" class="kt-gen__beatbox" />
+      <circle :cx="b.x + 16" cy="15" r="10" class="kt-gen__beatdot" />
+      <text :x="b.x + 16" y="19" text-anchor="middle" class="kt-gen__beatnum">{{ b.n }}</text>
+      <text :x="b.x + 34" y="20" class="kt-gen__beatname">{{ b.name }}</text>
+    </g>
+
+    <!-- ── the note, closed until the reveal ── -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(B.title) }">
+      <rect :x="NX" y="46" :width="NW" height="304" rx="12" class="kt-gen__note" :class="{ 'is-open': at(B.reveal + 0.5) }" />
+      <path :d="`M${NX + 20} 58 l 9 10 l -9 10 l -9 -10 z`" class="kt-gen__diamond" />
+      <text :x="NX + 38" y="74" class="kt-gen__ntitle">Distillation</text>
+      <text :x="NX + NW - 14" y="73" text-anchor="end" class="kt-gen__small">concept note</text>
+    </g>
+    <!-- closed: blurred lines, a lock, a grey Reveal -->
+    <g class="kt-gen__closed" :class="{ 'is-gone': at(B.reveal + 0.5) }">
+      <rect v-for="k in 6" :key="k" :x="NX + 22" :y="98 + k * 26" :width="k % 3 === 0 ? 200 : 300" height="9" rx="4.5" class="kt-gen__blur" />
+      <g :transform="`translate(${NX + NW / 2} 200)`">
+        <rect x="-15" y="-4" width="30" height="24" rx="5" class="kt-gen__lock" />
+        <path d="M-9 -4 v -7 a 9 9 0 0 1 18 0 v 7" class="kt-gen__shackle" :class="{ 'is-open': at(B.reveal + 0.3) }" />
+      </g>
+    </g>
+    <g class="kt-gen__fade" :class="{ 'is-on': at(B.title) && !at(B.reveal + 0.6) }">
+      <rect :x="NX + NW / 2 - 50" y="296" width="100" height="30" rx="15" class="kt-gen__reveal" :class="{ 'is-ready': at(ATTEMPT), 'is-pressed': at(B.reveal) }" />
+      <text :x="NX + NW / 2" y="315.5" text-anchor="middle" class="kt-gen__revealtext" :class="{ 'is-ready': at(ATTEMPT) }">Reveal</text>
+      <text :x="NX + NW / 2" y="342" text-anchor="middle" class="kt-gen__small kt-gen__fade" :class="{ 'is-on': !at(ATTEMPT) }">guess first</text>
+    </g>
+    <!-- open: the core assertions, marked -->
+    <g v-for="r in rows" :key="r.text[0]" class="kt-gen__row" :class="{ 'is-on': at(r.in) }">
+      <rect :x="NX + 12" :y="r.y" :width="NW - 24" height="52" rx="9" class="kt-gen__arow" :class="{ [`is-${r.mark}`]: at(r.marked) }" />
+      <text v-for="(l, j) in r.text" :key="l" :x="NX + 24" :y="r.y + 22 + j * 17" class="kt-gen__atext">{{ l }}</text>
+      <g class="kt-gen__fade" :class="{ 'is-on': at(r.marked) }">
+        <rect :x="NX + NW - 94" :y="r.y + 16" width="72" height="20" rx="10" class="kt-gen__mark" :class="`is-${r.mark}`" />
+        <text :x="NX + NW - 58" :y="r.y + 30" text-anchor="middle" class="kt-gen__marktext">{{ r.mark === 'got' ? '✓ got it' : '✗ wrong' }}</text>
+      </g>
+    </g>
+
+    <!-- ── my guess ── -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(B.guess) }">
+      <text :x="GX" y="62" class="kt-gen__label">my guess · before I look</text>
+      <rect :x="GX" y="72" width="440" height="142" rx="12" class="kt-gen__pad" :class="{ 'is-done': at(ATTEMPT) }" />
+      <text :x="GX + 16" y="202" class="kt-gen__small" :class="{ 'is-ok': words >= 10 }">{{ words }} words · 10 at least</text>
+    </g>
+    <text v-for="(l, i) in typed" :key="i" :x="GX + 16" :y="GY + i * LINE" class="kt-gen__guess">{{ l }}</text>
+    <g :transform="`translate(${GX + 370} 84)`">
+      <g class="kt-gen__stamp" :class="{ 'is-on': at(ATTEMPT) }">
+        <rect x="-54" y="0" width="108" height="22" rx="5" class="kt-gen__stampbox" />
+        <text y="15.5" text-anchor="middle" class="kt-gen__stamptext">attempted ✓</text>
+      </g>
+    </g>
+
+    <!-- mark: a line from each guess line to its assertion -->
+    <path v-for="r in rows" :key="`l${r.i}`" :d="`M${lineEnd(r.i) + 6} ${GY - 5 + r.i * LINE} C ${NX - 40} ${GY - 5 + r.i * LINE}, ${NX - 50} ${r.y + 26}, ${NX + 8} ${r.y + 26}`"
+      class="kt-gen__link" :class="[`is-${r.mark}`, { 'is-on': at(r.marked) }]" :marker-end="`url(#${id('head')})`" />
+
+    <!-- the correction, in my own words -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(FIX[0] - 0.2) }">
+      <text :x="GX" y="240" class="kt-gen__label is-hot">wrong → my correction, in my own words</text>
+      <rect :x="GX" y="248" width="440" height="38" rx="10" class="kt-gen__fixbox" />
+      <text :x="GX + 14" y="272" class="kt-gen__fix">{{ fixTyped }}</text>
+    </g>
+
+    <!-- check: Gemma 12B, each got it against my words -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(B.check) }">
+      <rect :x="GX" y="300" width="440" height="56" rx="10" class="kt-gen__checkbox" />
+      <image href="/images/logos/gemma-mark.png" :x="GX + 14" y="310" width="18" height="18" />
+      <text :x="GX + 40" y="324" class="kt-gen__checktitle">Gemma 12B checks each “got it”</text>
+      <text :x="GX + 40" y="343" class="kt-gen__small">is it in my guess? if not, it becomes “missed”</text>
+    </g>
+    <g v-for="r in rows.filter(r => r.check)" :key="`c${r.i}`" class="kt-gen__fade" :class="{ 'is-on': at(r.checked) }">
+      <path :d="`M${GX + 16} ${GY + 6 + r.i * LINE} H ${lineEnd(r.i)}`" class="kt-gen__said" />
+      <circle :cx="NX + NW - 104" :cy="r.y + 26" r="8" class="kt-gen__ok" />
+      <path :d="`M${NX + NW - 108} ${r.y + 26} l 3 3 5 -6`" class="kt-gen__oktick" />
+    </g>
+
+    <!-- the outcome -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(B.done) }">
+      <text x="0" y="392" class="kt-gen__done">✓ guess before the reveal</text>
+      <text x="440" y="392" text-anchor="middle" class="kt-gen__small">not graded</text>
+      <text x="880" y="392" text-anchor="end" class="kt-gen__done">✓ Generate on the climb · back tomorrow</text>
+    </g>
+  </svg>
+</template>
+
+<style>
+.kt-gen { width: 880px; height: auto; overflow: visible; font-family: var(--font-family-sans); }
+.kt-gen__fade { opacity: 0; transition: opacity 0.35s; }
+.kt-gen__fade.is-on { opacity: 1; }
+
+.kt-gen__beat { opacity: 0.35; transition: opacity 0.3s; }
+.kt-gen__beat.is-on { opacity: 1; }
+.kt-gen__beatbox { fill: var(--kt-code-bg); stroke: var(--kt-line-strong); stroke-width: 1.5; transition: stroke 0.3s, fill 0.3s; }
+.kt-gen__beat.is-now .kt-gen__beatbox { stroke: var(--kt-hot); fill: color-mix(in srgb, var(--kt-hot) 14%, var(--kt-bg)); }
+.kt-gen__beatdot { fill: var(--kt-line-strong); transition: fill 0.3s; }
+.kt-gen__beat.is-on .kt-gen__beatdot { fill: var(--kt-c-primary); }
+.kt-gen__beat.is-now .kt-gen__beatdot { fill: var(--kt-hot); }
+.kt-gen__beatnum { font: 800 11px var(--font-family-mono); fill: var(--kt-bg); }
+.kt-gen__beatname { font: 700 13px var(--font-family-mono); fill: var(--kt-heading); }
+
+.kt-gen__label { font: 700 11.5px var(--font-family-mono); fill: var(--kt-muted); letter-spacing: 0.02em; }
+.kt-gen__label.is-hot { fill: var(--kt-hot); }
+.kt-gen__small { font: 600 11px var(--font-family-mono); fill: var(--kt-muted); }
+.kt-gen__small.is-ok { fill: var(--kt-good); }
+
+/* the note */
+.kt-gen__note { fill: var(--kt-code-bg); stroke: var(--kt-line-strong); stroke-width: 1.8; transition: stroke 0.4s; }
+.kt-gen__note.is-open { stroke: var(--kt-hot); }
+.kt-gen__diamond { fill: color-mix(in srgb, var(--kt-hot) 35%, var(--kt-bg)); stroke: var(--kt-hot); stroke-width: 1.6; }
+.kt-gen__ntitle { font-size: 17px; font-weight: 800; fill: var(--kt-heading); }
+.kt-gen__closed { transition: opacity 0.4s; }
+.kt-gen__closed.is-gone { opacity: 0; }
+.kt-gen__blur { fill: var(--kt-line-strong); opacity: 0.5; }
+.kt-gen__lock { fill: var(--kt-warn); }
+.kt-gen__shackle { fill: none; stroke: var(--kt-warn); stroke-width: 3.5; transition: transform 0.3s; transform-box: fill-box; transform-origin: 100% 100%; }
+.kt-gen__shackle.is-open { transform: translateY(-6px) rotate(25deg); }
+.kt-gen__reveal { fill: var(--kt-line); transition: fill 0.3s, transform 0.15s; transform-box: fill-box; transform-origin: center; }
+.kt-gen__reveal.is-ready { fill: var(--kt-c-primary); }
+.kt-gen__reveal.is-pressed { transform: scale(0.92); }
+.kt-gen__revealtext { font-size: 13px; font-weight: 800; fill: var(--kt-muted); }
+.kt-gen__revealtext.is-ready { fill: var(--kt-bg); }
+.kt-gen__row { opacity: 0; transform: translateY(6px); transition: opacity 0.35s, transform 0.35s; }
+.kt-gen__row.is-on { opacity: 1; transform: none; }
+.kt-gen__arow { fill: color-mix(in srgb, var(--kt-fg) 4%, var(--kt-bg)); stroke: var(--kt-card-line); stroke-width: 1.2; transition: stroke 0.3s; }
+.kt-gen__arow.is-got { stroke: var(--kt-good); }
+.kt-gen__arow.is-wrong { stroke: var(--kt-bad); }
+.kt-gen__atext { font-size: 13px; font-weight: 600; fill: var(--kt-fg); }
+.kt-gen__mark.is-got { fill: var(--kt-good); }
+.kt-gen__mark.is-wrong { fill: var(--kt-bad); }
+.kt-gen__marktext { font: 800 11px var(--font-family-mono); fill: var(--kt-bg); }
+
+/* my guess */
+.kt-gen__pad { fill: var(--kt-code-bg); stroke: var(--kt-c-primary-soft); stroke-width: 1.8; transition: stroke 0.3s; }
+.kt-gen__pad.is-done { stroke: var(--kt-c-primary); }
+.kt-gen__guess { font-size: 15px; font-weight: 600; fill: var(--kt-heading); }
+.kt-gen__stamp { opacity: 0; transform: scale(1.4); transform-box: fill-box; transform-origin: center; transition: opacity 0.25s, transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.kt-gen__stamp.is-on { opacity: 1; transform: none; }
+.kt-gen__stampbox { fill: none; stroke: var(--kt-good); stroke-width: 1.6; }
+.kt-gen__stamptext { font: 800 11px var(--font-family-mono); fill: var(--kt-good); }
+.kt-gen__link { fill: none; stroke-width: 2; stroke-dasharray: 5 4; opacity: 0; transition: opacity 0.35s; }
+.kt-gen__link.is-on { opacity: 1; }
+.kt-gen__link.is-got { stroke: var(--kt-good); }
+.kt-gen__link.is-wrong { stroke: var(--kt-bad); }
+.kt-gen__head { fill: none; stroke: var(--kt-line-strong); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.kt-gen__fixbox { fill: color-mix(in srgb, var(--kt-hot) 10%, var(--kt-bg)); stroke: var(--kt-hot); stroke-width: 1.5; }
+.kt-gen__fix { font-size: 12.5px; font-weight: 700; fill: var(--kt-heading); }
+.kt-gen__checkbox { fill: var(--kt-code-bg); stroke: var(--kt-c-primary); stroke-width: 1.5; }
+.kt-gen__checktitle { font-size: 14px; font-weight: 800; fill: var(--kt-heading); }
+.kt-gen__said { stroke: var(--kt-good); stroke-width: 3; stroke-linecap: round; }
+.kt-gen__ok { fill: var(--kt-good); }
+.kt-gen__oktick { fill: none; stroke: var(--kt-bg); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.kt-gen__done { font: 800 13px var(--font-family-mono); fill: var(--kt-good); }
+</style>

@@ -8,7 +8,7 @@ status: in-progress
 <h1 class="s">Build the <span class="hot">brain</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop pulling', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="1" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="1" :from="1" />
 </div>
 
 <!--

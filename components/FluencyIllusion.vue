@@ -3,8 +3,8 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * Where the fluency illusion comes from: the book, open at the page, plays once:
- * 1. the Make It Stick cover slides in, a sticky tab "p. 116" slides out of it
- * 2. the definition, verbatim (ch. 5, p. 116): a highlighter sweeps "fluency with a text", a green
+ * 1. the Make It Stick cover slides in
+ * 2. the definition, verbatim (ch. 5, p. 116; not on the slide): a highlighter sweeps "fluency with a text", a green
  *    underline draws under "mastery of its content"
  * 3. the next sentence: "a particularly lucid presentation of a difficult concept" gets marked
  *    and tagged "= my summary.md": the book describes the slide before
@@ -16,17 +16,13 @@ const { at } = useTimeline(6.4)
 
 <template>
   <div class="kt-fill" role="img"
-    aria-label="Make It Stick, chapter 5, page 116: Fluency illusions result from our tendency to mistake fluency with a text for mastery of its content. If you read a particularly lucid presentation of a difficult concept, you can get the idea that it is actually pretty simple. That was my summary. Fluency is not mastery.">
+    aria-label="Make It Stick: Fluency illusions result from our tendency to mistake fluency with a text for mastery of its content. If you read a particularly lucid presentation of a difficult concept, you can get the idea that it is actually pretty simple. That was my summary. Fluency is not mastery.">
     <div class="kt-fill__main">
       <!-- the book, open at the page -->
       <figure class="kt-fill__book" :class="{ 'is-on': at(0.1) }">
         <div class="kt-fill__cover">
           <img src="/images/books/make-it-stick.jpg" alt="Make It Stick, the book cover">
-          <span class="kt-fill__tab" :class="{ 'is-on': at(0.8) }">p. 116</span>
         </div>
-        <figcaption>
-          <b>Chapter 5</b><br>Avoid Illusions of Knowing
-        </figcaption>
       </figure>
 
       <!-- the definition, verbatim -->
@@ -43,9 +39,6 @@ const { at } = useTimeline(6.4)
             class="kt-fill__tag" :class="{ 'is-on': at(4.9) }">= my summary.md</span>,
           you can get the idea that it is actually pretty simple…”
         </p>
-        <cite class="kt-fill__cite" :class="{ 'is-on': at(3.6) }">
-          Brown, Roediger, McDaniel · <i>Make It Stick</i> (2014) · p. 116
-        </cite>
       </div>
     </div>
 
@@ -79,7 +72,7 @@ const { at } = useTimeline(6.4)
   align-items: center;
 }
 
-/* the book: slides in, tilted; the tab slides out of its page edge */
+/* the book: slides in, tilted */
 .kt-fill__book {
   margin: 0;
   opacity: 0;
@@ -96,25 +89,6 @@ const { at } = useTimeline(6.4)
   border-radius: 4px 8px 8px 4px;
   box-shadow: 0 18px 40px color-mix(in srgb, var(--kt-bg) 70%, transparent), 0 0 0 1px var(--kt-line);
 }
-.kt-fill__tab {
-  position: absolute;
-  top: 108px;
-  right: 0;
-  padding: 4px 8px 4px 12px;
-  border-radius: 0 6px 6px 0;
-  background: var(--kt-warn);
-  color: var(--kt-bg);
-  font: 800 12px var(--font-family-mono);
-  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-.kt-fill__tab.is-on { transform: translateX(calc(100% - 10px)); }
-.kt-fill__book figcaption {
-  margin-top: 16px;
-  font: 12px/1.5 var(--font-family-mono);
-  white-space: nowrap;
-  color: var(--kt-muted);
-}
-.kt-fill__book figcaption b { color: var(--kt-heading); }
 
 /* the quote */
 .kt-fill__text { display: grid; gap: 18px; }
@@ -141,8 +115,7 @@ const { at } = useTimeline(6.4)
   color: var(--kt-hot);
 }
 .kt-fill__quote.is-on,
-.kt-fill__next.is-on,
-.kt-fill__cite.is-on { opacity: 1; transform: none; }
+.kt-fill__next.is-on { opacity: 1; transform: none; }
 
 /* highlighter and underline: they sweep in left to right */
 .kt-fill__mark {
@@ -190,12 +163,6 @@ const { at } = useTimeline(6.4)
 }
 .kt-fill__tag.is-on { opacity: 1; transform: rotate(-3deg); }
 
-.kt-fill__cite {
-  font: normal 13px var(--font-family-mono);
-  color: var(--kt-muted);
-  opacity: 0;
-  transition: opacity 0.5s 0.3s;
-}
 
 /* the callback */
 .kt-fill__vs {

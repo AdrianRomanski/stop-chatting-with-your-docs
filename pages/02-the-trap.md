@@ -22,13 +22,11 @@ So I read all of it. Every single page. (pages fly, ✓ all 200 read) And I stil
 
 And it was like the touch of God. (the AI agent and I meet, flash) Two hundred pages, one clean summary. And I thought: damn. Finally. I understand.
 
-(0:11, the group meeting) Then the group meeting. The whole team. Julia, Kirill, Szymon, Hanna. And I go to the whiteboard to explain the architecture. (I draw) Tokens at the bottom. Primitives. Components… And the questions start. (Kirill) "Wait, why this way?" (Szymon) "Do you really understand it?" (Hanna) "How do the layers connect?" (Julia) "Can you explain it again?" (scribble, "?") And nothing. (GULP) The whole team watching me, and I'm standing there feeling totally stupid.
+(0:11, the group meeting) Then the group meeting. The whole team. Julia, Kirill, Szymon, Hanna. And I go to the whiteboard to explain the architecture. (I draw) Tokens: a box. Fine. (Kirill) "Wait, why this way?" (a house) Components. (a sun) Patterns. Obviously. (Szymon) "Do you really understand it?" (a stick man) Primitives. (Hanna) "Why is there a sun?" (Julia) "Can you explain it again?" (scribble, "?") And nothing. (GULP) The whole team watching me, and I'm standing there feeling totally stupid.
 
 (0:22) And the summary? It wasn't wrong. (NOT ENOUGH) It just wasn't enough for me to understand it.
 -->
 
----
-kicker: Make It Stick · chapter 5
 ---
 
 # It's called the <span class="hot">fluency illusion</span>
@@ -38,9 +36,9 @@ kicker: Make It Stick · chapter 5
 </div>
 
 <!--
-⏱ 0:35 · script line 20: [STAGE FluencyIllusion "Make It Stick · chapter 5"] It's called the *fluency illusion* ⏱ 35s [^fluency-116]
+⏱ 0:35 · script line 20: [STAGE FluencyIllusion] It's called the *fluency illusion* ⏱ 35s [^fluency-116]
 
-I didn't make this name up. It's in this book: Make It Stick. Chapter 5, "Avoid Illusions of Knowing", page 116. (book, tab)
+I didn't make this name up. It's in this book: Make It Stick. Chapter 5, "Avoid Illusions of Knowing", page 116. (book)
 
 Let me read it. "Fluency illusions result from our tendency to mistake fluency with a text (highlight) for mastery of its content." (underline)
 
@@ -62,16 +60,20 @@ kicker: the one rule
 </div>
 
 <!--
-⏱ 0:40 · script: [STAGE SynthesisMine "the one rule"] Never outsource *synthesis* to AI ⏱ 40s
-Paced to the narration (SynthesisMine.vue): articles at 0:02, the prompt types from 0:04, they fly in at 0:06, out come the concepts at 0:09, NOT MINE at 0:13; distill from 0:15, synthesize from 0:20, the concept at 0:24; the AI reaches in at 0:29, the lock at 0:30, "?" at 0:32.
+⏱ 0:40 · script: [STAGE SynthesisMine "the one rule"] Never outsource *synthesis* to AI ⏱ 40s [^docs-200]
+Paced to the narration (SynthesisMine.vue): the pile at 0:01, the prompt types from 0:02, the pages fly in from 0:04, summary.md at 0:07, NOT MINE at 0:11; proactive from 0:13: concepts found 0:15–0:17, grouped 0:18–0:20, the diagram 0:21–0:23, the "?" at 0:24, the clarification at 0:26, the fix at 0:27, the lock at 0:29.
 
-So here's the one rule of this talk. First, the shortcut. (articles) We all do this. Three articles. (prompt types) "Find the concepts and the best parts." (they fly into the AI, it spins) And out they come: concepts, shiny. The best parts, highlighted. (handed to me) And me? Idle. (they go dull, NOT MINE) They look great. They're not mine.
+So here's the one rule of this talk. Same two hundred pages, two ways. First, procrastination. (the pile) The architecture docs. (prompt types) "Find the most important parts." (the pages fly into the AI, it spins) And out it comes: summary.md. Clean. (handed to me) And me? Idle. (it goes dull, NOT MINE) It looks great. It's not mine.
 
-Two different jobs hide behind "summarize this". (distill) Distillation: one source, its essence. Bold, highlight, a summary.
+Now proactive. Same pages, me doing the work. (find) While I read, I find the concepts. Me, not the AI.
 
-(synthesize) Synthesis: ideas from different places, a book, a talk, a project, connected into a concept that wasn't there before. (concept)
+(group) Then I group them. Tokens, primitives, components, patterns.
 
-That's the part that builds understanding. That's the part I gave away with Julia's two hundred pages, and the part the shortcut takes. (AI reaches in) So the AI doesn't get it. (lock) It's mine. (?) The AI may only ask.
+(draw) And I draw the diagram. Layer on layer, what builds on what. (arrow) And I get it wrong.
+
+(?) Here's where I'm stuck, and that's where the AI comes in. (the question) "Why this way?" (clarification) It explains. It clarifies. (the fix) And I fix my own diagram: those two were the wrong way round. The AI didn't draw it. It doesn't decide what matters.
+
+(lock) The synthesis stays mine. The AI may only answer what I ask.
 -->
 
 ---
@@ -85,20 +87,30 @@ kicker: the way out
 </div>
 
 <!--
-⏱ 0:45 · script line 22: [STAGE MasteryStairs "the way out"] Mastery takes the *stairs* ⏱ 45s [^mastery-steps] [^protege]
-The climb takes ~10 s, the meeting starts at 0:10, the team reacts from 0:14, Julia's question at 0:19, all done by 0:21.
+⏱ 1:00 · script line 25: [STAGE MasteryStairs "the way out"] Mastery takes the *stairs* ⏱ 60s [^mastery-steps] [^protege]
+A step every 4.5 s (STEP_DT in MasteryStairs.vue): I land on Read at 0:02, Group 0:06, Generate 0:11, Retrieve 0:15, Elaborate 0:20, Space 0:24 (each book appears under its steps once I've climbed them: Second Brain at Read, Make It Stick at Space, Feynman's Mental Models at TEACH), TEACH 0:29; the card top left shows what I do on each step. At the meeting the stairs shrink into the corner with their names kept. The meeting at 0:30, the team reacts from 0:34, Julia's question at 0:38, all done by 0:40.
 
-So how do you get from fluency to mastery? The book's answer: not by reading more. You climb. (me on the FLUENCY ledge)
+So how do you get from fluency to mastery? Not by reading more. You climb. (me on the ground, before the first step) The stairs combine three books, and I did every step on that architecture document.
 
-Generate: try to answer before you look it up. (hop) Retrieve: pull it out of your head, no notes. (hop) Elaborate: say it in your own words. (hop) And space it: come back after a gap. (hop)
+(hop) Read. First the raw material, the architecture doc itself. And while I read, I write things down: what matters, what I don't get. That's Building a Second Brain (its cover appears below): keep what resonates. (the step turns blue: Second Brain)
 
-Every step is harder than the last. That's the point: when learning is harder, it's stronger, and it lasts longer. (MASTERY)
+(hop) Group. The doc goes into four groups. The book calls it structure building: pull out the main ideas, build the frame.
 
-And there's one step above mastery: teach it. Explain it to someone else. Richard Feynman's trick (his photo), and it has a name: the Protégé Effect. You learn it best when you have to teach it. (TEACH, flag)
+(hop) Generate. I sketch the diagram before I look. A guess, wrong in places, and that's fine: then I check the docs and fix it.
 
-(0:10) So I climbed. And at the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. What builds on what. (✓)
+(hop) Retrieve. Docs closed. I redraw it from memory.
 
-(0:14, Kirill) "Wow, so that's how it works!" (Szymon) "Can you teach us this?" (Hanna) "Can you share guidelines?"
+(hop) Elaborate. Kirill's question: why this way? I answer it in my own words.
 
-(0:19) And Julia. The one who created it. "Will you write our guidelines?" (CLAP CLAP)
+(hop) Space. Tomorrow, next week, next month: I redraw it again, a little rusty every time.
+
+Group, Generate, Retrieve, Elaborate, Space: five techniques, all from the second book, Make It Stick. (its cover appears below) Every step is harder than the last. That's the point: when learning is harder, it's stronger, and it lasts longer.
+
+And the top step comes from the third book: teach it. Explain it to someone else. Richard Feynman's trick (his photo), and it has a name: the Protégé Effect. That's Richard Feynman's Mental Models (its cover appears below). You learn it best when you have to teach it. (TEACH, flag)
+
+(0:30) So I climbed. And at the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. What builds on what. (✓)
+
+(0:34, Kirill) "Wow, so that's how it works!" (Szymon) "Can you teach us this?" (Hanna) "Can you share guidelines?"
+
+(0:38) And Julia. The one who created it. "Will you write our guidelines?" (CLAP CLAP)
 -->

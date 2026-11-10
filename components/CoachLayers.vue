@@ -7,8 +7,10 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * hexagon inside it, holding the four coaching styles (feynman, socratic, cornell, devil; domain
  * coaching-style.ts). On the driving side, the terminal and "cli", the composition root, pointing
  * in. On the driven side, the four adapters, each with its logo or icon, plugging into the port it
- * implements (vault-mcp · NotesRepository, VaultFiling; ollama · SparringPartner; gemini · Judge;
- * local-state · PendingJudgements, Clock). Every arrow points inward. Then an arrow tries to point
+ * implements (adapter-vault-mcp McpVault: NotesRepository, Library, SessionLog, VaultFiling; adapter-ollama:
+ * SparringPartner + 6 more, the synthesis, structure, study, elaboration and teach partners and the style
+ * classifier; gemini · Judge; local-state · PendingJudgements, Clock). The application: one use case per
+ * command (read, synthesize, group, generate, spar, judge, study, elaborate, due, teach, climb). Every arrow points inward. Then an arrow tries to point
  * out from the domain to an adapter, turns red with a ✕ and fades: "lint enforces it"
  * (@nx/enforce-module-boundaries). No props.
  */
@@ -41,10 +43,10 @@ const AX = 690
 const AW = 200
 const AH = 70
 const adapters = [
-  { name: 'vault-mcp', tech: 'kb-template', port: 'NotesRepository · VaultFiling', tone: 'local', logo: '/images/logos/pushbased-mark.png' },
-  { name: 'ollama', tech: 'Gemma · offline', port: 'SparringPartner', tone: 'local', logo: '/images/logos/gemma-mark.png' },
-  { name: 'gemini', tech: 'Argon · online', port: 'Judge', tone: 'cloud', logo: '/images/logos/gemini-mark.png' },
-  { name: 'local-state', tech: 'queue · clock', port: 'PendingJudgements · Clock', tone: 'local', logo: '' },
+  { name: 'vault-mcp', tech: 'kb-template', port: ['NotesRepository · Library', 'SessionLog · VaultFiling'], tone: 'local', logo: '/images/logos/pushbased-mark.png' },
+  { name: 'ollama', tech: 'Gemma · offline', port: ['SparringPartner', '+ 6 more partners'], tone: 'local', logo: '/images/logos/gemma-mark.png' },
+  { name: 'gemini', tech: 'Argon · online', port: ['Judge'], tone: 'cloud', logo: '/images/logos/gemini-mark.png' },
+  { name: 'local-state', tech: 'queue · clock', port: ['PendingJudgements · Clock'], tone: 'local', logo: '' },
 ].map((a, i) => {
   const cy = 84 + i * 84
   const ex = edgeX(cy)
@@ -54,7 +56,7 @@ const adapters = [
 
 <template>
   <svg class="kt-clayers" viewBox="0 0 900 430" role="img"
-    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. On the driven side four adapters plug into the application's ports: vault-mcp for kb-template, ollama for Gemma, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: lint enforces it.">
+    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. The application has one use case per command. On the driven side four adapters plug into the application's ports: vault-mcp for kb-template, ollama for Gemma's seven partners, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: lint enforces it.">
     <defs>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M1 1 L 9 5 L 1 9" class="kt-clayers__head" />
@@ -77,7 +79,7 @@ const adapters = [
       <polygon :points="hex(R)" class="kt-clayers__hex" />
       <solar-routing-2-bold-duotone :x="CX - 14" y="64" width="26" height="26" class="kt-clayers__icon is-good" />
       <text :x="CX" y="106" text-anchor="middle" class="kt-clayers__name">application</text>
-      <text :x="CX" y="121" text-anchor="middle" class="kt-clayers__does">spar · judge · study · file</text>
+      <text :x="CX" y="121" text-anchor="middle" class="kt-clayers__does">one use case per command</text>
     </g>
 
     <!-- domain -->
@@ -107,7 +109,7 @@ const adapters = [
     <g v-for="a in adapters" :key="a.name" class="kt-clayers__part" :class="{ 'is-on': at(a.on) }">
       <path :d="`M${AX - 2} ${a.cy} H ${a.ex + 6}`" class="kt-clayers__wire" :marker-end="`url(#${id('head')})`" />
       <circle :cx="a.ex" :cy="a.cy" r="5" class="kt-clayers__port" />
-      <text :x="a.lx" :y="a.cy - 8" text-anchor="middle" class="kt-clayers__portname">{{ a.port }}</text>
+      <text v-for="(p, j) in a.port" :key="p" :x="a.lx" :y="a.cy - 8 - (a.port.length - 1 - j) * 13" text-anchor="middle" class="kt-clayers__portname">{{ p }}</text>
       <rect :x="AX" :y="a.y" :width="AW" :height="AH" rx="14" class="kt-clayers__box" :class="`is-${a.tone}`" />
       <image v-if="a.logo" :href="a.logo" :x="AX + 14" :y="a.cy - 13" width="26" height="26" preserveAspectRatio="xMidYMid meet" />
       <solar-history-bold-duotone v-else :x="AX + 13" :y="a.cy - 14" width="28" height="28" class="kt-clayers__icon is-cool" />

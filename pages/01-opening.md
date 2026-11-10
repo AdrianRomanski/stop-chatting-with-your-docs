@@ -2,6 +2,10 @@
 layout: cover
 scheme: light
 surface: soft
+# the JS Poland logo sits by my name here; in the corner it would land on the illustration
+frame: false
+partner: /images/logos/js-poland.webp
+partnerLabel: 'JS Poland · 18 Nov 2026'
 subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & Gemini 4 Argon"
 ---
 
@@ -15,6 +19,11 @@ subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & G
 :global(.kt-cover__sub) { max-width: 600px; }
 :global(.kt-cover__by) { font-size: 22px; gap: 18px; }
 :global(.kt-cover__logo) { height: 40px; }
+/* the event, JS Poland, above the title: the bottom belongs to the illustration */
+:global(.slidev-layout.kt-cover) { justify-content: flex-start !important; padding-top: 58px !important; }
+:global(.kt-cover__body) { display: flex; flex-direction: column; }
+:global(.kt-cover__partner) { order: -1; margin: 0 0 18px !important; }
+:global(.kt-cover__partner img) { height: 44px !important; }
 </style>
 
 <!--
@@ -30,50 +39,47 @@ surface: soft
 
 <SpeakerIntro>
   <div class="kt-hobby">
-    <div class="kt-hobby__favs">
-      <figure class="kt-fav"><img src="/images/hobbies/warhammer40k.jpg" alt="Warhammer 40k" class="is-full"></figure>
-      <figure class="kt-fav"><img src="/images/hobbies/pan-lodowego-ogrodu.jpg" alt="Pan Lodowego Ogrodu" class="is-full"></figure>
-    </div>
+    <figure class="kt-fav is-wide"><img src="/images/hobbies/warhammer40k.jpg" alt="Warhammer 40k"></figure>
+    <figure class="kt-fav is-pair is-cover"><img src="/images/hobbies/thorgal.jpg" alt="Thorgal"></figure>
+    <figure class="kt-fav is-cover"><img src="/images/hobbies/amazing-spiderman.jpg" alt="The Amazing Spider-Man"></figure>
   </div>
   <div class="kt-hobby">
-    <div class="kt-hobby__favs">
-      <figure class="kt-fav"><img src="/images/hobbies/thorgal.jpg" alt="Thorgal" class="is-full is-tall"></figure>
-      <figure class="kt-fav"><img src="/images/hobbies/amazing-spiderman.jpg" alt="The Amazing Spider-Man" class="is-full is-tall"></figure>
-    </div>
+    <figure class="kt-fav is-cover"><img src="/images/hobbies/dragon-ball-full-color.jpg" alt="Dragon Ball Full Color"></figure>
+    <figure class="kt-fav is-cover"><img src="/images/hobbies/great-teacher-onizuka.jpg" alt="Great Teacher Onizuka"></figure>
+    <figure class="kt-fav is-wide is-pair"><img src="/images/hobbies/one-piece.png" alt="One Piece"></figure>
   </div>
   <div class="kt-hobby">
-    <div class="kt-hobby__favs">
-      <figure class="kt-fav"><img src="/images/hobbies/pokemon-crystal.webp" alt="Pokémon Crystal" class="is-full"></figure>
-      <figure class="kt-fav"><img src="/images/hobbies/world-of-warcraft.png" alt="World of Warcraft" class="is-logo"></figure>
-    </div>
-  </div>
-  <div class="kt-hobby">
-    <div class="kt-hobby__favs">
-      <figure class="kt-fav"><img src="/images/hobbies/one-piece.png" alt="One Piece" class="is-logo"></figure>
-      <figure class="kt-fav"><img src="/images/hobbies/overlord.png" alt="Overlord" class="is-logo"></figure>
-    </div>
+    <figure class="kt-fav"><img src="/images/hobbies/pokemon-crystal.webp" alt="Pokémon Crystal"></figure>
+    <figure class="kt-fav"><img src="/images/hobbies/wario-land-3.jpg" alt="Wario Land 3"></figure>
+    <figure class="kt-fav is-pair is-logo"><img src="/images/hobbies/world-of-warcraft.png" alt="World of Warcraft"></figure>
+    <figure class="kt-fav"><img src="/images/hobbies/counter-strike.jpg" alt="Counter-Strike 1.6"></figure>
   </div>
 </SpeakerIntro>
 
 <style>
+/* three rows, two favorites per row: books | comics, manga | anime, Game Boy | PC */
 :global(.kt-me__lines .kt-hobby) {
   display: grid;
-  grid-template-columns: auto;
-  align-items: start;
-  gap: 14px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(5, 92px);
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
   white-space: normal;
 }
-:global(.kt-hobby__favs) { display: flex; gap: 14px; }
-:global(.kt-fav) { margin: 0; width: 160px; }
+:global(.kt-fav) { margin: 0; }
+:global(.kt-fav.is-wide) { grid-column: span 3; }
+:global(.kt-fav.is-pair) { margin-left: 14px; }
+/* every row is 5 columns wide: the banners take 3, the WoW logo 2, so all rows match */
+:global(.kt-fav.is-logo) { grid-column: span 2; }
 :global(.kt-fav img) {
   display: block;
-  width: 160px;
-  height: 84px;
+  width: 100%;
+  height: 124px;
   object-fit: contain;
   border-radius: 8px;
 }
-:global(.kt-fav img.is-tall) { height: 128px; }
+/* book covers fill the same box, so Thorgal and Spider-Man (different aspect ratios) match */
+:global(.kt-fav.is-cover img) { object-fit: cover; }
 /* WoW badges on the photo: Horde (faction) bottom left, Warlock (class) bottom right */
 :global(.kt-me__who) { position: relative; }
 :global(.kt-me__who::before),
@@ -101,7 +107,7 @@ surface: soft
 <!--
 ⏱ 0:30 · script line 12: [INTRO] Hobbies
 Status: READY (speaker sign-off 2026-10-22). Soft dark surface.
-Quick and punchy. Adrian, full-stack at PushBased. Off the clock: books (Warhammer 40k, and Grzędowicz's Pan Lodowego Ogrodu, "Lord of the Ice Garden"), comics (Thorgal, The Amazing Spider-Man), games (Pokémon Crystal, World of Warcraft) and anime (One Piece, Overlord). The two badges on the photo: Horde (faction) and Warlock (class), from World of Warcraft. Then straight into the train story.
+Quick and punchy. Adrian, full-stack at PushBased. Off the clock, my favorites: the book (Warhammer 40k), comics (Thorgal, The Amazing Spider-Man), manga (Dragon Ball Full Color, Great Teacher Onizuka), the anime (One Piece), Game Boy (Pokémon Crystal, Wario Land 3) and PC (World of Warcraft, Counter-Strike 1.6). The two badges on the photo: Horde (faction) and Warlock (class), from World of Warcraft. Then straight into the train story.
 -->
 
 ---
@@ -111,14 +117,14 @@ kicker: phase 1
 status: in-progress
 ---
 
-<h1 class="s">Stop <span class="hot">pulling</span></h1>
+<h1 class="s">Stop learning from <span class="hot">summaries</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop pulling', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="0" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="0" :from="1" />
 </div>
 
 <!--
-⏱ 0:08 · script: [PHASE] Stop *pulling*
+⏱ 0:08 · script: [PHASE] Stop learning from *summaries*
 -->
 
 ---
@@ -133,7 +139,7 @@ status: done
 </div>
 
 <!--
-⏱ 0:45 · script line 14: [STAGE TrainOffline "how this talk started"] Born on a train / with *no signal* ⏱ 45s
+⏱ 0:55 · script line 14: [STAGE TrainOffline "how this talk started"] Born on a train / with *no signal* ⏱ 55s
 Comedic, quick; let the animation land each beat.
 
 So: this talk was born on a train. PKP Intercity, for the locals. (beat)
@@ -151,6 +157,8 @@ And then everything linked to everything. (graph tangles) I hadn't built a secon
 What I needed was structure, and a plan simple enough to follow on a train. The book had one: four folders. P, A, R, A. (notes drop into the four folders) Hold that thought: we open those four folders in a minute.
 
 And even with a plan, the doubt. (thought bubble) Do I really get it? Or did I just read it? Without the book and without the internet, there was nobody to ask me.
+
+So my first reflex? Just ask AI for a summary. (summary?) Like we all do. (beat) And then I remembered. (architecture docs?) I'd tried exactly that before. With an architecture. And it did not go well. (hold it: the next slide tells it)
 
 And that's where the idea came from: an offline sparring partner. Something that runs on my laptop, no Wi-Fi, and fires questions back at me instead of answers. (bulb)
 

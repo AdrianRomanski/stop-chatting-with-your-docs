@@ -7,7 +7,7 @@ kicker: phase 5
 <h1 class="m">Judge <span class="hot">blind</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop pulling', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="4" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="4" :from="1" />
 </div>
 
 <!--
@@ -29,7 +29,7 @@ status: in-progress
 <!--
 ⏱ 0:25 · script: [STATEMENT] The judge never sees your *notes* / only your answer and your claims | pays #arch and #claims; the compact TwoTiers below, the packet crossing labelled "challenge + answer + your claims"
 
-Same boundary as on the architecture slide. The notes try to cross and bounce off the lock.
+A boundary between my laptop and the cloud. The notes try to cross and bounce off the lock.
 
 What crosses the boundary is my explanation, in my words, and the claims I wrote myself when I distilled the note. That's exactly what should be graded.
 
@@ -48,11 +48,39 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:25 · script: [STATEMENT] It found the gap / I *couldn't* see | my real judge session (the live judge demo runs at the end); AnswerGap redrawn with my real session of 25 Oct 2026: the challenge "What is the author's primary argument regarding this layered text processing system?", my answer "it helps take the essence of text"; Gemma 4B "pass" ✓ fades; Argon: "fail", the claim marked "hand-waving", one gap "how highlighting works inside the bolded text"; "next review: tomorrow". Pays off the fluency illusion: fluent, and not enough [^session-1025]
+⏱ 0:25 · script: [STATEMENT] It found the gap / I *couldn't* see | my real judge session; AnswerGap redrawn with my real session of 25 Oct 2026: the challenge "What is the author's primary argument regarding this layered text processing system?", my answer "it helps take the essence of text"; Gemma 4B "pass" ✓ fades; Argon: "fail", the claim marked "hand-waving", one gap "how highlighting works inside the bolded text"; "next review: tomorrow". Pays off the fluency illusion: fluent, and not enough [^session-1025]
 
 My own first session, on my Distillation note. (the question) The coach asked: "What is the author's primary argument regarding this layered text processing system?" (my answer) And I answered: "it helps take the essence of text." The small model passed my answer. That was before the 12B check: this session is why it exists. Argon read the same words and called it what it was: hand-waving.
 
 "It helps take the essence of text" sounds right. It's the summary.md all over again: fluent, and not enough.
 
 On the slide: the challenge, my answer and Argon's hand-waving claim are verbatim from the session file (s-20261025-205751-3ff4.md); the slide shows my first answer, three follow-ups came after it. The gap is shortened, a paraphrase; the recorded gap reads: "The answer does not explain that highlighting specifically targets portions of the bolded text." The session recorded two hand-waves and two gaps; the slide shows one of each. Next review 2026-10-26: the day after.
+-->
+
+
+---
+kicker: the climb so far
+status: in-progress
+---
+
+# Six steps up the <span class="hot">climb</span>
+
+<div class="kt-center" style="margin-top: -40px">
+  <ClimbCheckpoint :done="6" concept="Distillation" books="all" covers :gained="[
+    { step: 'space', text: 'judged blind: failed once, studied, passed · a day later, passed again' },
+  ]" />
+</div>
+
+<!--
+⏱ 0:40 · script: [CHECKPOINT ClimbCheckpoint "the climb so far"] Six steps up the *climb* | the stairs to Space, Teach next; under the stairs the books: Building a Second Brain over Read, the bridge, Group and Generate; Make It Stick over Group to Space; the styles' books (The Socratic Method, Feynman's Mental Models) over Retrieve, Elaborate, Space; Richard Feynman's Mental Models under Teach; Tomorrowmind under everything ⏱ 30s
+
+(the stairs) Back to the stairs. Six steps. One left: Teach.
+
+(the books) And look underneath. Group and Generate aren't only Make It Stick. They're Building a Second Brain too: once I've synthesized my concepts, I connect them, into layers, and I try to rebuild them before I look. The two books overlap right there.
+
+(the styles) Where the coach questions me in a style, two more books: Farnsworth's The Socratic Method, and Feynman's Mental Models. And Teach, the last step, is Feynman again: the Protégé Effect.
+
+(Tomorrowmind) And under all of it, Tomorrowmind. There's a concept from it in every step, and it's the book that made me build this app in the first place: use AI as a coach, not a crutch.
+
+Six steps. Next: teach.
 -->

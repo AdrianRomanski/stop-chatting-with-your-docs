@@ -12,8 +12,9 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *    photo and an "AI agent" card slide in and meet; at the touch a shockwave and a glow, a
  *    summary.md comes down; the thought "Damn. FINALLY I understand!"
  * 3. "The group meeting": me at the whiteboard, the whole team watching (Julia, Kirill, Szymon,
- *    Hanna); I draw a box, an arrow, half a box… while they ask "do you really understand it?";
- *    then a scribble and a "?". GULP, feeling
+ *    Hanna); I draw one serious box, "tokens", then random stuff with very confident layer names:
+ *    a house (components), a sun (patterns), a stick man (primitives), while they ask "why this
+ *    way?", "do you really understand it?", "why is there a sun?"; then a scribble and a "?". GULP, feeling
  *    totally stupid. The strip dims, a NOT ENOUGH stamp slams onto the summary (it wasn't wrong, it
  *    just wasn't enough), panel 2 drains to grey.
  * Sets up FluencyIllusion (it has a name, from Make It Stick). No props.
@@ -69,17 +70,28 @@ const ME_AT = SCENE_3 + 1.6
 // my attempt, stroke by stroke, until it falls apart: each stroke is a polyline, drawn over `for`
 // seconds from `at`; the marker's tip rides along the stroke being drawn
 type Pt = [number, number]
-// the scribble stays inside the fourth layer, clear of the labels below
-const scribble: Pt[] = [[730, 104], [738, 88], [746, 105], [754, 87], [762, 105], [770, 89], [778, 104], [786, 87],
-  [794, 105], [802, 89], [810, 102]]
+// the ring of points around a centre: a head (r, r) or a sun's spikes (alternating radii)
+const ring = (cx: number, cy: number, radii: number[], n: number): Pt[] =>
+  Array.from({ length: n + 1 }, (_, i) => {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2
+    const r = radii[i % radii.length]
+    return [Math.round(cx + Math.cos(a) * r), Math.round(cy + Math.sin(a) * r)]
+  })
+// the scribble: everything crossed out, in one angry zigzag
+const scribble: Pt[] = [[730, 140], [744, 108], [756, 142], [770, 106], [784, 142], [798, 108], [812, 142], [826, 106],
+  [840, 140], [852, 112]]
 const SCRIBBLE = 9.9
-// the architecture, bottom-up: one layer at a time, then a fourth I can't finish
-const layer = (y: number): Pt[] => [[728, y], [850, y], [850, y + 16], [728, y + 16], [728, y]]
-const strokes: { pts: Pt[]; at: number; for: number; hot?: boolean; label?: string }[] = [
-  { pts: layer(154), at: 2.4, for: 1.1, label: 'tokens' },
-  { pts: layer(132), at: 4, for: 1.1, label: 'primitives' },
-  { pts: layer(110), at: 5.6, for: 1.1, label: 'components' },
-  { pts: [[728, 104], [728, 88], [790, 88]], at: 7.3, for: 0.8 },
+// the architecture, as I "remember" it: one serious box, then random stuff, each with a very
+// confident layer name: a house (components), a sun (patterns), a stick man (primitives)
+const strokes: { pts: Pt[]; at: number; for: number; hot?: boolean; label?: string; lx?: number; ly?: number }[] = [
+  { pts: [[728, 150], [784, 150], [784, 166], [728, 166], [728, 150]], at: 2.4, for: 0.9, label: 'tokens', lx: 756, ly: 162 },
+  { pts: [[798, 166], [798, 146], [834, 146], [834, 166]], at: 3.6, for: 0.6 },
+  { pts: [[794, 148], [816, 130], [838, 148]], at: 4.2, for: 0.4, label: 'components', lx: 816, ly: 126 },
+  { pts: ring(842, 92, [7, 13], 16), at: 5.0, for: 0.9, label: 'patterns', lx: 800, ly: 96 },
+  { pts: ring(748, 98, [6], 10), at: 6.3, for: 0.4 },
+  { pts: [[748, 104], [748, 121]], at: 6.8, for: 0.2 },
+  { pts: [[739, 111], [757, 111]], at: 7.05, for: 0.2 },
+  { pts: [[741, 132], [748, 121], [755, 132]], at: 7.3, for: 0.3, label: 'primitives', lx: 759, ly: 144 },
   { pts: scribble, at: SCRIBBLE, for: 0.8, hot: true },
 ]
 const len = (pts: Pt[]) => pts.slice(1).reduce((sum, p, i) => sum + Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]), 0)
@@ -100,7 +112,8 @@ const ink = computed(() => strokes.map(k => ({
   hot: k.hot,
   off: 1 - progress(k),
   label: k.label,
-  y: k.pts[0][1] + 12,
+  x: k.lx,
+  y: k.ly,
   done: progress(k) === 1,
 })))
 // the pen: on the stroke being drawn, resting where the last one ended, held at a writing angle;
@@ -122,7 +135,7 @@ const pen = computed(() => {
 const questions = [
   { who: 1, w: 176, at: 2.4, until: 4.4, before: 'Wait, why this way?', hot: '', after: '' },
   { who: 2, w: 244, at: 4.6, until: 6.6, before: 'Do you ', hot: 'really', after: ' understand it?' },
-  { who: 3, w: 230, at: 6.8, until: 8.6, before: 'How do the layers connect?', hot: '', after: '' },
+  { who: 3, w: 222, at: 6.8, until: 8.6, before: 'Why is there a sun?', hot: '', after: '' },
   { who: 0, w: 222, at: 8.8, until: Infinity, before: 'Can you explain it again?', hot: '', after: '' },
 ].map((q) => {
   const head = 650 + q.who * 58
@@ -136,7 +149,7 @@ const STUPID_AT = SCENE_3 + 10.6
 
 <template>
   <svg class="kt-jstory" viewBox="0 0 880 396" role="img"
-    aria-label="A three-panel comic. A while ago: Julia Rapczynska's design system architecture, about 200 pages of hardcore docs, and I'm short on time. I read all of it and still don't get it. One prompt later: I ask AI to summarize it, the AI agent and I meet, and I think: finally I understand. The group meeting: at the whiteboard, the whole team watching, I try to draw the architecture, layer by layer, and it falls apart; I feel totally stupid. The summary was not wrong; it just was not enough for me to understand it.">
+    aria-label="A three-panel comic. A while ago: Julia Rapczynska's design system architecture, about 200 pages of hardcore docs, and I'm short on time. I read all of it and still don't get it. One prompt later: I ask AI to summarize it, the AI agent and I meet, and I think: finally I understand. The group meeting: at the whiteboard, the whole team watching, I try to draw the architecture and draw random stuff instead: a box called tokens, a house called components, a sun called patterns, a stick man called primitives; the team asks why this way, and why there is a sun; I feel totally stupid. The summary was not wrong; it just was not enough for me to understand it.">
     <defs>
       <clipPath :id="id('julia')"><circle cx="60" cy="86" r="32" /></clipPath>
       <clipPath :id="id('reader')"><circle cx="212" cy="194" r="28" /></clipPath>
@@ -297,9 +310,9 @@ const STUPID_AT = SCENE_3 + 10.6
       <path v-for="(k, i) in ink" :key="`k${i}`" :d="k.d" pathLength="1" :style="{ strokeDashoffset: k.off }"
         class="kt-jstory__ink" :class="{ 'is-scribble': k.hot }" />
       <template v-for="(k, i) in ink" :key="`l${i}`">
-        <text v-if="k.label" x="789" :y="k.y" text-anchor="middle" class="kt-jstory__layer" :class="{ 'is-on': k.done }">{{ k.label }}</text>
+        <text v-if="k.label" :x="k.x" :y="k.y" text-anchor="middle" class="kt-jstory__layer" :class="{ 'is-on': k.done }">{{ k.label }}</text>
       </template>
-      <text x="830" y="108" text-anchor="middle" class="kt-jstory__lost" :class="{ 'is-on': at(SCRIBBLE_AT + 0.3) }">?</text>
+      <text x="792" y="138" text-anchor="middle" class="kt-jstory__lost" :class="{ 'is-on': at(SCRIBBLE_AT + 0.3) }">?</text>
 
       <!-- me, in the spotlight -->
       <circle cx="668" cy="118" r="64" :fill="`url(#${id('spot')})`" class="kt-jstory__spot" :class="{ 'is-on': at(STUPID_AT) }" />

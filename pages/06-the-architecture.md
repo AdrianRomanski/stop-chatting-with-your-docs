@@ -7,73 +7,122 @@ kicker: phase 4
 <h1 class="s">Push the <span class="hot">challenge</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop pulling', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="3" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="3" :from="1" />
 </div>
 
 <!--
 ⏱ 0:08 · script: [PHASE] Push the *challenge*
 -->
 
+---
+kicker: "climb step 2 · coach group"
+status: in-progress
+---
+
+# Sort the book into <span class="hot">layers</span>
+
+<div class="kt-center" style="margin-top: 8px">
+  <GroupLayers />
+</div>
+
+<!--
+⏱ 0:35 · script: [STAGE GroupLayers "climb step 2 · coach group"] Sort the book into *layers* | coach group on Building a Second Brain: ten concepts, unsorted, fly into four layers I name (Capture, Organize, Distill, Express, top to bottom), builds-on arrows up the stack, one cycle refused, the rules ticked, Gemma's question ⏱ 35s
+
+Before the coach pushes me, two quieter steps. (2, Group) First, Group: coach group, on the whole book.
+
+(the tray) Synthesize left me ten concept notes from Building a Second Brain. A list. Unsorted. Hard to remember.
+
+(the layers) So I add layers and name them myself. Here I named them after the book: Capture, Organize, Distill, Express. The names are mine to pick. (the chips fly) Every concept goes into exactly one. Distillation, the one we followed, lands in Distill.
+
+(the arrows) And each layer builds on the one above it: you can't organize what you never captured.
+
+(the red arrow) Draw one arrow too many, Capture building on Express, and the code refuses it: it prints the loop. (the ticks) Two to seven groups, every concept in one, no cycles. Checked in code, not by a model.
+
+(Gemma's question) Gemma may ask me up to three questions about my structure. It never suggests a group: the frame has to be mine.
+-->
+
+---
+kicker: "climb step 3 · coach generate"
+status: in-progress
+---
+
+# Guess before you <span class="hot">look</span>
+
+<div class="kt-center" style="margin-top: 6px">
+  <GenerateGuess />
+</div>
+
+<!--
+⏱ 0:45 · script: [STAGE GenerateGuess "climb step 3 · coach generate"] Guess before you *look* | five beats: title only (Reveal grey, "guess first") → my guess, 16 words → reveal: three real core assertions → mark each against a line of my guess: got it / wrong + my correction / got it → Gemma 12B checks each got it against my words ⏱ 45s
+
+(3, Generate) The second quiet step: Generate. And it's the strangest one: I answer before I study.
+
+(1, title only) coach generate, on one concept. The note stays closed: I see only its title, Distillation. The Reveal button is grey. The code won't open the note until I've guessed.
+
+(2, the guess types) So I guess. What does it say? I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Ten words at least; I can type /idk if I really have no idea. (attempted) Stamped.
+
+(3, reveal) Now the note opens: its core assertions.
+
+(4, the lines) I mark each one against my guess, myself. Bolding: got it. (red) Highlighting: wrong. It's not whole paragraphs, only parts of the bold. And a wrong mark needs a correction, in my own words: copy six words from the note and it's refused. Summary: got it.
+
+(5, Gemma 12B) Then the check: was each "got it" really in my guess? Gemma 12B looks for it in my words. Both hold. If one didn't, it would turn into "missed".
+
+(the footer) Not graded. But a wrong guess, corrected, sticks better than a right answer I just read. And the idea comes back tomorrow, for its first spar.
+-->
+
+---
+kicker: the climb so far
+status: in-progress
+---
+
+# Three steps up the <span class="hot">climb</span>
+
+<div class="kt-center" style="margin-top: 10px">
+  <ClimbCheckpoint :done="3" concept="Distillation" books covers :gained="[
+    { step: 'group', text: 'Building a Second Brain in 4 layers I named · Distillation sits in Distill' },
+    { step: 'generate', text: 'guessed before I looked: 2 got it, 1 wrong, corrected in my own words' },
+  ]" />
+</div>
+
+<!--
+⏱ 0:20 · script: [CHECKPOINT ClimbCheckpoint "the climb so far"] Three steps up the *climb* ⏱ 20s
+
+(the stairs, I hop up) Back to the stairs. Read, the bridge, and now Group and Generate.
+
+(the books) And a second book joins under Group and Generate: Make It Stick.
+
+(the rows) The book has a frame I built myself. And I've already been wrong about Distillation once, and fixed it. That's the soil the coach needs. Now it can push.
+-->
+
 
 ---
 status: in-progress
 ---
 
-# One loop, <span class="hot">seven</span> steps
+# The loop inside the <span class="hot">climb</span>
 
 <div class="kt-center" style="margin-top: 14px">
   <CoachLoop />
 </div>
 
 <!--
-⏱ 0:35 · script: [STEPS] One loop, *seven* steps | the README loop as a ring, read · distill · synthesize ticked, the ladder under review [^ladder] ⏱ 35s
+⏱ 0:50 · script: [STEPS] The loop inside the *climb* | the README loop with the climb's seven steps numbered on it: 1 read (+ distill, synthesize the bridge) ticked; 2 group, 3 generate before the loop; spar · judge · study = 4 Retrieve; 5 elaborate after a round; review = 6 Space; 7 teach after a spaced pass; the ladder under review [^ladder] ⏱ 50s
 
-Read, distill, synthesize: you just saw those. (the left zone) That half lives in the knowledge base, my second brain: (the logos) Obsidian, where I read and mark, on a kb-template vault.
+(the left zone) Read, distill, and the bridge, synthesize: you just saw those. That half lives in the knowledge base, my second brain: (the logos) Obsidian, where I read and mark, on a kb-template vault.
 
-(the right zone) Then the coach's half, ai-coach. Spar, offline, with Gemma. Judge, online, with Argon. Study what you missed. And come back when it's due: review sends me back to spar.
+(the coach) Everything else is ai-coach, and every step of the climb has its place. (2) Group: once a book has its concepts, I sort them into layers I name myself. (3) Generate: before I spar a concept for the first time, I guess what it says from its title alone, then check.
 
-The schedule: fail, and it's back tomorrow. Pass the sparring partner, three days. Pass the judge, and the gap grows: seven days, fourteen, thirty, up to a year.
+(the ring) Then the loop. Spar, offline, with Gemma. Judge, online, with Argon. Study what you missed. (Retrieve) Those three together are step four: Retrieve, from memory, note closed.
+
+(5) After a round, elaborate: why does it work, what does it link to, where would I use it. (6) And review: the idea comes back when it's due, and I spar it again after a gap. That's Space.
+
+(7) Pass a spaced review, and the last step opens: teach it, to a student who gets it wrong.
+
+(the tags) And under each step, who does the work. Read, distill, review: no AI, just code. Synthesize, group, generate, teach: Gemma, offline, as a plain helper. Only spar, study and elaborate speak in the note's style, feynman, socratic, cornell or devil. And the judge, Argon, online, grades by the style I sparred in.
+
+(the ladder) The schedule: fail, and it's back tomorrow. A new idea comes back tomorrow too, even when I pass. After that, the sparring partner's pass gives three days. Pass the judge, and the gap grows: seven days, fourteen, thirty, up to a year.
 -->
 
----
-status: in-progress
----
-
-# The application <span class="hot">flow</span>
-
-<div class="kt-center" style="margin-top: 33px">
-  <ArchFlow />
-</div>
-
-<style>
-/* two dots (2 × 24px) higher than the other headlines, so the diagram can grow */
-h1 { margin-top: -48px; }
-</style>
-
-<!--
-⏱ 1:10 · script: [ARCH #arch] The application *flow* | one real session, step by step (ArchFlow) ⏱ 70s
-Paced to this narration (S in ArchFlow.vue): the map builds in the first 8 s; coach spar 0:08, Gemma 4B asks 0:15, weak answer and Tier 1 failed 0:21, asks again 0:27, good answer and Tier 1 completed 0:31, coach judge and Tier 2 failed 0:37, coach study 0:46, coach judge again and Tier 2 passed 0:54, the lock 1:03. Each actor keeps its number badge.
-
-(the map) My laptop, offline. On the left, my second brain: my notes, in Obsidian. Under it, kb-template's vault server: the only way in. In the middle, ai-coach. And in the cloud, Gemini 4 Argon. Still ai-coach: the judge is just another adapter.
-
-Let's run one session.
-
-(1, the terminal types, the diamond travels) I type coach spar. The coach never opens a file itself: it asks kb-template, over MCP, for a concept note. Here it comes.
-
-(2, Gemma 4B glows) The coach hands the concept to Gemma 4B, on Ollama. The small model creates the question, (the "?") and asks me.
-
-(3, the weak answer goes down, 12B glows red, ✕) My first answer is weak. Gemma 12B, the bigger model, checks it against my core assertions: Tier 1, failed.
-
-(4B asks again, the good answer, ✓) It asks again. This time I explain the mechanism: Tier 1, completed.
-
-(4, coach judge, red out) Then, online: coach judge. My answer and my claims cross the boundary to Argon. (red back) And Argon finds what the small models missed: Tier 2, failed. A verdict, and the gaps.
-
-(5, coach study, Gemma 4B turns study partner) So, coach study. Gemma 4B, back on my laptop, becomes my study partner. (hint, my explanation, twice) It gives me a hint, never the answer, and I explain it again in my words. (study · gaps closed) Gaps closed.
-
-(coach judge again, green back) Back to the judge: Tier 2, passed. (next review) And it doesn't end there: the next review is in seven days, then fourteen, thirty, up to a year.
-
-(the note, the lock) And my notes? One tries to leave. It stops at the lock. My notes stay private.
--->
 
 ---
 kicker: hexagonal architecture
@@ -94,11 +143,11 @@ status: in-progress
 
 Hexagonal, enforced by Nx.
 
-(the hexagon) In the middle, the application: the things you can do, spar, judge, study, file. Inside it, the domain: the rules of learning, including the four coaching styles, feynman, socratic, cornell and devil; more on those in a minute. It imports nothing, not even Node.
+(the hexagon) In the middle, the application: one use case per command. Read, synthesize, group, generate, spar, judge, study, elaborate, teach, and climb, which shows where each idea stands. Inside it, the domain: the rules of learning, including the four coaching styles, feynman, socratic, cornell and devil; more on those in a minute. It imports nothing, not even Node.
 
 (the cli) On the left, the driving side: the terminal and the cli, the composition root, the only place a port meets its adapter.
 
-(the adapters) On the right, the driven side. The core defines the ports, and each piece of technology plugs in: the vault over MCP, Gemma on Ollama as the sparring partner, Argon as the judge, and local state for the queue and the clock. Swapping Gemma for another model is one new adapter.
+(the adapters) On the right, the driven side. The core defines the ports, and each piece of technology plugs in: the vault over MCP, Gemma on Ollama, which plays seven parts now, the sparring partner, the synthesis partner, the student I teach and four more, Argon as the judge, and local state for the queue and the clock. Swapping Gemma for another model is one new adapter.
 
 (the red arrow) Every arrow points in. If one points out, lint fails the build.
 -->

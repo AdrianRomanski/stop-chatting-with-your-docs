@@ -9,12 +9,13 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * 3. so the notes start: they spray out of the laptop, then links draw between them, a note graph
  * 4. the graph tangles, the person beside it thinks "Organize that CHAOS using PARA"; the notes snap into
  *    the four PARA folders, P · A · R · A (Projects, Areas, Resources, Archives): "Finally Structured"
- * 5. still unsure: "How can I know that I understand it?"; the doubt turns into the idea, a lightbulb over the
- *    thought: "I Need OFFLINE Sparring Partner"
+ * 5. still unsure: "How can I know that I understand it?"; the reflex, "Just ask AI for a summary?", and
+ *    then the memory: "Wait… remember the architecture docs?" (the next slide's story)
+ * 6. the doubt turns into the idea, a lightbulb over the thought: "I Need OFFLINE Sparring Partner"
  * Sets up the structure (PARA) and the plan (CODE) of "build the brain"; the bulb pays off on
  * "Airplane mode, on". No props.
  */
-const { at } = useTimeline(12)
+const { at } = useTimeline(15)
 const poles = [0, 1, 2]
 // where the spammed notes land: x, y, rotation
 const notes = [
@@ -36,7 +37,9 @@ const para = ['P', 'A', 'R', 'A']
 const ordered = notes.map((_, i) => [columns[i % 4], 128 + Math.floor(i / 4) * 52, 0])
 const ORDER_AT = 8.4
 const DOUBT_AT = 9.8
-const IDEA_AT = 11
+const SUMMARY_AT = 11.2
+const RECALL_AT = 12.6
+const IDEA_AT = 14
 // a folder per column, drawn like ParaBuckets': tab top left, the notes sit inside
 const folder = (x: number) => `M${x - 19} 98 h14 l5 6 h19 v154 h-38z`
 // a note sits where it landed until the folders are out, then they pull it in, a few at a time
@@ -48,12 +51,12 @@ function place(i: number) {
   }
 }
 const thought = computed(() =>
-  at(IDEA_AT) ? 'idea' : at(DOUBT_AT) ? 'doubt' : at(ORDER_AT) ? 'plan' : 'pile')
+  at(IDEA_AT) ? 'idea' : at(RECALL_AT) ? 'recall' : at(SUMMARY_AT) ? 'summary' : at(DOUBT_AT) ? 'doubt' : at(ORDER_AT) ? 'plan' : 'pile')
 </script>
 
 <template>
   <svg class="kt-train" viewBox="0 0 880 340" role="img"
-    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. So the notes pile up into a tangle: organize that chaos using PARA. They file into the four PARA folders, Projects, Areas, Resources, Archives: finally structured. How can I know that I understand it? An idea lights up: I need an offline sparring partner.">
+    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. So the notes pile up into a tangle: organize that chaos using PARA. They file into the four PARA folders, Projects, Areas, Resources, Archives: finally structured. How can I know that I understand it? Just ask AI for a summary? Wait, remember the architecture docs? An idea lights up: I need an offline sparring partner.">
     <defs>
       <clipPath id="kt-train-window">
         <rect x="20" y="40" width="250" height="200" rx="30" />
@@ -153,8 +156,8 @@ const thought = computed(() =>
 
       <!-- the folder labels: P · A · R · A -->
       <g v-for="(x, i) in columns" :key="`c${i}`" class="kt-train__step" :class="{ 'is-on': at(ORDER_AT + i * 0.08) }">
-        <circle :cx="x" cy="76" r="14" class="kt-train__stepdot" :class="{ 'is-cold': i === 3 }" />
-        <text :x="x" y="82" text-anchor="middle" class="kt-train__steptext" :class="{ 'is-cold': i === 3 }">{{ para[i] }}</text>
+        <circle :cx="x" cy="76" r="14" class="kt-train__stepdot" />
+        <text :x="x" y="82" text-anchor="middle" class="kt-train__steptext">{{ para[i] }}</text>
       </g>
     </g>
 
@@ -184,6 +187,17 @@ const thought = computed(() =>
             <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">know that I</text>
             <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">understand</text>
             <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">it<tspan class="kt-train__q">?</tspan></text>
+          </g>
+          <g class="kt-train__word is-summary">
+            <text x="809" y="157" text-anchor="middle" class="kt-train__thinktext">Just ask AI</text>
+            <text x="809" y="177" text-anchor="middle" class="kt-train__thinktext">for a</text>
+            <text x="809" y="197" text-anchor="middle" class="kt-train__thinktext">summary<tspan class="kt-train__q">?</tspan></text>
+          </g>
+          <g class="kt-train__word is-recall">
+            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">Wait…</text>
+            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">remember the</text>
+            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext kt-train__q">architecture</text>
+            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">docs<tspan class="kt-train__q">?</tspan></text>
           </g>
           <g class="kt-train__word is-idea">
             <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">I Need</text>
@@ -322,7 +336,7 @@ const thought = computed(() =>
 .kt-train__notebody.is-messy { animation: kt-train-jitter 0.22s linear infinite; }
 @keyframes kt-train-jitter { 25% { transform: translate(-1.5px, 1px) rotate(-3deg); } 75% { transform: translate(1.5px, -1px) rotate(3deg); } }
 
-/* the structure: four PARA folders, Archives cold like ParaBuckets', a letter over each */
+/* the structure: four PARA folders, Archives cold like ParaBuckets', a green letter over each */
 .kt-train__folder {
   opacity: 0;
   fill: var(--kt-tint-primary);
@@ -339,9 +353,7 @@ const thought = computed(() =>
 .kt-train__step { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.5); transition: opacity 0.2s, transform 0.35s cubic-bezier(0.3, 1.8, 0.5, 1); }
 .kt-train__step.is-on { opacity: 1; transform: none; }
 .kt-train__stepdot { fill: var(--kt-tint-success, var(--kt-tint-primary)); stroke: var(--kt-good); stroke-width: 2.5; }
-.kt-train__stepdot.is-cold { fill: var(--kt-tint-neutral); stroke: var(--kt-line-strong); }
 .kt-train__steptext { font: 800 17px var(--font-family-mono); fill: var(--kt-good); }
-.kt-train__steptext.is-cold { fill: var(--kt-muted); }
 
 /* the person, unsure */
 .kt-train__person { fill: var(--kt-tint-neutral); stroke: var(--kt-c-primary-soft); stroke-width: 2.5; }
@@ -351,7 +363,7 @@ const thought = computed(() =>
 .kt-train__think.is-idea .kt-train__thought { stroke: var(--kt-warn); fill: color-mix(in srgb, var(--kt-warn) 12%, var(--kt-bg)); }
 .kt-train__cloud { transform-box: fill-box; transform-origin: 40% 100%; }
 .kt-train__think.is-plan .kt-train__thought { stroke: var(--kt-good); fill: color-mix(in srgb, var(--kt-good) 12%, var(--kt-bg)); }
-.kt-train__think.is-on:is(.is-pile, .is-doubt) .kt-train__cloud { animation: kt-train-wobble 1.6s ease-in-out infinite; }
+.kt-train__think.is-on:is(.is-pile, .is-doubt, .is-recall) .kt-train__cloud { animation: kt-train-wobble 1.6s ease-in-out infinite; }
 @keyframes kt-train-wobble { 25% { transform: rotate(-2.5deg); } 75% { transform: rotate(2.5deg); } }
 .kt-train__thinktext { font: 700 15px var(--font-family-mono); fill: var(--kt-heading); }
 .kt-train__q { fill: var(--kt-hot); font-weight: 900; }
@@ -360,6 +372,8 @@ const thought = computed(() =>
 .kt-train__think.is-pile .kt-train__word.is-pile,
 .kt-train__think.is-plan .kt-train__word.is-plan,
 .kt-train__think.is-doubt .kt-train__word.is-doubt,
+.kt-train__think.is-summary .kt-train__word.is-summary,
+.kt-train__think.is-recall .kt-train__word.is-recall,
 .kt-train__think.is-idea .kt-train__word.is-idea { opacity: 1; transition: opacity 0.2s 0.14s; }
 
 /* the idea */

@@ -9,7 +9,8 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * the book's text lands in 3.Resources/0.Raw, reference only and never sparred, and my notes link
  * to it. Bottom row, the book's steps in kb-template, coloured as the graph view colours them
  * (GraphDistill): read · notes · bold · highlight · summary, then synthesize into a concept note,
- * the diamond, the only thing that is sparred.
+ * the diamond, the only thing that is sparred. Over the five steps, a blue bracket: climb step 1, Read (blue,
+ * Building a Second Brain, as on ClimbCheckpoint); under synthesize, "bridge" (hot, as there).
  */
 const { at } = useTimeline(7.6)
 const uid = useId()
@@ -28,7 +29,7 @@ const stepX = (i: number) => 64 + i * 128
 
 <template>
   <svg class="kt-rflow" viewBox="0 0 900 340" role="img"
-    aria-label="While reading, what resonates goes on paper, my pick, or into the inbox, before PARA. After the last page, the book's text goes to 3.Resources/0.Raw, reference only and never sparred, and my notes link to it. In kb-template the book moves through read, notes, bold, highlight and summary, then I synthesize it into a concept note, the only thing the coach spars.">
+    aria-label="Climb step 1, Read. While reading, what resonates goes on paper, my pick, or into the inbox, before PARA. After the last page, the book's text goes to 3.Resources/0.Raw, reference only and never sparred, and my notes link to it. In kb-template the book moves through read, notes, bold, highlight and summary, then I synthesize it into a concept note, the only thing the coach spars.">
     <defs>
       <marker :id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M0 0 L10 5 L0 10 z" class="kt-rflow__head" />
@@ -120,6 +121,12 @@ const stepX = (i: number) => 64 + i * 128
       <text :x="stepX(i)" y="252" text-anchor="middle" class="kt-rflow__num">{{ s.n }}</text>
       <text :x="stepX(i)" y="292" text-anchor="middle" class="kt-rflow__name">{{ s.name }}</text>
     </g>
+    <!-- the climb: all of this is step 1, Read; synthesize is the bridge out of it -->
+    <g class="kt-rflow__part" :class="{ 'is-on': at(6.2) }">
+      <path :d="`M${stepX(0) - 22} 216 V 210 H ${stepX(4) + 22} V 216`" class="kt-rflow__climb" />
+      <text :x="(stepX(0) + stepX(4)) / 2" y="202" text-anchor="middle" class="kt-rflow__climbtext">climb step 1 · Read</text>
+    </g>
+    <text :x="(stepX(4) + 772) / 2" y="266" text-anchor="middle" class="kt-rflow__bridge kt-rflow__part" :class="{ 'is-on': at(6.6) }">bridge</text>
     <text :x="(stepX(2) + stepX(4)) / 2" y="316" text-anchor="middle" class="kt-rflow__tag kt-rflow__part"
       :class="{ 'is-on': at(6.1) }">progressive summarization</text>
 
@@ -277,4 +284,7 @@ const stepX = (i: number) => 64 + i * 128
 @media (prefers-reduced-motion: reduce) {
   .kt-rflow__heart.is-on, .kt-rflow__pulse.is-on { animation: none; }
 }
+.kt-rflow__climb { fill: none; stroke: var(--kt-info); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.kt-rflow__climbtext { font: 800 13px var(--font-family-mono); fill: var(--kt-info); letter-spacing: 0.04em; }
+.kt-rflow__bridge { font: 800 11px var(--font-family-mono); fill: var(--kt-hot); letter-spacing: 0.06em; }
 </style>
