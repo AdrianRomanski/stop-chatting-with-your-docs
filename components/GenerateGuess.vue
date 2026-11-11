@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue'
+import { computed } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
@@ -8,27 +8,29 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * one by one in a bar on top: title only → guess → reveal → mark → check.
  * 1. The concept note, on the right, is closed: only its title shows; its Reveal button is grey,
  *    "guess first" (reveal() before submit() throws).
- * 2. My guess types into the pad on the left, one line per idea; a counter runs to 16 words (10 at
- *    least, or /idk); "attempted ✓" is stamped.
+ * 2. My guess types into the pad on the left, one line per idea; "attempted ✓" is
+ *    stamped, yellow; once every mark holds it turns to "passed ✓", green.
  * 3. Reveal turns on and opens the note: three of its real core assertions (as on ConceptNote).
- * 4. I mark each one against my guess, a line from the guess's line to it: got it, wrong, got it. The
- *    wrong one needs a correction in my own words (no 6 words copied from the assertion): it types in.
- * 5. Gemma 12B checks every "got it" against the words of my guess (coveredAssertions): both hold, ✓
- *    under the phrase. An unsupported "got it" would turn into "missed".
- * Then: guess before the reveal ✓ (attemptCameFirst) · not graded · ✓ Generate on the climb · back tomorrow.
+ * 4. I mark each one against my guess: got it, wrong, got it.
+ * 5. Gemma 12B, in a box under the assertions, checks every mark: ✓, ✗ on the wrong one, ✓. Then my
+ *    correction types in, in my own words (no 6 words copied from the assertion), and Gemma checks
+ *    again: it holds, ✗ turns to ✓ and wrong to got it, red to green.
  * No props.
  */
 const { t, at } = useTimeline(14)
-const uid = useId()
-const id = (name: string) => `kt-gen-${name}-${uid}`
 
-const B = { title: 0.2, guess: 1.0, reveal: 5.0, mark: 6.9, check: 10.9, done: 12.4 }
+const B = { title: 0.2, guess: 1.0, reveal: 5.0, mark: 6.9 }
+// I mark all three; Gemma checks them: one fails. Then my correction, and Gemma checks it again.
+const MARKED = [B.mark + 0.2, B.mark + 0.8, B.mark + 1.4]
+const CHECK = B.mark + 2.1
+const FIX: [number, number] = [CHECK + 1.4, CHECK + 3.4]
+const RECHECK = FIX[1] + 0.5
 const beats = [
   { n: 1, name: 'title only', at: B.title },
   { n: 2, name: 'guess', at: B.guess },
   { n: 3, name: 'reveal', at: B.reveal },
   { n: 4, name: 'mark', at: B.mark },
-  { n: 5, name: 'check', at: B.check },
+  { n: 5, name: 'check', at: CHECK },
 ].map((b, i) => ({ ...b, x: i * 176 }))
 const beat = computed(() => beats.reduce((n, b) => (at(b.at) ? b.n : n), 0))
 
@@ -47,40 +49,33 @@ const typed = computed(() => {
     return s
   })
 })
-const words = computed(() => typed.value.join(' ').trim().split(/\s+/).filter(Boolean).length)
 const ATTEMPT = TYPE[1] + 0.3
 
 // the note, on the right
 const NX = 488
 const NW = 392
 const rows = [
-  { text: ['The learner identifies interesting', 'text by bolding it.'], mark: 'got', check: true },
-  { text: ['The learner then highlights portions', 'of the bolded text.'], mark: 'wrong', check: false },
-  { text: ['The learner creates a fourth layer', 'consisting of a summary.'], mark: 'got', check: true },
+  { text: ['The learner identifies interesting', 'text by bolding it.'], mark: 'got' },
+  { text: ['The learner then highlights portions', 'of the bolded text.'], mark: 'wrong' },
+  { text: ['The learner creates a fourth layer', 'consisting of a summary.'], mark: 'got' },
 ].map((r, i) => ({
   ...r,
   i,
   y: 98 + i * 64,
   in: B.reveal + 0.7 + i * 0.3,
-  marked: B.mark + 0.2 + i * 0.6,
-  checked: B.check + 0.4 + i * 0.4,
+  marked: MARKED[i],
+  checked: CHECK + 0.3 + i * 0.3,
 }))
+// the second check passes the correction: the wrong one becomes got it
+const PASSED = RECHECK + 0.4
+const state = (r: { mark: string }) => (r.mark === 'wrong' && at(PASSED) ? 'got' : r.mark)
 const fix = 'Only parts of the bold get highlighted, not whole paragraphs.'
-const FIX: [number, number] = [rows[2].marked + 0.5, rows[2].marked + 2.5]
 const fixTyped = computed(() => fix.slice(0, Math.round(fix.length * Math.min(1, Math.max(0, (t.value - FIX[0]) / (FIX[1] - FIX[0]))))))
-// where a guess line ends, roughly (13.5px sans)
-const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
 </script>
 
 <template>
-  <svg class="kt-gen" viewBox="0 0 880 410" role="img"
-    aria-label="Generate, with coach generate on the Distillation concept note, in five beats. One, title only: the note is closed, and its reveal button waits: guess first. Two, guess: I type, before I look: I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Sixteen words, ten at least. Three, reveal: the note opens on three of its core assertions. Four, mark: I mark each one against my guess. Bolding interesting text: got it. Highlighting portions of the bold: wrong, and I correct it in my own words: only parts of the bold get highlighted, not whole paragraphs. A summary as a fourth layer: got it. Five, check: Gemma 12B checks each got it against the words of my guess; both hold. The guess came before the reveal. Not graded. Generate ticks on the climb, and the idea comes back tomorrow.">
-    <defs>
-      <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-        <path d="M1 1 L 9 5 L 1 9" class="kt-gen__head" />
-      </marker>
-    </defs>
-
+  <svg class="kt-gen" viewBox="0 0 880 356" role="img"
+    aria-label="Generate, with coach generate on the Distillation concept note, in five beats. One, title only: the note is closed, and its reveal button waits: guess first. Two, guess: I type, before I look: I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Three, reveal: the note opens on three of its core assertions. Four, mark: I mark each one against my guess. Bolding interesting text: got it. Highlighting portions of the bold: wrong, and I correct it in my own words: only parts of the bold get highlighted, not whole paragraphs. A summary as a fourth layer: got it. Five, check: Gemma 12B checks every mark against my guess; the wrong one fails. Then I type my correction, Gemma checks again, wrong turns into got it, and attempted turns into passed.">
     <!-- the five beats -->
     <g v-for="b in beats" :key="b.n" class="kt-gen__beat" :class="{ 'is-on': beat >= b.n, 'is-now': beat === b.n }">
       <rect :x="b.x" y="0" width="168" height="30" rx="15" class="kt-gen__beatbox" />
@@ -111,57 +106,44 @@ const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
     </g>
     <!-- open: the core assertions, marked -->
     <g v-for="r in rows" :key="r.text[0]" class="kt-gen__row" :class="{ 'is-on': at(r.in) }">
-      <rect :x="NX + 12" :y="r.y" :width="NW - 24" height="52" rx="9" class="kt-gen__arow" :class="{ [`is-${r.mark}`]: at(r.marked) }" />
+      <rect :x="NX + 12" :y="r.y" :width="NW - 24" height="52" rx="9" class="kt-gen__arow" :class="{ [`is-${state(r)}`]: at(r.marked) }" />
       <text v-for="(l, j) in r.text" :key="l" :x="NX + 24" :y="r.y + 22 + j * 17" class="kt-gen__atext">{{ l }}</text>
       <g class="kt-gen__fade" :class="{ 'is-on': at(r.marked) }">
-        <rect :x="NX + NW - 94" :y="r.y + 16" width="72" height="20" rx="10" class="kt-gen__mark" :class="`is-${r.mark}`" />
-        <text :x="NX + NW - 58" :y="r.y + 30" text-anchor="middle" class="kt-gen__marktext">{{ r.mark === 'got' ? '✓ got it' : '✗ wrong' }}</text>
+        <rect :x="NX + NW - 94" :y="r.y + 16" width="72" height="20" rx="10" class="kt-gen__mark" :class="`is-${state(r)}`" />
+        <text :x="NX + NW - 58" :y="r.y + 30" text-anchor="middle" class="kt-gen__marktext">{{ state(r) === 'got' ? '✓ got it' : '✗ wrong' }}</text>
       </g>
     </g>
 
     <!-- ── my guess ── -->
     <g class="kt-gen__fade" :class="{ 'is-on': at(B.guess) }">
-      <text :x="GX" y="62" class="kt-gen__label">my guess · before I look</text>
       <rect :x="GX" y="72" width="440" height="142" rx="12" class="kt-gen__pad" :class="{ 'is-done': at(ATTEMPT) }" />
-      <text :x="GX + 16" y="202" class="kt-gen__small" :class="{ 'is-ok': words >= 10 }">{{ words }} words · 10 at least</text>
     </g>
     <text v-for="(l, i) in typed" :key="i" :x="GX + 16" :y="GY + i * LINE" class="kt-gen__guess">{{ l }}</text>
     <g :transform="`translate(${GX + 370} 84)`">
-      <g class="kt-gen__stamp" :class="{ 'is-on': at(ATTEMPT) }">
+      <g class="kt-gen__stamp" :class="{ 'is-on': at(ATTEMPT), 'is-passed': at(PASSED) }">
         <rect x="-54" y="0" width="108" height="22" rx="5" class="kt-gen__stampbox" />
-        <text y="15.5" text-anchor="middle" class="kt-gen__stamptext">attempted ✓</text>
+        <text y="15.5" text-anchor="middle" class="kt-gen__stamptext">{{ at(PASSED) ? 'passed ✓' : 'attempted ✓' }}</text>
       </g>
     </g>
 
-    <!-- mark: a line from each guess line to its assertion -->
-    <path v-for="r in rows" :key="`l${r.i}`" :d="`M${lineEnd(r.i) + 6} ${GY - 5 + r.i * LINE} C ${NX - 40} ${GY - 5 + r.i * LINE}, ${NX - 50} ${r.y + 26}, ${NX + 8} ${r.y + 26}`"
-      class="kt-gen__link" :class="[`is-${r.mark}`, { 'is-on': at(r.marked) }]" :marker-end="`url(#${id('head')})`" />
-
     <!-- the correction, in my own words -->
     <g class="kt-gen__fade" :class="{ 'is-on': at(FIX[0] - 0.2) }">
-      <text :x="GX" y="240" class="kt-gen__label is-hot">wrong → my correction, in my own words</text>
-      <rect :x="GX" y="248" width="440" height="38" rx="10" class="kt-gen__fixbox" />
-      <text :x="GX + 14" y="272" class="kt-gen__fix">{{ fixTyped }}</text>
+      <rect :x="GX" y="232" width="440" height="38" rx="10" class="kt-gen__fixbox" />
+      <text :x="GX + 14" y="256" class="kt-gen__fix">{{ fixTyped }}</text>
     </g>
 
-    <!-- check: Gemma 12B, each got it against my words -->
-    <g class="kt-gen__fade" :class="{ 'is-on': at(B.check) }">
-      <rect :x="GX" y="300" width="440" height="56" rx="10" class="kt-gen__checkbox" />
-      <image href="/images/logos/gemma-mark.png" :x="GX + 14" y="310" width="18" height="18" />
-      <text :x="GX + 40" y="324" class="kt-gen__checktitle">Gemma 12B checks each “got it”</text>
-      <text :x="GX + 40" y="343" class="kt-gen__small">is it in my guess? if not, it becomes “missed”</text>
+    <!-- check: Gemma 12B, in the note under the assertions -->
+    <g class="kt-gen__fade" :class="{ 'is-on': at(CHECK) }">
+      <rect :x="NX + 12" y="290" :width="NW - 24" height="48" rx="10" class="kt-gen__checkbox" :class="{ 'is-again': at(RECHECK) }" />
+      <image href="/images/logos/gemma-mark.png" :x="NX + 22" y="305" width="18" height="18" />
+      <text :x="NX + 50" y="310" class="kt-gen__checktitle">{{ at(RECHECK) ? 'Gemma 12B checks again' : 'Gemma 12B checks every mark' }}</text>
+      <text :x="NX + 50" y="327" class="kt-gen__small">{{ at(RECHECK) ? 'with my correction' : 'against my guess' }}</text>
     </g>
-    <g v-for="r in rows.filter(r => r.check)" :key="`c${r.i}`" class="kt-gen__fade" :class="{ 'is-on': at(r.checked) }">
-      <path :d="`M${GX + 16} ${GY + 6 + r.i * LINE} H ${lineEnd(r.i)}`" class="kt-gen__said" />
-      <circle :cx="NX + NW - 104" :cy="r.y + 26" r="8" class="kt-gen__ok" />
-      <path :d="`M${NX + NW - 108} ${r.y + 26} l 3 3 5 -6`" class="kt-gen__oktick" />
-    </g>
-
-    <!-- the outcome -->
-    <g class="kt-gen__fade" :class="{ 'is-on': at(B.done) }">
-      <text x="0" y="392" class="kt-gen__done">✓ guess before the reveal</text>
-      <text x="440" y="392" text-anchor="middle" class="kt-gen__small">not graded</text>
-      <text x="880" y="392" text-anchor="end" class="kt-gen__done">✓ Generate on the climb · back tomorrow</text>
+    <!-- Gemma's result on each row: ✓, or ✗ on the wrong one until the second check -->
+    <g v-for="r in rows" :key="`c${r.i}`" class="kt-gen__fade" :class="{ 'is-on': at(r.checked) }">
+      <circle :cx="NX + NW - 104" :cy="r.y + 26" r="8" class="kt-gen__ok" :class="{ 'is-fail': state(r) === 'wrong' }" />
+      <path v-if="state(r) === 'got'" :d="`M${NX + NW - 108} ${r.y + 26} l 3 3 5 -6`" class="kt-gen__oktick" />
+      <path v-else :d="`M${NX + NW - 107} ${r.y + 23} l 6 6 M ${NX + NW - 101} ${r.y + 23} l -6 6`" class="kt-gen__oktick" />
     </g>
   </svg>
 </template>
@@ -181,10 +163,7 @@ const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
 .kt-gen__beatnum { font: 800 11px var(--font-family-mono); fill: var(--kt-bg); }
 .kt-gen__beatname { font: 700 13px var(--font-family-mono); fill: var(--kt-heading); }
 
-.kt-gen__label { font: 700 11.5px var(--font-family-mono); fill: var(--kt-muted); letter-spacing: 0.02em; }
-.kt-gen__label.is-hot { fill: var(--kt-hot); }
 .kt-gen__small { font: 600 11px var(--font-family-mono); fill: var(--kt-muted); }
-.kt-gen__small.is-ok { fill: var(--kt-good); }
 
 /* the note */
 .kt-gen__note { fill: var(--kt-code-bg); stroke: var(--kt-line-strong); stroke-width: 1.8; transition: stroke 0.4s; }
@@ -208,6 +187,7 @@ const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
 .kt-gen__arow.is-got { stroke: var(--kt-good); }
 .kt-gen__arow.is-wrong { stroke: var(--kt-bad); }
 .kt-gen__atext { font-size: 13px; font-weight: 600; fill: var(--kt-fg); }
+.kt-gen__mark { transition: fill 0.3s; }
 .kt-gen__mark.is-got { fill: var(--kt-good); }
 .kt-gen__mark.is-wrong { fill: var(--kt-bad); }
 .kt-gen__marktext { font: 800 11px var(--font-family-mono); fill: var(--kt-bg); }
@@ -218,19 +198,16 @@ const lineEnd = (i: number) => GX + 16 + lines[i].length * 7.7
 .kt-gen__guess { font-size: 15px; font-weight: 600; fill: var(--kt-heading); }
 .kt-gen__stamp { opacity: 0; transform: scale(1.4); transform-box: fill-box; transform-origin: center; transition: opacity 0.25s, transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1); }
 .kt-gen__stamp.is-on { opacity: 1; transform: none; }
-.kt-gen__stampbox { fill: none; stroke: var(--kt-good); stroke-width: 1.6; }
-.kt-gen__stamptext { font: 800 11px var(--font-family-mono); fill: var(--kt-good); }
-.kt-gen__link { fill: none; stroke-width: 2; stroke-dasharray: 5 4; opacity: 0; transition: opacity 0.35s; }
-.kt-gen__link.is-on { opacity: 1; }
-.kt-gen__link.is-got { stroke: var(--kt-good); }
-.kt-gen__link.is-wrong { stroke: var(--kt-bad); }
-.kt-gen__head { fill: none; stroke: var(--kt-line-strong); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.kt-gen__stampbox { fill: none; stroke: var(--kt-warn); stroke-width: 1.6; transition: stroke 0.3s; }
+.kt-gen__stamptext { font: 800 11px var(--font-family-mono); fill: var(--kt-warn); transition: fill 0.3s; }
+.kt-gen__stamp.is-passed .kt-gen__stampbox { stroke: var(--kt-good); }
+.kt-gen__stamp.is-passed .kt-gen__stamptext { fill: var(--kt-good); }
 .kt-gen__fixbox { fill: color-mix(in srgb, var(--kt-hot) 10%, var(--kt-bg)); stroke: var(--kt-hot); stroke-width: 1.5; }
 .kt-gen__fix { font-size: 12.5px; font-weight: 700; fill: var(--kt-heading); }
-.kt-gen__checkbox { fill: var(--kt-code-bg); stroke: var(--kt-c-primary); stroke-width: 1.5; }
-.kt-gen__checktitle { font-size: 14px; font-weight: 800; fill: var(--kt-heading); }
-.kt-gen__said { stroke: var(--kt-good); stroke-width: 3; stroke-linecap: round; }
-.kt-gen__ok { fill: var(--kt-good); }
+.kt-gen__checkbox { fill: var(--kt-code-bg); stroke: var(--kt-c-primary); stroke-width: 1.5; transition: stroke 0.3s; }
+.kt-gen__checkbox.is-again { stroke: var(--kt-good); }
+.kt-gen__checktitle { font-size: 13.5px; font-weight: 800; fill: var(--kt-heading); }
+.kt-gen__ok { fill: var(--kt-good); transition: fill 0.3s; }
+.kt-gen__ok.is-fail { fill: var(--kt-bad); }
 .kt-gen__oktick { fill: none; stroke: var(--kt-bg); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.kt-gen__done { font: 800 13px var(--font-family-mono); fill: var(--kt-good); }
 </style>

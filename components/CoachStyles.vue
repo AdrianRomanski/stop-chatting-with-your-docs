@@ -10,9 +10,11 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * turns glowing, round and round (CSS, after the reveal). Bottom: how
  * a style is picked (--style, the note's frontmatter, the config, or Gemma reads the note).
  * - `compact`: the four cards only, still taking turns; the recap after the coach demo.
+ * - `still`: no motion at all: everything shown at once, no turns.
  */
-withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
-const { at } = useTimeline(5.2)
+const props = withDefaults(defineProps<{ compact?: boolean; still?: boolean }>(), { compact: false, still: false })
+const { at: tick } = useTimeline(5.2, { enabled: !props.still })
+const at = (s: number) => props.still || tick(s)
 
 const styles = [
   {
@@ -44,7 +46,7 @@ const styles = [
 </script>
 
 <template>
-  <div class="kt-styles" :class="{ 'is-compact': compact, 'is-cycling': at(compact ? 1.6 : 3.4) }" role="img"
+  <div class="kt-styles" :class="{ 'is-compact': compact, 'is-cycling': !still && at(compact ? 1.6 : 3.4), 'is-still': still }" role="img"
     aria-label="One local model, Gemma 4B on Ollama, offline, questions you in four styles, each shown with one question and answer on the Distill chapter of Building a Second Brain. Feynman: explain it in plain words, no jargon. Socratic: defend a claim against a counterexample. Cornell: state the author's thesis and how they argue it. Devil: name failure modes, trade-offs, where it breaks. The style comes from --style, the note's frontmatter, the config, or Gemma picks it by reading the note.">
     <div class="kt-styles__row">
       <div v-for="(s, i) in styles" :key="s.name" class="kt-styles__card" :class="[`is-${s.name}`, { 'is-on': at(0.6 + i * 0.5) }]"
@@ -204,4 +206,6 @@ const styles = [
 
 /* compact: the recap after the coach demo */
 .kt-styles.is-compact .kt-styles__card { min-height: 0; }
+.kt-styles.is-still .kt-styles__card,
+.kt-styles.is-still .kt-styles__part { transition: none; }
 </style>

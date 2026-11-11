@@ -1,7 +1,6 @@
 ---
 surface: accent-1
 align: center
-kicker: phase 2
 status: in-progress
 ---
 
@@ -15,8 +14,6 @@ status: in-progress
 ⏱ 0:08 · script: [PHASE] Build the *brain*
 -->
 
----
-kicker: "before the first note"
 ---
 
 # The first three <span class="hot">mistakes</span>
@@ -51,33 +48,61 @@ Emotion and intuition, not logic. If it resonates, keep it.
 
 
 ---
-kicker: "Building a Second Brain · Tiago Forte"
----
 
 # The <span class="hot">CODE</span> pipeline
 
-<div class="kt-center" style="margin-top: 22px">
+<!-- the boxes and the book they come from, centered in the space under the headline -->
+<!-- -6px: collapses with the headline's 26px margin into 20px, so the block sits centered -->
+<div class="kt-center" style="margin-top: -6px">
   <SecondBrain />
 </div>
+
+<div class="kt-basb">
+  <img src="/images/books/building-a-second-brain.webp" alt="Building a Second Brain, the book cover">
+  <div>
+    <div class="kt-basb__from">from the book</div>
+    <div class="kt-basb__title">Building a Second Brain</div>
+    <div class="kt-basb__by">Tiago Forte</div>
+  </div>
+</div>
+
+<style>
+.kt-basb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+.kt-basb img {
+  height: 74px;
+  border-radius: 3px 6px 6px 3px;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--kt-bg) 70%, transparent), 0 0 0 1px var(--kt-line);
+}
+.kt-basb__from { font: 12px var(--font-family-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--kt-subtle); }
+.kt-basb__title { margin-top: 2px; font-size: 20px; font-weight: 800; color: var(--kt-heading); }
+.kt-basb__by { font-size: 15px; color: var(--kt-muted); }
+</style>
 
 <!--
 ⏱ 0:25 · script: [PIPELINE SecondBrain "Building a Second Brain · Tiago Forte"] The *CODE* pipeline ⏱ 25s
 
-Before we push anything, we need something to push from. Tiago Forte calls it a Second Brain, and his rule is simple: a note-taking system is only useful if it helps you ship.
+Before we push anything, we need something to push from. Tiago Forte calls it a Second Brain, in his book Building a Second Brain (the cover), and his rule is simple: a note-taking system is only useful if it helps you ship.
 
-It runs as a pipeline called CODE: Capture, Organize, Distill, Express. (cards appear)
+It runs as a pipeline called CODE: Capture, Organize, Distill, Express.
 
 Let's take it one letter at a time, and follow one note all the way through. You already know that note: it's the one behind mistake three.
 -->
 
 ---
-kicker: "C · Capture"
 class: kt-code-step
 ---
 
+<SecondBrain step="capture" />
+
 # Keep what <span class="hot">resonates</span>
 
-<div class="kt-center" style="margin-top: 22px">
+<div class="kt-center" style="margin-top: 0; zoom: 0.92">
   <CaptureResonates />
 </div>
 
@@ -94,13 +119,14 @@ So I pick up a pen. (the paper slides in) And I write it out, by hand. Not the w
 -->
 
 ---
-kicker: "O · Organize with PARA"
 class: kt-code-step
 ---
 
+<SecondBrain step="organize" />
+
 # File by <span class="hot">actionability</span>, not topic
 
-<div class="kt-center" style="margin-top: 22px">
+<div class="kt-center" style="margin-top: 14px">
   <OrganizeFlow />
 </div>
 
@@ -125,13 +151,38 @@ Forte's one question: "In which project will this be most useful?" Not where it 
 -->
 
 ---
-kicker: "D · Distill"
+align: center
+---
+
+<h1 class="s">“We only know<br>what we <span class="hot">make</span>”</h1>
+
+<div class="kt-quote-by">— Giambattista Vico</div>
+
+<div class="kt-center" style="margin-top: 18px">
+  <ConsumeCreate />
+</div>
+
+<!--
+⏱ 0:25 · script: [STAGE ConsumeCreate "from consuming to creating"] “We only know / what we *make*” ⏱ 25s
+
+Forte's whole book points one way. Chapter 3: "shift as much of your time and effort as possible from consuming to creating."
+
+He splits CODE in two halves. Capture and Organize are divergence: we open up, collect, take things in. (inputs flow into the brain) Distill and Express are convergence: we narrow down, decide, make something. (the brain lights up, the whiteboard draws itself)
+
+And in chapter 7 he borrows a line from the philosopher Giambattista Vico: "We only know what we make." (pause on the quote)
+
+Not what we read. Not what an AI summarized for us. What we make. And convergence is exactly the half we're tempted to hand to an LLM: let it synthesize, let it draft, and our own brain never fires.
+-->
+
+---
 class: kt-code-step
 ---
 
+<SecondBrain step="distill" halves />
+
 # One note, four <span class="hot">layers</span>
 
-<div class="kt-center" style="margin-top: 22px">
+<div class="kt-center" style="margin-top: 6px">
   <DistillLayers />
 </div>
 
@@ -149,18 +200,19 @@ Every time I come back, I go one layer deeper, and the next time my eyes find th
 -->
 
 ---
-kicker: "E · Express"
 class: kt-code-step
 ---
 
-# You've already <span class="hot">seen</span> it
+<SecondBrain step="express" halves />
 
-<div class="kt-center" style="margin-top: 22px">
+# Notes become <span class="hot">slides</span>, posts, articles
+
+<div class="kt-center" style="margin-top: 6px">
   <ExpressAssemble />
 </div>
 
 <!--
-⏱ 0:35 · script: [STAGE ExpressAssemble "E · Express"] You've already *seen* it ⏱ 35s
+⏱ 0:35 · script: [STAGE ExpressAssemble "E · Express"] Notes become *slides*, posts, articles ⏱ 35s
 
 Express. Don't start from a blank page. Assemble what you've already distilled. Forte calls those pieces intermediate packets.
 
@@ -172,7 +224,6 @@ That slide wasn't written from scratch. It was assembled from notes. That's Expr
 -->
 
 ---
-kicker: "CODE × PARA in practice"
 hide: true
 ---
 
@@ -194,31 +245,6 @@ Organize: weekly review. Not "Productivity". Where can I use this right now? Int
 Distill: a week later, brainstorming for that project, I bold the rules, so my eyes get them in two seconds.
 
 Express: those rules plus two other notes become the kickoff doc. Ship it, and the whole project folder moves to Archives.
--->
-
----
-align: center
-kicker: from consuming to creating
----
-
-<h1 class="s">“We only know<br>what we <span class="hot">make</span>”</h1>
-
-<div class="kt-quote-by">— Giambattista Vico</div>
-
-<div class="kt-center" style="margin-top: 18px">
-  <ConsumeCreate />
-</div>
-
-<!--
-⏱ 0:25 · script: [STAGE ConsumeCreate "from consuming to creating"] “We only know / what we *make*” ⏱ 25s
-
-Forte's whole book points one way. Chapter 3: "shift as much of your time and effort as possible from consuming to creating."
-
-He splits CODE in two halves. Capture and Organize are divergence: we open up, collect, take things in. (inputs flow into the brain) Distill and Express are convergence: we narrow down, decide, make something. (the brain lights up, the whiteboard draws itself)
-
-And in chapter 7 he borrows a line from the philosopher Giambattista Vico: "We only know what we make." (pause on the quote)
-
-Not what we read. Not what an AI summarized for us. What we make. And convergence is exactly the half we're tempted to hand to an LLM: let it synthesize, let it draft, and our own brain never fires.
 -->
 
 ---

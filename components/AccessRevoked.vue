@@ -41,7 +41,7 @@ const { at } = useTimeline(14)
         <div class="kt-revoke__chat">
           <div class="kt-revoke__log kt-revoke__sunken">
             <p class="is-sys">*** Connected to PushBased Gaming</p>
-            <p class="is-msg" :class="{ 'is-on': at(0.5) }"><img class="kt-revoke__ava" src="/images/people/julian-jandl.jpg" alt=""><span><time>21:47</time> <strong>Julian:</strong> Lost again 😩 We have to analyze our old tactics. Maybe rushing B is not the only option</span></p>
+            <p class="is-msg" :class="{ 'is-on': at(0.5) }"><img class="kt-revoke__ava" src="/images/people/julian-jandl-face.jpg" alt=""><span><time>21:47</time> <strong>Julian:</strong> Lost again 😩 We have to analyze our old tactics. Maybe rushing B is not the only option</span></p>
             <p class="is-msg" :class="{ 'is-on': at(4.4) }"><img class="kt-revoke__ava" src="/images/speaker.webp" alt=""><span><time>21:48</time> <strong>Adrian:</strong> {{ pitch }}</span></p>
             <p class="is-msg" :class="{ 'is-on': at(10.4) }"><img class="kt-revoke__ava" src="/images/people/michael-hladky.webp" alt=""><span><time>21:48</time> <strong>Michael:</strong> <em class="is-pull">Pull</em>-based? at <em class="is-push">Push</em>Based? 🤨</span></p>
             <p class="is-sys" :class="{ 'is-on': at(12.6) }">*** Adrian was kicked by Michael</p>
@@ -258,7 +258,7 @@ const { at } = useTimeline(14)
 }
 
 .kt-revoke__log .is-msg { display: flex; align-items: flex-start; gap: 12px; }
-.kt-revoke__log .is-msg .kt-revoke__ava { width: 52px; height: 52px; border-width: 2px; border-color: var(--w-shadow) var(--w-hi) var(--w-hi) var(--w-shadow); }
+.kt-revoke__log .is-msg .kt-revoke__ava { width: 88px; height: 88px; object-position: 50% 25%; border-width: 2px; border-color: var(--w-shadow) var(--w-hi) var(--w-hi) var(--w-shadow); }
 
 .kt-revoke__log time { font-size: 15px; color: var(--w-shadow); }
 .kt-revoke__log time::before { content: '['; }

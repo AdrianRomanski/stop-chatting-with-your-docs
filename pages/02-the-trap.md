@@ -1,6 +1,3 @@
----
-kicker: a true story
----
 
 # 200 pages, one summary, <span class="hot">zero</span> understanding
 
@@ -42,77 +39,53 @@ I didn't make this name up. It's in this book: Make It Stick. Chapter 5, "Avoid 
 
 Let me read it. "Fluency illusions result from our tendency to mistake fluency with a text (highlight) for mastery of its content." (underline)
 
-And the very next sentence: "If you read a particularly lucid presentation of a difficult concept, you can get the idea that it is actually pretty simple." (mark)
+Fluency with a text. That's exactly what an AI summary gives you. That was my summary.md.
 
-A particularly lucid presentation of a difficult concept. That's exactly what an AI summary is. That was my summary.md. (tag)
-
-Fluency: "finally, I understand". Mastery: drawing it at the whiteboard. They're not the same thing. (≠)
+(≠) Fluency: you explain complex concepts with precision, in the industry's terms, and technical colleagues easily follow. Mastery: you make those same ideas instantly clear to a child or an executive, with simple words and vivid analogies. They're not the same thing.
 -->
 
 ---
-kicker: the one rule
+
+# I only stood on the first <span class="hot">step</span>
+
+<div class="kt-center">
+  <ClimbCheckpoint :done="1" :synthesized="false" concept="Julia's architecture" big outsourced />
+</div>
+
+<!--
+⏱ 0:20 · script: [CHECKPOINT ClimbCheckpoint "the climb"] I only stood on the first *step*
+
+(the stairs) Here's the climb from fluency to mastery. Read, then synthesize, then Group, Generate, Retrieve, Elaborate, Space, and at the top: Teach.
+
+(I hop on Read) And me with those two hundred pages? I read every single one. One step.
+
+(summary.md drops onto Synthesize) The very next step is synthesis. And that's exactly the one I handed to the AI: Gemini wrote me a summary. (the words pour into my mouth) And I just swallowed it. Tokens, primitives, components, patterns. Obviously. Easy.
+
+(I jump at it, bounce off, fall) So I jumped for the next step, and bounced right off a summary that wasn't mine. Back on the floor, where I started.
+-->
+
 ---
 
 # Never outsource <span class="hot">synthesis</span> to AI
 
-<div class="kt-center" style="margin-top: 18px">
+<div class="kt-center">
   <SynthesisMine />
 </div>
 
 <!--
 ⏱ 0:40 · script: [STAGE SynthesisMine "the one rule"] Never outsource *synthesis* to AI ⏱ 40s [^docs-200]
-Paced to the narration (SynthesisMine.vue): the pile at 0:01, the prompt types from 0:02, the pages fly in from 0:04, summary.md at 0:07, NOT MINE at 0:11; proactive from 0:13: concepts found 0:15–0:17, grouped 0:18–0:20, the diagram 0:21–0:23, the "?" at 0:24, the clarification at 0:26, the fix at 0:27, the lock at 0:29.
+Paced to the narration (SynthesisMine.vue). Merges the old "Pull a summary, or get pushed" (PullPush) into this slide. Left half, top, pull-based: the pile at 0:01, the pages fly into the AI 0:02–0:03, summary.md at 0:04, pulled to me (idle) at 0:05, FLUENCY ILLUSION at 0:07. Left half, bottom, push-based: from 0:07, my diagram 0:09–0:10, the AI pushes back at 0:12, my answer and the tick at 0:13, "mastering concepts" at 0:14. Right half: the next group meeting from 0:15, I draw it 0:16–0:19, the team asks from 0:20, Julia at 0:25, CLAP CLAP at 0:26.
 
-So here's the one rule of this talk. Same two hundred pages, two ways. First, procrastination. (the pile) The architecture docs. (prompt types) "Find the most important parts." (the pages fly into the AI, it spins) And out it comes: summary.md. Clean. (handed to me) And me? Idle. (it goes dull, NOT MINE) It looks great. It's not mine.
+So here's the one rule of this talk. Same two hundred pages, two architectures. And the whole difference is who does the synthesis.
 
-Now proactive. Same pages, me doing the work. (find) While I read, I find the concepts. Me, not the AI.
+Pull-based architecture. I hand the AI the wheel. (the pages fly into the AI) It reads, it decides what matters. (summary.md) I pull a summary. Clean. (pulled to me) And me? Idle. My thinking: flat. (FLUENCY ILLUSION) It looks great. And I feel like I get it. That's the fluency illusion.
 
-(group) Then I group them. Tokens, primitives, components, patterns.
+(0:07) Push-based architecture. I keep the wheel. Same pages, me doing the work. (the diagram) I synthesize the concepts myself, layer on layer. Tokens, primitives, components, patterns. What builds on what.
 
-(draw) And I draw the diagram. Layer on layer, what builds on what. (arrow) And I get it wrong.
+(0:12, the AI pushes back) And then the AI pushes back: "Why this way?" Now I have to defend it. That's cognitive sparring. (my answer, the tick) I answer, and my thinking is under load. That's where understanding gets built: when something pushes back.
 
-(?) Here's where I'm stuck, and that's where the AI comes in. (the question) "Why this way?" (clarification) It explains. It clarifies. (the fix) And I fix my own diagram: those two were the wrong way round. The AI didn't draw it. It doesn't decide what matters.
+(mastering concepts) The synthesis stays mine. That's how you master a concept.
 
-(lock) The synthesis stays mine. The AI may only answer what I ask.
+(0:15, the meeting) And it worked. At the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. (the team) "Wow, so that's how it works!" "Can you teach us this?" "Can you share guidelines?" (0:25) And Julia, the one who created it: "Will you write our guidelines?" (CLAP CLAP)
 -->
 
----
-kicker: the way out
----
-
-# Mastery takes the <span class="hot">stairs</span>
-
-<div class="kt-center" style="margin-top: 14px">
-  <MasteryStairs />
-</div>
-
-<!--
-⏱ 1:00 · script line 25: [STAGE MasteryStairs "the way out"] Mastery takes the *stairs* ⏱ 60s [^mastery-steps] [^protege]
-A step every 4.5 s (STEP_DT in MasteryStairs.vue): I land on Read at 0:02, Group 0:06, Generate 0:11, Retrieve 0:15, Elaborate 0:20, Space 0:24 (each book appears under its steps once I've climbed them: Second Brain at Read, Make It Stick at Space, Feynman's Mental Models and Tomorrowmind, under the whole climb, at TEACH), TEACH 0:29; the card top left shows what I do on each step. At the meeting the stairs shrink into the corner with their names kept. The meeting at 0:30, the team reacts from 0:34, Julia's question at 0:38, all done by 0:40.
-
-So how do you get from fluency to mastery? Not by reading more. You climb. (me on the ground, before the first step) The stairs combine three books, and I did every step on that architecture document.
-
-(hop) Read. First the raw material, the architecture doc itself. And while I read, I write things down: what matters, what I don't get. That's Building a Second Brain (its cover appears below): keep what resonates. (the step turns blue: Second Brain)
-
-(hop) Group. The doc goes into four groups. The book calls it structure building: pull out the main ideas, build the frame.
-
-(hop) Generate. I sketch the diagram before I look. A guess, wrong in places, and that's fine: then I check the docs and fix it.
-
-(hop) Retrieve. Docs closed. I redraw it from memory.
-
-(hop) Elaborate. Kirill's question: why this way? I answer it in my own words.
-
-(hop) Space. Tomorrow, next week, next month: I redraw it again, a little rusty every time.
-
-Group, Generate, Retrieve, Elaborate, Space: five techniques, all from the second book, Make It Stick. (its cover appears below) Every step is harder than the last. That's the point: when learning is harder, it's stronger, and it lasts longer.
-
-And the top step comes from the third book: teach it. Explain it to someone else. Richard Feynman's trick (his photo), and it has a name: the Protégé Effect. That's Richard Feynman's Mental Models (its cover appears below). You learn it best when you have to teach it. (TEACH, flag)
-
-(the fourth cover, under the whole climb) And under all of it, one more book: Tomorrowmind. Use AI as a coach, not a crutch. That's what every step is about.
-
-(0:30) So I climbed. And at the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. What builds on what. (✓)
-
-(0:34, Kirill) "Wow, so that's how it works!" (Szymon) "Can you teach us this?" (Hanna) "Can you share guidelines?"
-
-(0:38) And Julia. The one who created it. "Will you write our guidelines?" (CLAP CLAP)
--->

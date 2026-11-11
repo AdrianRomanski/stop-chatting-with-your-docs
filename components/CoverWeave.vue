@@ -12,20 +12,23 @@ import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue'
  *    right), which comes online for this act. Its verdict lands on the node: a check, and that
  *    node's links thicken (what you retrieve gets stronger); the third verdict finds a gap, the link
  *    flashes red, is redrawn, then passes. Finally the judge schedules the next review.
- * One cycle is CYCLE seconds, then the moving layer fades out and the story starts again.
+ * 5. The payoff, the Matrix dojo scene: the tested brain becomes "I know RxJS" (Neo, inside the
+ *    brain), and Morpheus answers "Show me." from beside it. Everything holds there.
+ * It plays once (END seconds) and stays on the final frame, so the room can read the meme.
  * The art stays out of the title block (the strip under the byline and the right ~25%).
- * Reduced motion: the final state (the connected, tested brain with its checks), still.
+ * Reduced motion: the final state (the tested brain, its checks and the meme), still.
  */
 const uid = useId()
-const CYCLE = 19.4
-const FINAL = 17.9
+const MEME_AT = 17.7 // after the judge's last verdict and the next-review pill
+const SHOW_AT = MEME_AT + 1.3 // the judge answers
+const END = SHOW_AT + 0.7
 
-const t = ref(FINAL)
+const t = ref(END)
 let raf = 0
 let t0 = 0
 function tick(now: number) {
-  t.value = ((now - t0) / 1000) % CYCLE
-  raf = requestAnimationFrame(tick)
+  t.value = Math.min(END, (now - t0) / 1000)
+  if (t.value < END) raf = requestAnimationFrame(tick)
 }
 onMounted(() => {
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -274,10 +277,19 @@ const brainLinkP = computed(() => brainLinks.map((_, i) => {
 }))
 const brainGrow = computed(() => prog(NODE_AT, nodeOrder.length * NODE_STEP + 0.5))
 
-// ---- the loop: the moving layer fades in, and out before the reset
-const FADE_OUT = 18.3
-const layer = computed(() => Math.min(clamp(t.value / 0.4), 1 - clamp((t.value - FADE_OUT) / 0.9)))
-const cloudPath = 'M-50 26 A21 21 0 0 1 -42 -12 A30 30 0 0 1 10 -26 A26 26 0 0 1 50 -5 A16 16 0 0 1 50 26 Z'
+// ---- the moving layer fades in once, and stays
+const layer = computed(() => clamp(t.value / 0.4))
+
+// ---- beat 5: the payoff, the meme fills the brain (clipped to its outline)
+// the brain is 76×64 at scale 2.7; the picture sits a little low so the caption clears the curve
+const brainPath = 'M0 -32 c-22 0 -38 14 -38 32 c0 18 16 32 38 32 c22 0 38 -14 38 -32 c0 -18 -16 -32 -38 -32z'
+const meme = { w: 76 * brain.s, h: 64 * brain.s, dy: 14 } // neo-matrix.png is 1152×760
+const memeP = computed(() => ease(prog(MEME_AT, 0.5)))
+// the answer: Morpheus in a panel left of the brain (right of the subtitle, above Gemma's label),
+// cropped to his face and the caption so "Show me." reads from the back row
+const show = { x: 630, y: 252, w: 132, h: 128 } // show-me.png is 790×760, cropped to 560×540
+const showP = computed(() => ease(prog(SHOW_AT, 0.5)))
+const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 0 0 1 48.6 -5 A16 16 0 0 1 48.6 26 Z'
 </script>
 
 <template>
@@ -318,9 +330,9 @@ const cloudPath = 'M-50 26 A21 21 0 0 1 -42 -12 A30 30 0 0 1 10 -26 A26 26 0 0 1
       <circle r="70" :fill="`url(#kt-cweave-bad-${uid})`" :style="{ opacity: judgeLit.bad }" />
       <path :d="cloudPath" class="kt-cweave__cloud is-off" :style="{ opacity: 1 - cloudOn }" />
       <path :d="cloudPath" class="kt-cweave__cloud" :style="{ opacity: cloudOn }" />
-      <image href="/images/logos/gemini-mark.png" x="-42" y="-13" width="26" height="25" :style="{ opacity: 0.45 + 0.55 * cloudOn }" />
-      <text x="-10" y="6" class="kt-cweave__name" :style="{ opacity: 0.45 + 0.55 * cloudOn }">Argon</text>
-      <text x="0" y="-36" text-anchor="middle" class="kt-cweave__tag is-role">JUDGE · CLOUD</text>
+      <image href="/images/logos/gemini-mark.png" x="-39.9" y="-13" width="26" height="25" :style="{ opacity: 0.45 + 0.55 * cloudOn }" />
+      <text x="-7.9" y="6" class="kt-cweave__name" :style="{ opacity: 0.45 + 0.55 * cloudOn }">Argon</text>
+      <text x="0" y="-42" text-anchor="middle" class="kt-cweave__tag is-role">JUDGE · CLOUD</text>
       <g :style="{ opacity: reviewP, transform: `translateY(${(1 - reviewP) * -6}px)` }">
         <rect x="-90" y="36" width="180" height="26" rx="13" class="kt-cweave__review" />
         <path d="M-77 43 h12 v12 h-12z M-77 47 h12 M-73.5 41 v3 M-68.5 41 v3" class="kt-cweave__cal" />
@@ -413,13 +425,39 @@ const cloudPath = 'M-50 26 A21 21 0 0 1 -42 -12 A30 30 0 0 1 10 -26 A26 26 0 0 1
         <text y="6" text-anchor="middle" class="kt-cweave__qtext">?</text>
       </g>
       <g v-for="(q, i) in quizzes" :key="`qk${i}`"
-        :style="{ transform: `translate(${nodes[q.n].x + 17}px, ${nodes[q.n].y - 17}px) scale(${0.6 + 0.4 * passP[i]})`, opacity: passP[i] }">
+        :style="{ transform: `translate(${nodes[q.n].x + 17}px, ${nodes[q.n].y - 17}px) scale(${0.6 + 0.4 * passP[i]})`, opacity: passP[i] * (1 - memeP) }">
         <circle r="13" class="kt-cweave__pass" />
         <path d="M-6 0.5 l4 4 l8 -8.5" class="kt-cweave__tick" />
       </g>
     </g>
 
-    <!-- the pen: stays with the person across the reset -->
+    <!-- beat 5: "I know RxJS" fills the tested brain, and holds to the end -->
+    <g :style="{ opacity: memeP, transform: `translate(${brain.x}px, ${brain.y}px) scale(${0.85 + 0.15 * memeP})` }">
+      <clipPath :id="`kt-cweave-meme-${uid}`">
+        <path :d="brainPath" :transform="`scale(${brain.s})`" />
+      </clipPath>
+      <!-- the picture sits low to clear the curve: the strip above it continues its black caption band -->
+      <rect :x="-meme.w / 2" :y="-meme.h / 2" :width="meme.w" :height="meme.dy + 2" class="kt-cweave__memeband"
+        :clip-path="`url(#kt-cweave-meme-${uid})`" />
+      <image href="/images/memes/neo-matrix.png" :x="-meme.w / 2" :y="-meme.h / 2 + meme.dy" :width="meme.w" :height="meme.h"
+        preserveAspectRatio="xMidYMin slice" :clip-path="`url(#kt-cweave-meme-${uid})`" />
+      <path :d="brainPath" :transform="`scale(${brain.s})`" class="kt-cweave__memeframe" />
+    </g>
+
+    <!-- beat 5: Morpheus answers "Show me." beside the brain -->
+    <g :style="{ opacity: showP, transform: `translate(${show.x + show.w}px, ${show.y + show.h / 2}px) scale(${0.85 + 0.15 * showP}) translate(${-show.w}px, ${-show.h / 2}px)` }">
+      <clipPath :id="`kt-cweave-show-${uid}`">
+        <rect :width="show.w" :height="show.h" rx="14" />
+      </clipPath>
+      <g :clip-path="`url(#kt-cweave-show-${uid})`">
+        <svg :width="show.w" :height="show.h" viewBox="130 120 560 540" preserveAspectRatio="xMidYMid slice">
+          <image href="/images/memes/show-me.png" width="790" height="760" />
+        </svg>
+      </g>
+      <rect :width="show.w" :height="show.h" rx="14" class="kt-cweave__memeframe" />
+    </g>
+
+    <!-- the pen: stays with the person -->
     <g :style="{ transform: `translate(${pen.x}px, ${pen.y}px)` }" class="kt-cweave__pen" :class="{ 'is-writing': penWriting }">
       <g transform="rotate(32)">
         <path d="M0 0 l-4 -9 h8z" class="kt-cweave__nib" />
@@ -603,6 +641,11 @@ const cloudPath = 'M-50 26 A21 21 0 0 1 -42 -12 A30 30 0 0 1 10 -26 A26 26 0 0 1
 .kt-cweave__good-out { stop-color: var(--kt-good); stop-opacity: 0; }
 .kt-cweave__bad-in { stop-color: var(--kt-bad); stop-opacity: 0.4; }
 .kt-cweave__bad-out { stop-color: var(--kt-bad); stop-opacity: 0; }
+
+/* beat 5: the meme bubble */
+/* the meme's own caption band is pure black, so the strip that extends it is too (photo, not theme) */
+.kt-cweave__memeband { fill: black; }
+.kt-cweave__memeframe { fill: none; stroke: var(--kt-c-primary); stroke-width: 3; vector-effect: non-scaling-stroke; }
 
 @media (prefers-reduced-motion: reduce) {
   .kt-cweave__wire { animation: none; }

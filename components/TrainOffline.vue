@@ -11,7 +11,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *    the four PARA folders, P · A · R · A (Projects, Areas, Resources, Archives): "Finally Structured"
  * 5. still unsure: "How can I know that I understand it?"; the reflex, "Just ask AI for a summary?", and
  *    then the memory: "Wait… remember the architecture docs?" (the next slide's story)
- * 6. the doubt turns into the idea, a lightbulb over the thought: "I Need OFFLINE Sparring Partner"
+ * 6. the doubt turns into the idea, a lightbulb over the thought: "What if a local model acts as a teacher?"
  * Sets up the structure (PARA) and the plan (CODE) of "build the brain"; the bulb pays off on
  * "Airplane mode, on". No props.
  */
@@ -56,7 +56,7 @@ const thought = computed(() =>
 
 <template>
   <svg class="kt-train" viewBox="0 0 880 340" role="img"
-    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. So the notes pile up into a tangle: organize that chaos using PARA. They file into the four PARA folders, Projects, Areas, Resources, Archives: finally structured. How can I know that I understand it? Just ask AI for a summary? Wait, remember the architecture docs? An idea lights up: I need an offline sparring partner.">
+    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. So the notes pile up into a tangle: organize that chaos using PARA. They file into the four PARA folders, Projects, Areas, Resources, Archives: finally structured. How can I know that I understand it? Just ask AI for a summary? Wait, remember the architecture docs? An idea lights up: what if a local model acts as a teacher?">
     <defs>
       <clipPath id="kt-train-window">
         <rect x="20" y="40" width="250" height="200" rx="30" />
@@ -200,10 +200,10 @@ const thought = computed(() =>
             <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">docs<tspan class="kt-train__q">?</tspan></text>
           </g>
           <g class="kt-train__word is-idea">
-            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">I Need</text>
-            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">OFFLINE</text>
-            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">Sparring</text>
-            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">Partner</text>
+            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">What if a</text>
+            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">local model</text>
+            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">acts as a</text>
+            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">teacher<tspan class="kt-train__q">?</tspan></text>
           </g>
         </g>
       </g>

@@ -29,19 +29,34 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *   elaborate), the styles' books: The Socratic Method, Feynman's Mental Models. Under everything, Tomorrowmind:
  *   a concept from it in every step, and the spark for the app. `books` alone shows only the stretch already
  *   climbed; `books="all"` shows every book, whole. `covers` puts each book's cover beside its name.
+ * - `tall`: taller steps and bigger names, for the stairs alone on a slide
+ * - `big`: the stairs fill the slide edge to edge: taller and wider steps, a bigger me, summary and words
+ * - `outsourced`: the synthesis handed to the AI: no bridge tag on Synthesize, a summary.md made by Gemini
+ *   drops onto it and pours its words, a waterfall off its edge, into my mouth on Read; then I jump at the
+ *   summary, bounce off it (it wobbles) and fall back to the floor, onto my side
  */
 type Gain = { step: string; text: string }
 type Card = { kind: 'raw' | 'read' | 'distill' | 'concept'; title: string; lines: string[]; via?: string }
 const props = withDefaults(defineProps<{
-  done: number; concept: string; synthesized?: boolean; gained?: Gain[]; flow?: Card[]; never?: string; books?: boolean | 'all'; covers?: boolean
-}>(), { synthesized: true, gained: () => [], flow: () => [], books: false, covers: false })
+  done: number; concept: string; synthesized?: boolean; gained?: Gain[]; flow?: Card[]; never?: string; books?: boolean | 'all'; covers?: boolean; tall?: boolean; big?: boolean; outsourced?: boolean
+}>(), { synthesized: true, gained: () => [], flow: () => [], books: false, covers: false, tall: false, big: false, outsourced: false })
 
 const NAMES = ['Read', 'Group', 'Generate', 'Retrieve', 'Elaborate', 'Space', 'Teach']
 const BOOK = (k: number) => (k === 0 ? 'basb' : k === 6 ? 'teach' : 'mis')
 
-const GROUND = 150
-const COL = 101
-const W = 92
+// `tall`: the stairs alone on the slide, so taller steps and bigger names
+// `big`: the stairs fill the slide, wider than the content box (VBW), into the side padding
+// with books under them, the big stairs give up some height to the book rows
+const GROUND = props.big ? (props.books ? 240 : 380) : props.tall ? 240 : 150
+const BASE = props.big ? (props.books ? 62 : 100) : props.tall ? 50 : 34 // the first step's height
+const RISE = props.big ? (props.books ? 24 : 38) : props.tall ? 22 : 14 // each step this much higher than the one before
+const LBL = props.big ? 1.5 : props.tall ? 1.3 : 1 // the names and tags inside a step
+const X0 = props.big ? 64 : 60 // the first step's left edge
+const COL = props.big ? 116 : 101
+const W = props.big ? 106 : 92
+const VBW = props.big ? X0 + 7 * COL + W + 14 : 880
+const R = props.big ? 26 : 19 // my face's radius
+const K = props.big ? 1.35 : 1 // the summary and its words
 // the blocks: the seven steps (k = the step's index in the code), Synthesize slotted in after Read
 const blocks = [
   { name: 'Read', k: 0 },
@@ -50,14 +65,14 @@ const blocks = [
 ].map((b, i) => ({
   ...b,
   i,
-  x: 60 + i * COL,
-  top: 116 - i * 14,
+  x: X0 + i * COL,
+  top: GROUND - BASE - i * RISE,
   book: b.k < 0 ? 'synth' : BOOK(b.k),
   done: b.k < 0 ? props.synthesized : b.k < props.done,
 }))
 const lastBlock = blocks.reduce((m, b) => (b.done ? b.i : m), -1)
-const BOOK_ROW = props.covers ? 58 : 20
-const COVER = { w: 34, h: 50 }
+const BOOK_ROW = props.covers ? (props.big ? 50 : 58) : 20
+const COVER = props.big ? { w: 32, h: 46 } : { w: 34, h: 50 }
 // which book each block comes from; only the stretch already climbed shows, and empty rows close up
 const bookList = [
   { name: 'Building a Second Brain', from: 0, to: 3, row: 0, key: 'basb', end: false, covers: ['building-a-second-brain.webp'] },
@@ -70,11 +85,11 @@ const bookList = [
   .map(b => ({ ...b, to: props.books === 'all' ? b.to : Math.min(b.to, lastBlock) }))
 const usedRows = [...new Set(bookList.map(b => b.row))].sort()
 const placed = bookList.map(b => {
-  const x1 = 60 + b.from * COL + 4
-  const x2 = 60 + b.to * COL + W - 4
+  const x1 = X0 + b.from * COL + 4
+  const x2 = X0 + b.to * COL + W - 4
   const coversW = props.covers ? b.covers.length * (COVER.w + 6) : 0
   // the covers sit at the label's start: after x1, or before the label when it ends at x2
-  const labelW = b.name.length * (props.covers ? 7.6 : 6.6)
+  const labelW = b.name.length * (props.big ? 8.4 : props.covers ? 7.6 : 6.6)
   const coverX = b.end ? x2 - labelW - coversW - 2 : x1 + 6
   return {
     ...b, x1, x2,
@@ -105,7 +120,18 @@ const OUT = CMD + 0.9
 const GAIN = OUT + 0.9
 const CARD_DT = 0.55
 const NEVER = GAIN + props.flow.length * CARD_DT + 0.3
-const { t, at } = useTimeline(Math.max(GAIN + props.gained.length * 0.45, NEVER) + 0.8)
+// outsourced: Gemini's summary drops onto Synthesize once I'm on my step; I jump at it, hit it, bounce off
+const GEM = LIT(lastBlock) + 0.5
+const POUR = GEM + 0.6 // the words start falling from the summary into my mouth
+const POUR_N = 6
+const POUR_DT = 0.45
+const POUR_FOR = 0.7
+const WORDS = ['tokens', 'primitives', 'components', 'patterns', 'obviously', 'easy']
+const JUMP = props.outsourced ? POUR + (POUR_N - 1) * POUR_DT + POUR_FOR + 0.4 : GEM + 1
+const JUMP_FOR = 0.35
+const HIT = JUMP + JUMP_FOR
+const FALL_FOR = 0.75
+const { t, at } = useTimeline(Math.max(GAIN + props.gained.length * 0.45, NEVER, props.outsourced ? HIT + FALL_FOR : 0) + 0.8)
 
 // the flow: four cards under the terminal, arrows between them
 const FY = TY + 4
@@ -122,9 +148,36 @@ const H = props.flow.length ? FY + CH + (props.never ? 48 : 12) : TY + 8 + props
 const uid = useId()
 const face = `kt-climbcp-face-${uid}`
 
+// outsourced: the summary on Synthesize, its top left corner
+const synth = blocks.find(b => b.k < 0)!
+const SUM = { x: synth.x + W / 2 - 30 * K, y: synth.top - 78 * K, w: 60 * K, h: 74 * K }
+
+// the waterfall: each word leaves the summary's left edge, curls over and drops into my mouth on Read
+const drops = computed(() => {
+  if (!props.outsourced) return []
+  const a = stops[stops.length - 1]
+  // words hang left of their point (anchored at the end), so they slide off the card's left edge
+  const p0 = { x: SUM.x - 4, y: SUM.y + 34 * K }
+  const p1 = { x: SUM.x - 20 * K, y: SUM.y + 26 * K }
+  const p2 = { x: a.x + 6 * K, y: a.y + R * 0.47 }
+  return Array.from({ length: POUR_N }, (_, i) => {
+    const p = (t.value - POUR - i * POUR_DT) / POUR_FOR
+    if (p <= 0 || p >= 1) return null
+    const q = p ** 1.3 // gravity: slower off the edge, fast into the mouth
+    const u = 1 - q
+    return {
+      i, word: WORDS[i % WORDS.length],
+      x: u * u * p0.x + 2 * u * q * p1.x + q * q * p2.x,
+      y: u * u * p0.y + 2 * u * q * p1.y + q * q * p2.y,
+      size: 12 * K * (1 - 0.55 * q),
+      o: q > 0.8 ? (1 - q) / 0.2 : Math.min(1, p * 6),
+    }
+  }).filter(Boolean) as { i: number; word: string; x: number; y: number; size: number; o: number }[]
+})
+
 // I start on the ground left of the stairs and hop block by block onto the last one done
-const START = { x: 28, y: GROUND - 22 }
-const stops = [START, ...blocks.slice(0, lastBlock + 1).map(b => ({ x: b.x + W / 2, y: b.top - 22 }))]
+const START = { x: X0 - R - 13, y: GROUND - R - 3 }
+const stops = [START, ...blocks.slice(0, lastBlock + 1).map(b => ({ x: b.x + W / 2, y: b.top - R - 3 }))]
 const me = computed(() => {
   let pos = stops[0]
   for (let i = 0; i < stops.length - 1; i++) {
@@ -134,13 +187,28 @@ const me = computed(() => {
     const b = stops[i + 1]
     pos = { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p - 40 * Math.sin(Math.PI * p) }
   }
-  return pos
+  if (!props.outsourced || t.value < JUMP) return { ...pos, rot: 0 }
+  const a = stops[stops.length - 1]
+  const hit = { x: SUM.x - R, y: SUM.y + 30 * K }
+  if (t.value < HIT) {
+    // the jump at the summary: up and over, into its left side
+    const p = (t.value - JUMP) / JUMP_FOR
+    return { x: a.x + (hit.x - a.x) * p, y: a.y + (hit.y - a.y) * p - 34 * Math.sin(Math.PI * p), rot: 0 }
+  }
+  // bounced off: back over Read, down to the floor left of the stairs, tumbling onto my side
+  const p = Math.min(1, (t.value - HIT) / FALL_FOR)
+  const end = { x: X0 - R - 7, y: GROUND - R }
+  return {
+    x: hit.x + (end.x - hit.x) * Math.sin((Math.PI / 2) * p),
+    y: hit.y + (end.y - hit.y) * p * p - 30 * Math.sin(Math.PI * Math.min(1, p * 1.4)),
+    rot: -90 * p,
+  }
 })
 
 </script>
 
 <template>
-  <svg class="kt-climbcp" :class="{ 'has-covers': covers }" :viewBox="`0 0 880 ${H}`" role="img"
+  <svg class="kt-climbcp" :class="{ 'has-covers': covers, 'is-tall': tall, 'is-big': big }" :viewBox="`0 0 ${VBW} ${H}`" role="img"
     :aria-label="`The climb of ${concept}: ${blocks.map(b => (b.done ? 'done ' : 'open ') + b.name).join(', ')}. Synthesize, between Read and Group, makes the concept note. I stand on ${blocks[lastBlock]?.name ?? 'the ground'}. What this phase gave: ${[...gained.map(g => g.text), ...flow.map(c => `${c.title}, ${c.lines.join(' ')}`)].join('; ')}.${never ? ` ${never}.` : ''}`">
     <defs>
       <clipPath :id="face" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
@@ -150,20 +218,22 @@ const me = computed(() => {
     </defs>
 
     <!-- the stairs -->
-    <path :d="`M8 ${GROUND} H 872`" class="kt-climbcp__ground" />
+    <path :d="`M8 ${GROUND} H ${VBW - 8}`" class="kt-climbcp__ground" />
     <g v-for="b in blocks" :key="b.name">
       <rect :x="b.x" :y="b.top" :width="W" :height="GROUND - b.top" rx="9" class="kt-climbcp__step"
-        :class="[striped[b.i].keys.length ? 'is-books' : `is-${b.book}`, { 'is-lit': b.done && at(LIT(b.i)), 'is-next': b.i === nextBlock && at(OUT) }]" />
+        :class="[striped[b.i].keys.length ? 'is-books' : `is-${b.book}`, { 'is-lit': b.done && at(LIT(b.i)), 'is-next': b.i === nextBlock && !outsourced && at(OUT) }]" />
       <!-- the books' colors over a climbed block: a tinted fill and an outline in stripes -->
       <g v-if="striped[b.i].keys.length" class="kt-climbcp__striped" :class="{ 'is-lit': b.done && at(LIT(b.i)) }">
         <rect :x="b.x" :y="b.top" :width="W" :height="GROUND - b.top" rx="9" :fill="`url(#${face}-st${b.i})`" class="kt-climbcp__stfill" />
         <rect :x="b.x" :y="b.top" :width="W" :height="GROUND - b.top" rx="9" fill="none" :stroke="`url(#${face}-st${b.i})`" class="kt-climbcp__stline" />
       </g>
-      <text :x="b.x + 8" :y="b.top + 20" class="kt-climbcp__name" :class="{ 'is-open': !b.done }">{{ b.name }}</text>
-      <text v-if="b.i === nextBlock" :x="b.x + 8" :y="b.top + 38" class="kt-climbcp__next" :class="{ 'is-on': at(OUT) }">next</text>
-      <g v-if="b.k < 0">
-        <text :x="b.x + 8" :y="b.top + 38" class="kt-climbcp__bridgetag" :class="{ 'is-lit': b.done && at(LIT(b.i)) }">bridge</text>
-        <path :d="`M${b.x + W - 18} ${b.top + 25} l 7 8 l -7 8 l -7 -8 z`" class="kt-climbcp__bridge"
+      <text :x="big ? b.x + W / 2 : b.x + 8" :y="b.top + 20 * LBL" :text-anchor="big ? 'middle' : 'start'" class="kt-climbcp__name" :class="{ 'is-open': !b.done }">{{ b.name }}</text>
+      <!-- on the bridge the dashed outline alone says next: its "bridge" tag sits where "next" would -->
+      <text v-if="b.i === nextBlock && b.k >= 0 && !outsourced" :x="big ? b.x + W / 2 : b.x + 8" :y="b.top + 38 * LBL" :text-anchor="big ? 'middle' : 'start'" class="kt-climbcp__next" :class="{ 'is-on': at(OUT) }">next</text>
+      <!-- big: no bridge tag, only the centered name -->
+      <g v-if="b.k < 0 && !outsourced && !big">
+        <text :x="b.x + 8" :y="b.top + 38 * LBL" class="kt-climbcp__bridgetag" :class="{ 'is-lit': b.done && at(LIT(b.i)) }">bridge</text>
+        <path :d="`M${b.x + W - 18} ${b.top + 25 * LBL + (LBL - 1) * 20} l 7 8 l -7 8 l -7 -8 z`" class="kt-climbcp__bridge"
           :class="{ 'is-lit': b.done && at(LIT(b.i)) }" />
       </g>
     </g>
@@ -181,12 +251,26 @@ const me = computed(() => {
       <text :x="b.textX" :y="b.y + (covers ? 33 : 13)" :text-anchor="b.end ? 'end' : 'start'" class="kt-climbcp__book" :class="`is-${b.key}`">{{ b.name }}</text>
     </g>
 
+    <!-- the AI took the synthesis step: its summary sits on it -->
+    <g v-if="outsourced" class="kt-climbcp__gem" :class="{ 'is-on': at(GEM) }">
+      <g class="kt-climbcp__sum" :class="{ 'is-hit': at(HIT) }">
+        <rect :x="SUM.x" :y="SUM.y" :width="SUM.w" :height="SUM.h" rx="6" class="kt-climbcp__sumpage" />
+        <image href="/images/logos/gemini-mark.png" :x="SUM.x + SUM.w / 2 - 12 * K" :y="SUM.y + 8 * K" :width="24 * K" :height="24 * K" />
+        <rect v-for="(w, k) in [40, 34, 40, 26]" :key="k" :x="SUM.x + 10 * K" :y="SUM.y + (40 + k * 8) * K" :width="w * K" :height="3.5 * K" :rx="1.75 * K" class="kt-climbcp__sumline" />
+      </g>
+      <text :x="SUM.x + SUM.w / 2" :y="SUM.y - 9 * K" text-anchor="middle" class="kt-climbcp__sumname">summary.md</text>
+    </g>
+
+    <!-- the summary's words, poured into my mouth -->
+    <text v-for="d in drops" :key="d.i" :x="d.x" :y="d.y" :font-size="d.size" :opacity="d.o" text-anchor="end"
+      class="kt-climbcp__drop">{{ d.word }}</text>
+
     <!-- me -->
-    <g class="kt-climbcp__me" :class="{ 'is-on': at(0.2) }">
-      <circle :cx="me.x" :cy="me.y" r="23" class="kt-climbcp__glow" />
-      <image href="/images/speaker.webp" :x="me.x - 19" :y="me.y - 19" width="38" height="38" :clip-path="`url(#${face})`"
+    <g class="kt-climbcp__me" :class="{ 'is-on': at(0.2) }" :transform="`rotate(${me.rot} ${me.x} ${me.y})`">
+      <circle :cx="me.x" :cy="me.y" :r="R + 4" class="kt-climbcp__glow" />
+      <image href="/images/speaker.webp" :x="me.x - R" :y="me.y - R" :width="2 * R" :height="2 * R" :clip-path="`url(#${face})`"
         preserveAspectRatio="xMidYMid slice" />
-      <circle :cx="me.x" :cy="me.y" r="19" class="kt-climbcp__ring" />
+      <circle :cx="me.x" :cy="me.y" :r="R" class="kt-climbcp__ring" />
     </g>
 
 
@@ -256,6 +340,28 @@ const me = computed(() => {
 .kt-climbcp__next.is-on { opacity: 1; }
 
 .kt-climbcp__me { opacity: 0; transition: opacity 0.3s; }
+.kt-climbcp__gem { opacity: 0; transform: translateY(-30px); transition: opacity 0.35s, transform 0.45s cubic-bezier(0.3, 1.5, 0.6, 1); }
+.kt-climbcp__gem.is-on { opacity: 1; transform: none; }
+.kt-climbcp__sum { transform-box: fill-box; transform-origin: 50% 100%; }
+.kt-climbcp__sum.is-hit { animation: kt-climbcp-wobble 0.6s ease-out; }
+@keyframes kt-climbcp-wobble {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(7deg); }
+  55% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}
+.kt-climbcp__sumpage { fill: color-mix(in srgb, var(--kt-fg) 8%, var(--kt-bg)); stroke: var(--kt-hot); stroke-width: 2; }
+.kt-climbcp__sumline { fill: var(--kt-muted); }
+.kt-climbcp__drop { font-family: var(--font-family-mono); font-weight: 700; fill: var(--kt-hot); }
+.kt-climbcp__sumname { font: 700 12px var(--font-family-mono); fill: var(--kt-hot); }
+/* big: wider than the slide's content box, centered over it, reaching into the side padding */
+.kt-climbcp.is-big { width: 930px; flex-shrink: 0; }
+/* big: the names centered in their step (text-anchor in the template); Synthesize, the longest, sets the size */
+.kt-climbcp.is-big .kt-climbcp__name { font-size: 16px; letter-spacing: -0.01em; }
+.kt-climbcp.is-big .kt-climbcp__sumname { font-size: 15px; }
+.kt-climbcp.is-big .kt-climbcp__next { font-size: 14px; }
+.kt-climbcp.is-big .kt-climbcp__book { font-size: 14px; }
 .kt-climbcp__me.is-on { opacity: 1; }
 .kt-climbcp__glow { fill: color-mix(in srgb, var(--kt-c-primary) 25%, transparent); }
 .kt-climbcp__ring { fill: none; stroke: var(--kt-c-primary-soft); stroke-width: 3; }
@@ -286,6 +392,9 @@ const me = computed(() => {
 .kt-climbcp__bracket.is-teach { stroke: var(--kt-warn); }
 .kt-climbcp__book { font: 700 11px var(--font-family-mono); }
 .kt-climbcp.has-covers .kt-climbcp__book { font-size: 12.5px; }
+.kt-climbcp.is-tall .kt-climbcp__name { font-size: 14.5px; letter-spacing: -0.015em; }
+.kt-climbcp.is-tall .kt-climbcp__next,
+.kt-climbcp.is-tall .kt-climbcp__bridgetag { font-size: 13.5px; }
 .kt-climbcp__covershadow { fill: var(--kt-bg); opacity: 0.6; }
 .kt-climbcp__book.is-basb { fill: var(--kt-info); }
 .kt-climbcp__book.is-mis { fill: var(--kt-good); }

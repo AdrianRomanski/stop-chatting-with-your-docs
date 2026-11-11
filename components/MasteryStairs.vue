@@ -19,9 +19,14 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *    above each block; I glide to the whiteboard and draw
  *    the architecture with confidence, layer by layer, the marker riding each stroke; the team,
  *    in color now, is impressed and asks for guidelines, one at a time; Julia, the creator, last
- * No props.
+ * Props: `climbed` starts with the climb already done (all steps landed, the books shown, me on TEACH);
+ * only the meeting at the whiteboard plays.
  */
-const { t, at } = useTimeline(43.5)
+const props = defineProps<{ climbed?: boolean }>()
+const timeline = useTimeline(43.5)
+// with `climbed`, the clock starts just after I land on TEACH (SKIP, below)
+const t = computed(() => timeline.t.value + (props.climbed ? SKIP : 0))
+const at = (s: number) => t.value >= s
 const uid = useId()
 const face = `kt-mstairs-face-${uid}`
 const head = `kt-mstairs-head-${uid}`
@@ -94,6 +99,7 @@ const later = [
 // --- the next group meeting ---
 // 2.4s on the summit: time to see the Feynman book before the meeting
 const MEET_AT = HOP(6) + HOP_FOR + 2.4
+const SKIP = HOP(6) + HOP_FOR + 0.1
 const GLIDE_FOR = 0.9
 const ME_AT_BOARD = { x: 290, y: 136, r: 36 }
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
@@ -197,7 +203,7 @@ const CLAP_AT = ASK_AT + 5.6
 </script>
 
 <template>
-  <svg class="kt-mstairs" viewBox="0 0 880 396" role="img"
+  <svg class="kt-mstairs" :class="{ 'is-climbed': climbed }" viewBox="0 0 880 396" role="img"
     aria-label="From fluency to mastery on the design system's architecture document. Three books combined. Read: the raw material, writing down what matters, from Building a Second Brain by Tiago Forte. Then five techniques from Make It Stick by Brown, Roediger and McDaniel. Group: I sort the document into four layers, tokens, primitives, components, patterns. Generate: I sketch the diagram before I look, then check it. Retrieve: I redraw it with the docs closed. Elaborate: why this way, in my own words. Space: I redraw it again tomorrow, next week, next month. The top step: teach it to others, the Protégé Effect, from the book Richard Feynman's Mental Models by Peter Hollins. Then the next group meeting: I draw the design system architecture layer by layer, and the team, Julia the creator included, asks me for guidelines.">
     <defs>
       <clipPath :id="face" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
@@ -690,4 +696,7 @@ const CLAP_AT = ASK_AT + 5.6
   .kt-mstairs__clap.is-on,
   .kt-mstairs__glow.is-top { animation: none !important; }
 }
+/* climbed from the start: no landing bursts, no confetti, no blocks rising */
+.kt-mstairs.is-climbed .kt-mstairs__thud, .kt-mstairs.is-climbed .kt-mstairs__confetti { display: none; }
+.kt-mstairs.is-climbed .kt-mstairs__rise, .kt-mstairs.is-climbed .kt-mstairs__rise * { transition: none !important; }
 </style>

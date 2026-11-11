@@ -6,15 +6,16 @@ import FirstMistakes from './FirstMistakes.vue'
  * E · Express, the example is this talk: three intermediate packets (distilled notes from Building
  * a Second Brain, Ch. 5, Ch. 1 epigraph, Ch. 3) fly one by one into an empty slide frame and fill
  * its three panels of a still, miniature FirstMistakes: slide 13, "The first three mistakes", which the audience saw a few minutes
- * earlier. Each packet stays, dimmed and ticked, while a copy of it flies. The third packet is the
- * note captured, organized and distilled on the slides before.
+ * earlier. Each packet stays, dimmed and ticked, while a copy of it flies. All three packets look
+ * the same: none is special.
+ * The third packet is the note captured, organized and distilled on the slides before.
  * No props, no numbers.
  */
 const { at } = useTimeline(5.6)
 const packets = [
   { from: 'BASB · ch. 5', text: '“not get a PhD in notetaking”' },
   { from: 'BASB · ch. 1', text: '“Your mind is for having ideas, not holding them”' },
-  { from: 'my note · ch. 3', text: 'Feeling over logic. Keep what resonates.', mine: true },
+  { from: 'my note · ch. 3', text: 'Feeling over logic. Keep what resonates.' },
 ]
 const flyAt = (i: number) => 1.6 + i * 0.7
 // the three panels of FirstMistakes (viewBox 1040 wide, splits at 340 and 694)
@@ -30,13 +31,13 @@ const slots = [
     aria-label="Express: three distilled notes are assembled into a slide of this talk, The first three mistakes, instead of writing it from a blank page.">
     <!-- the packets -->
     <template v-for="(p, i) in packets" :key="i">
-      <div class="kt-expr__packet" :class="{ 'is-on': at(0.2 + i * 0.3), 'is-used': at(flyAt(i)), 'is-mine': p.mine }"
+      <div class="kt-expr__packet" :class="{ 'is-on': at(0.2 + i * 0.3), 'is-used': at(flyAt(i)) }"
         :style="{ top: `${i * 96}px` }">
         <span class="kt-expr__from">{{ p.from }}</span>
         <span class="kt-expr__text">{{ p.text }}</span>
         <svg class="kt-expr__tick" viewBox="0 0 20 20"><path d="M3 10 l5 5 9 -11" /></svg>
       </div>
-      <div class="kt-expr__packet is-ghost" :class="{ 'is-flying': at(flyAt(i)), 'is-mine': p.mine }"
+      <div class="kt-expr__packet is-ghost" :class="{ 'is-flying': at(flyAt(i)) }"
         :style="{ top: `${i * 96}px`, '--dx': `${346 + i * 149}px`, '--dy': `${110 - i * 96}px` }">
         <span class="kt-expr__from">{{ p.from }}</span>
         <span class="kt-expr__text">{{ p.text }}</span>
@@ -91,7 +92,7 @@ const slots = [
   background: var(--kt-tint-primary);
   opacity: 0;
   transform: translateX(-20px);
-  transition: opacity 0.4s, transform 0.6s cubic-bezier(0.5, 0, 0.6, 1);
+  transition: opacity 0.4s, transform 0.6s cubic-bezier(0.5, 0, 0.6, 1), border-color 0.4s, background 0.4s;
 }
 
 .kt-expr__packet.is-on { opacity: 1; transform: none; }
@@ -121,11 +122,9 @@ const slots = [
 }
 
 .kt-expr__packet.is-used .kt-expr__tick { opacity: 1; }
-.kt-expr__packet.is-mine { border-color: var(--kt-hot); background: var(--kt-tint-secondary); }
 
 .kt-expr__from { display: block; font: 12px var(--font-family-mono); color: var(--kt-subtle); }
-.kt-expr__text { display: block; margin-top: 4px; font-size: 16px; font-weight: 600; line-height: 1.3; color: var(--kt-heading); }
-.kt-expr__packet.is-mine .kt-expr__text { color: var(--kt-hot); }
+.kt-expr__text { display: block; margin-top: 4px; font-size: 16px; font-weight: 600; line-height: 1.3; color: var(--kt-heading); transition: color 0.4s; }
 
 .kt-expr__arrow {
   position: absolute;

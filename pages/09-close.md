@@ -1,6 +1,3 @@
----
-kicker: "how this talk was made"
----
 
 # Five books, one <span class="hot">talk</span>
 
@@ -57,8 +54,6 @@ Paced to this narration (S in ArchFlow.vue): the map builds in the first 8 s; re
 
 
 ---
-kicker: where it started
----
 
 # Back on the <span class="hot">train</span>
 
@@ -81,12 +76,11 @@ Remember the train? No signal, a finished book, and one question: how can I know
 
 One step is still open.
 
-(If asked: this slide is the loop as I use it, not a recorded session; my real first session is the one on slide 35, and that one failed.)
+(If asked: this slide is the loop as I use it, not a recorded session; my real first session is the one on slide 36, and that one failed.)
 -->
 
 
 ---
-kicker: "climb step 7 · teach"
 status: in-progress
 ---
 

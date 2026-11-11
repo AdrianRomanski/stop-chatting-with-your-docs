@@ -1,74 +1,91 @@
 <script setup lang="ts">
-import { useId } from 'vue'
-import { useTimeline } from '../theme/composables/useTimeline'
+import { nextTick, onMounted, ref } from 'vue'
+import { onSlideEnter } from '@slidev/client'
 
 /**
- * Tiago Forte's CODE pipeline: four stage cards (Capture, Organize, Distill, Express) with a note
- * travelling along them, an inbox tray under Capture, and under Distill a zoomed card that builds
- * progressive summarization bottom-up: raw → bold → highlight → your summary on top.
- * Once everything is in, the Capture card beats softly (lub-dub): keep what resonates, catch the
- * feeling. The card style is reused, small, by WriteOnlyGraveyard. No props.
+ * Tiago Forte's CODE pipeline: four stage cards, Capture, Organize, Distill, Express, each with its
+ * rule. Static: no animation. The card style is reused, small, by WriteOnlyGraveyard.
+ * Props: `step` (capture | organize | distill | express) draws the compact strip instead, for the
+ * top of each stage's slide: C · O · D · E, the current stage lit and named. With `halves` the strip
+ * also names Forte's two halves, set up on the Vico slide (ConsumeCreate): C · O divergence,
+ * D · E convergence; the current stage's half is lit. Each name is centered between its two letters,
+ * not over the lit pill's word (measured once the fonts are in).
  */
-const { at } = useTimeline(5.5)
-const uid = useId()
-const wire = `kt-sbrain-wire-${uid}`
+defineProps<{ step?: 'capture' | 'organize' | 'distill' | 'express'; halves?: boolean }>()
+const half = (k?: string) => (k === 'capture' || k === 'organize' ? 'divergence' : 'convergence')
 const stages = [
-  { x: 30, letter: 'C', word: 'Capture', sub: 'keep what resonates' },
-  { x: 240, letter: 'O', word: 'Organize', sub: 'by actionability' },
-  { x: 450, letter: 'D', word: 'Distill', sub: 'summarize in layers' },
-  { x: 660, letter: 'E', word: 'Express', sub: 'ship from packets' },
+  { x: 30, key: 'capture', letter: 'C', word: 'Capture', sub: 'keep what resonates' },
+  { x: 240, key: 'organize', letter: 'O', word: 'Organize', sub: 'by actionability' },
+  { x: 450, key: 'distill', letter: 'D', word: 'Distill', sub: 'summarize in layers' },
+  { x: 660, key: 'express', letter: 'E', word: 'Express', sub: 'assemble from notes' },
 ]
-// progressive summarization, drawn bottom-up
-const layers = [
-  { y: 302, n: '1', label: 'raw', kind: 'raw' },
-  { y: 274, n: '2', label: 'bold', kind: 'bold' },
-  { y: 246, n: '3', label: 'highlight', kind: 'hl' },
-  { y: 218, n: '4', label: 'your summary', kind: 'sum' },
+const groups = [
+  { name: 'divergence', stages: stages.slice(0, 2) },
+  { name: 'convergence', stages: stages.slice(2) },
 ]
+
+// shift each half's name so it sits on the midpoint between its two letters
+const groupEls = ref<HTMLElement[]>([])
+const shift = ref([0, 0])
+function centerNames() {
+  shift.value = groupEls.value.map((g, i) => {
+    // slides are mounted ahead of time, hidden: measure only when this one is laid out
+    if (!g.offsetWidth || !g.getBoundingClientRect().width) return shift.value[i]
+    const box = g.getBoundingClientRect()
+    const scale = box.width / g.offsetWidth || 1 // the slide is scaled to the window
+    const mids = [...g.querySelectorAll('.kt-sbrain-strip__stage b')].map((b) => {
+      const r = b.getBoundingClientRect()
+      return (r.left + r.width / 2 - box.left) / scale
+    })
+    return mids.length === 2 ? (mids[0] + mids[1]) / 2 - g.offsetWidth / 2 : 0
+  })
+}
+async function measure() {
+  await nextTick()
+  await document.fonts?.ready
+  centerNames()
+  requestAnimationFrame(centerNames)
+}
+onMounted(measure)
+onSlideEnter(measure)
 </script>
 
 <template>
-  <svg class="kt-sbrain" viewBox="0 0 880 330" role="img"
-    aria-label="CODE: capture, organize, distill, express. Distill builds in layers: raw, bold, highlight, your own summary.">
-    <!-- capture: a soft heartbeat, keep what resonates -->
-    <rect x="22" y="2" width="206" height="138" rx="19" class="kt-sbrain__beat" :class="{ 'is-on': at(4.9) }" />
-
-    <!-- the CODE stages -->
-    <g v-for="(s, i) in stages" :key="s.letter" class="kt-sbrain__part" :class="{ 'is-on': at(0.2 + i * 0.5) }">
-      <rect :x="s.x" y="10" width="190" height="122" rx="14" class="kt-sbrain__card" :class="{ 'is-focus': i === 2 }" />
-      <text :x="s.x + 20" y="62" class="kt-sbrain__letter">{{ s.letter }}</text>
-      <text :x="s.x + 60" y="56" class="kt-sbrain__word">{{ s.word }}</text>
-      <text :x="s.x + 20" y="96" class="kt-sbrain__sub">{{ s.sub }}</text>
-    </g>
-
-    <!-- the pipeline a note travels -->
-    <path :id="wire" d="M125 156 H 755" class="kt-sbrain__wire" :class="{ 'is-on': at(2.2) }" />
-    <g class="kt-sbrain__part" :class="{ 'is-on': at(2.3) }">
-      <rect x="-11" y="-14" width="22" height="28" rx="3" class="kt-sbrain__doc" />
-      <path d="M-5 -5 h10 M-5 1 h10 M-5 7 h6" class="kt-sbrain__lines" />
-      <animateMotion dur="3.6s" repeatCount="indefinite">
-        <mpath :href="`#${wire}`" />
-      </animateMotion>
-    </g>
-
-    <!-- capture lands in an inbox first -->
-    <g class="kt-sbrain__part" :class="{ 'is-on': at(2.6) }">
-      <path d="M125 132 V 206" class="kt-sbrain__link" />
-      <path d="M62 214 h126 v40 a8 8 0 0 1 -8 8 h-110 a8 8 0 0 1 -8 -8z M62 236 h36 l8 10 h38 l8 -10 h36" class="kt-sbrain__tray" />
-      <text x="125" y="290" text-anchor="middle" class="kt-sbrain__tag">inbox first</text>
-    </g>
-
-    <!-- distill, zoomed: progressive summarization -->
-    <g class="kt-sbrain__part" :class="{ 'is-on': at(2.9) }">
-      <path d="M545 132 V 192" class="kt-sbrain__link" />
-      <rect x="360" y="192" width="370" height="128" rx="12" class="kt-sbrain__zoom" />
-    </g>
-    <g v-for="(l, i) in layers" :key="l.n" class="kt-sbrain__part" :class="{ 'is-on': at(3.2 + i * 0.45) }">
-      <text x="382" :y="l.y + 5" class="kt-sbrain__lnum">{{ l.n }}</text>
-      <text x="402" :y="l.y + 5" class="kt-sbrain__lname">{{ l.label }}</text>
-      <rect v-if="l.kind === 'hl'" x="530" :y="l.y - 9" width="96" height="18" rx="4" class="kt-sbrain__hl" />
-      <path :d="l.kind === 'sum' ? `M530 ${l.y} h178` : `M530 ${l.y} h${l.kind === 'raw' ? 178 : l.kind === 'bold' ? 140 : 96}`"
-        class="kt-sbrain__layer" :class="`is-${l.kind}`" />
+  <div v-if="step" class="kt-sbrain-strip" role="img"
+    :aria-label="`CODE, stage: ${step}${halves ? `, ${half(step)}` : ''}`">
+    <!-- with halves: two groups, each named on top -->
+    <template v-if="halves">
+      <template v-for="(g, gi) in groups" :key="g.name">
+        <span v-if="gi" class="kt-sbrain-strip__sep" />
+        <div ref="groupEls" class="kt-sbrain-strip__group">
+          <span class="kt-sbrain-strip__half" :class="{ 'is-on': half(step) === g.name }">
+            <span class="kt-sbrain-strip__name" :style="{ transform: `translateX(${shift[gi]}px)` }">{{ g.name }}</span>
+          </span>
+          <div class="kt-sbrain-strip__row">
+            <template v-for="(s, i) in g.stages" :key="s.key">
+              <span v-if="i" class="kt-sbrain-strip__dot">·</span>
+              <span class="kt-sbrain-strip__stage" :class="{ 'is-on': s.key === step }">
+                <b>{{ s.letter }}</b><span v-if="s.key === step">{{ s.word }}</span>
+              </span>
+            </template>
+          </div>
+        </div>
+      </template>
+    </template>
+    <template v-for="(s, i) in stages" v-else :key="s.key">
+      <span v-if="i" class="kt-sbrain-strip__dot">·</span>
+      <span class="kt-sbrain-strip__stage" :class="{ 'is-on': s.key === step }">
+        <b>{{ s.letter }}</b><span v-if="s.key === step">{{ s.word }}</span>
+      </span>
+    </template>
+  </div>
+  <svg v-else class="kt-sbrain" viewBox="0 0 880 260" role="img"
+    aria-label="CODE: capture, keep what resonates; organize, by actionability; distill, summarize in layers; express, assemble from notes.">
+    <g v-for="s in stages" :key="s.letter">
+      <rect :x="s.x" y="10" width="190" height="240" rx="18" class="kt-sbrain__card" />
+      <text :x="s.x + 95" y="122" text-anchor="middle" class="kt-sbrain__letter">{{ s.letter }}</text>
+      <text :x="s.x + 95" y="172" text-anchor="middle" class="kt-sbrain__word">{{ s.word }}</text>
+      <text :x="s.x + 95" y="206" text-anchor="middle" class="kt-sbrain__sub">{{ s.sub }}</text>
     </g>
   </svg>
 </template>
@@ -80,87 +97,60 @@ const layers = [
   font-family: var(--font-family-sans);
 }
 
-.kt-sbrain__part {
-  opacity: 0;
-  transition: opacity 0.45s;
-}
-
-.kt-sbrain__part.is-on { opacity: 1; }
-
 .kt-sbrain__card {
   fill: var(--kt-tint-primary);
   stroke: var(--kt-c-primary);
   stroke-width: 2.5;
 }
 
-.kt-sbrain__card.is-focus { stroke: var(--kt-hot); }
+.kt-sbrain__letter { font-size: 92px; font-weight: 800; fill: var(--kt-hot); }
+.kt-sbrain__word { font-size: 27px; font-weight: 800; fill: var(--kt-heading); }
+.kt-sbrain__sub { font: 15px var(--font-family-mono); fill: var(--kt-subtle); }
 
-.kt-sbrain__beat {
-  fill: none;
-  stroke: var(--kt-hot);
-  stroke-width: 2;
-  opacity: 0;
+/* the compact strip, above a stage's headline */
+.kt-sbrain-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-family: var(--font-family-sans);
 }
-
-.kt-sbrain__beat.is-on { animation: kt-sbrain-beat 2.6s ease-out infinite; }
-
-@keyframes kt-sbrain-beat {
-  0%, 46%, 100% { opacity: 0; }
-  8% { opacity: 0.6; }
-  18% { opacity: 0.12; }
-  27% { opacity: 0.45; }
+.kt-sbrain-strip__dot { color: var(--kt-subtle); font-weight: 700; }
+.kt-sbrain-strip__stage {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--kt-line);
+  color: var(--kt-subtle);
+  font-size: 15px;
+  line-height: 22px;
 }
-
-.kt-sbrain__letter { font-size: 46px; font-weight: 800; fill: var(--kt-hot); }
-.kt-sbrain__word { font-size: 21px; font-weight: 800; fill: var(--kt-heading); }
-.kt-sbrain__sub { font: 13px var(--font-family-mono); fill: var(--kt-subtle); }
-.kt-sbrain__tag { font: 14px var(--font-family-mono); fill: var(--kt-subtle); }
-
-.kt-sbrain__wire {
-  fill: none;
-  stroke: var(--kt-line);
-  stroke-width: 2.5;
-  stroke-dasharray: 6 7;
-  opacity: 0;
-  transition: opacity 0.45s;
+.kt-sbrain-strip__stage b { font-size: 18px; font-weight: 800; }
+.kt-sbrain-strip__stage.is-on {
+  border-color: var(--kt-c-primary);
+  background: var(--kt-tint-primary);
+  color: var(--kt-heading);
+  font-weight: 800;
 }
+.kt-sbrain-strip__stage.is-on b { color: var(--kt-hot); }
 
-.kt-sbrain__wire.is-on {
-  opacity: 1;
-  stroke: var(--kt-c-primary-soft);
-  animation: kt-sbrain-flow 1s linear infinite;
+/* the two halves (with `halves`): each pair grouped, its name on top, the current half lit */
+.kt-sbrain-strip__group { display: flex; flex-direction: column; align-items: stretch; gap: 5px; }
+.kt-sbrain-strip__row { display: flex; align-items: center; justify-content: center; gap: 8px; }
+/* the name sits on a bracket that spans its pair */
+.kt-sbrain-strip__half {
+  padding-bottom: 3px;
+  border-bottom: 2px solid var(--kt-line);
+  text-align: center;
+  font: 600 12px var(--font-family-mono);
+  line-height: 13px;
+  letter-spacing: 0.04em;
+  color: var(--kt-subtle);
 }
-
-@keyframes kt-sbrain-flow {
-  to { stroke-dashoffset: -26; }
-}
-
-.kt-sbrain__doc { fill: var(--kt-card); stroke: var(--kt-line-strong); stroke-width: 1.5; }
-.kt-sbrain__lines { stroke: var(--kt-subtle); stroke-width: 2.5; stroke-linecap: round; }
-
-.kt-sbrain__link {
-  fill: none;
-  stroke: var(--kt-line-strong);
-  stroke-width: 2;
-  stroke-dasharray: 3 6;
-}
-
-.kt-sbrain__tray {
-  fill: var(--kt-card);
-  stroke: var(--kt-line-strong);
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-
-.kt-sbrain__zoom { fill: var(--kt-card); stroke: var(--kt-hot); stroke-width: 2; }
-
-.kt-sbrain__lnum { font: 700 14px var(--font-family-mono); fill: var(--kt-hot); }
-.kt-sbrain__lname { font: 14px var(--font-family-mono); fill: var(--kt-fg); }
-
-.kt-sbrain__layer { stroke-linecap: round; }
-.kt-sbrain__layer.is-raw { stroke: var(--kt-line-strong); stroke-width: 3; }
-.kt-sbrain__layer.is-bold { stroke: var(--kt-heading); stroke-width: 6; }
-.kt-sbrain__layer.is-hl { stroke: var(--kt-heading); stroke-width: 6; }
-.kt-sbrain__layer.is-sum { stroke: var(--kt-hot); stroke-width: 7; }
-.kt-sbrain__hl { fill: var(--kt-tint-secondary); stroke: var(--kt-hot); stroke-width: 1.5; }
+.kt-sbrain-strip__half.is-on { color: var(--kt-hot); font-weight: 800; border-color: var(--kt-hot); }
+.kt-sbrain-strip__name { display: inline-block; }
+.kt-sbrain-strip__sep { align-self: stretch; width: 2px; margin: 0 8px; background: var(--kt-line); }
+.kt-sbrain-strip:has(.kt-sbrain-strip__group) { align-items: stretch; margin-bottom: 0; }
 </style>

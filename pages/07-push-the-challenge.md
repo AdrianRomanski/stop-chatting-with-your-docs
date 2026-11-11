@@ -1,33 +1,3 @@
----
-kicker: "coach · Gemma 4B · offline"
----
-
-# Four ways to be <span class="hot">questioned</span>
-
-<div class="kt-center" style="margin-top: 4px">
-  <CoachStyles />
-</div>
-
-<!--
-⏱ 0:35 · script: [STAGE CoachStyles #styles "coach · Gemma 4B · offline"] Four ways to be *questioned*
-
-The sparring partner is one small model, Gemma 4B, on Ollama, on my laptop. But it doesn't question everything the same way. It has four styles. Here's each one on the same note: the Distill chapter of Building a Second Brain.
-
-(feynman) Feynman: explain it in plain words, like to a beginner. The buzzwords from my concept note are banned for the round: no "distill", no "main points". So: cut a note down until future me gets it at a glance.
-
-(socratic) Socratic, straight from Farnsworth's book: commit to a claim, then face a counterexample. Highlighting helps, so why not highlight half the page? Because then nothing stands out: each layer keeps 10 to 20 percent of the one before.
-
-(cornell) Cornell: what's the author's thesis, and how does he argue it? Distilling is forgetting on purpose. (the bulls) His example is Picasso's bull: the first state, a full bull; the last, a few lines, and it's still a bull.
-
-(devil) And devil's advocate: where does this break? When is distilling a waste of time? When I'm not making anything. Distill when you're about to create.
-
-(the cards take turns) One question at a time, and never the answer. The style is picked per note: a flag, the note's frontmatter, the config, or Gemma reads the note and picks one.
--->
-
----
-kicker: verification asymmetry
----
-
 # Asking is cheap, <span class="hot">checking</span> isn't
 
 <div class="kt-center" style="margin-top: 14px">
@@ -48,8 +18,6 @@ So the check goes to a bigger model, Gemma 12B, still on my laptop. Temperature 
 (the seesaw tips) That's verification asymmetry: the cost of a mistake decides the model. Small model asks. Bigger model checks.
 -->
 
----
-kicker: "verifier's law"
 ---
 
 # Verification <span class="hot">asymmetry</span>

@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { useTimeline } from '../theme/composables/useTimeline'
-
 /**
  * What gaming taught me: three game cards (Counter-Strike 1.6, League of Legends, World of
  * Warcraft), each ticking off the fundamentals that game is won on. Then two formulas: talent +
  * dedication levels off at "good", fundamentals + talent + dedication climbs to "world class".
  * Last, the banner that hands over to the next section: this talk's fundamental is an Organized
- * Second Brain. No props.
+ * Second Brain. Static: everything shows at once, no animation. No props.
  */
-const { at } = useTimeline(8)
 const games = [
   { name: 'Counter-Strike 1.6', logo: '/images/games/counter-strike.webp', cover: true,
     basics: ['crosshair placement', 'spray control', 'economy'] },
@@ -17,18 +14,17 @@ const games = [
   { name: 'World of Warcraft', logo: '/images/hobbies/world-of-warcraft.png', cover: false,
     basics: ['rotation', 'positioning', 'know your class'] },
 ]
-const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
 </script>
 
 <template>
   <div class="kt-gf">
     <div class="kt-gf__games">
-      <div v-for="(g, gi) in games" :key="g.name" class="kt-gf__game kt-gf__part" :class="{ 'is-on': at(0.15 + gi * 0.35) }">
+      <div v-for="(g, gi) in games" :key="g.name" class="kt-gf__game">
         <div class="kt-gf__logo" :class="{ 'is-cover': g.cover }">
           <img :src="g.logo" :alt="g.name">
         </div>
         <ul class="kt-gf__basics">
-          <li v-for="(b, i) in g.basics" :key="b" class="kt-gf__basic" :class="{ 'is-on': at(basicAt(gi, i)) }">
+          <li v-for="(b, i) in g.basics" :key="b" class="kt-gf__basic">
             <span class="kt-gf__tick">✓</span>{{ b }}
           </li>
         </ul>
@@ -37,13 +33,13 @@ const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
 
     <div class="kt-gf__bottom">
       <div class="kt-gf__sums">
-        <div class="kt-gf__sum kt-gf__part" :class="{ 'is-on': at(4.1) }">
+        <div class="kt-gf__sum">
           <span class="kt-gf__chip">talent</span><span class="kt-gf__op">+</span>
           <span class="kt-gf__chip">dedication</span><span class="kt-gf__op">→</span>
           <svg class="kt-gf__curve" viewBox="0 0 64 28" aria-hidden="true"><path d="M2 24 C 16 10, 24 8, 62 8" class="is-flat" /></svg>
           <span class="kt-gf__result is-warn">stuck at good</span>
         </div>
-        <div class="kt-gf__sum kt-gf__part" :class="{ 'is-on': at(5.3) }">
+        <div class="kt-gf__sum">
           <span class="kt-gf__chip is-hot">fundamentals</span><span class="kt-gf__op">+</span>
           <span class="kt-gf__chip">talent</span><span class="kt-gf__op">+</span>
           <span class="kt-gf__chip">dedication</span><span class="kt-gf__op">→</span>
@@ -52,7 +48,7 @@ const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
         </div>
       </div>
 
-      <div class="kt-gf__banner kt-gf__pop" :class="{ 'is-on': at(6.6) }">
+      <div class="kt-gf__banner">
         <svg class="kt-gf__brain" viewBox="-40 -34 80 68" aria-hidden="true">
           <path d="M0 -32 c-22 0 -38 14 -38 32 c0 18 16 32 38 32 c22 0 38 -14 38 -32 c0 -18 -16 -32 -38 -32z M0 -28 v56 M-22 -12 c8 4 8 12 0 16 M22 -12 c-8 4 -8 12 0 16" />
         </svg>
@@ -75,13 +71,6 @@ const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
   font-family: var(--font-family-sans);
 }
 
-.kt-gf__part {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.45s, transform 0.45s;
-}
-
-.kt-gf__part.is-on { opacity: 1; transform: none; }
 
 .kt-gf__games {
   display: grid;
@@ -125,12 +114,8 @@ const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
   gap: 10px;
   font: 15px var(--font-family-mono);
   color: var(--kt-fg);
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.35s, transform 0.35s;
 }
 
-.kt-gf__basic.is-on { opacity: 1; transform: none; }
 
 /* the theme gives every slide list a square bullet; the tick is the bullet here */
 .kt-slide ul > li.kt-gf__basic { margin: 0; padding-left: 0; }
@@ -191,13 +176,6 @@ const basicAt = (g: number, i: number) => 1.3 + g * 0.8 + i * 0.22
   box-shadow: 0 0 40px color-mix(in srgb, var(--kt-c-primary) 55%, transparent);
 }
 
-.kt-gf__pop {
-  opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.4s, transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-
-.kt-gf__pop.is-on { opacity: 1; transform: none; }
 
 .kt-gf__brain { width: 60px; height: 52px; flex: none; }
 .kt-gf__brain path {

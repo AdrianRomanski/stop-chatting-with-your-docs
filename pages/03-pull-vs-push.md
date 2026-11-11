@@ -1,28 +1,4 @@
 ---
-kicker: two architectures
----
-
-# Pull a summary, or get <span class="hot">pushed</span>
-
-<div class="kt-center" style="margin-top: 16px">
-  <PullPush />
-</div>
-
-<!--
-⏱ 0:45 · script line 26: [STAGE PullPush #push "two architectures"] Pull a summary, or get *pushed* ⏱ 45s
-
-Two ways to wire AI to your notes. And the whole difference is who does the synthesis.
-
-Pull Based Architecture. (left) Five notes. I drop them all into the AI, and I ask: summarize. (notes drop, gears) The AI finds what they have in common. The AI connects them. I read the result. My thinking: flat. Idle. I outsourced the synthesis.
-
-Push Based Architecture. (right) The same five notes, with Tiago Forte's Progressive Summarization. Layer one: collect them. (notes fly in) Layer two: bold the lines that matter. (bold) Layer three: highlight the best of the bold. (highlight)
-
-And I send what I distilled to the AI. (→ coach) And it pushes back: why is that the key idea? (question) Now I have to defend it. That's cognitive sparring. My thinking: under load.
-
-That's where understanding gets built: when something pushes back.
--->
-
----
 frame: false
 ---
 
@@ -44,8 +20,6 @@ Michael had something to say about that. (Michael types) "Pull-based? At PushBas
 -->
 
 
----
-kicker: what gaming taught me
 ---
 
 # Talent won't carry you, <span class="hot">fundamentals</span> will
