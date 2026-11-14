@@ -7,12 +7,13 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * hexagon inside it, holding the four coaching styles (feynman, socratic, cornell, devil; domain
  * coaching-style.ts). On the driving side, the terminal and "cli", the composition root, pointing
  * in. On the driven side, the four adapters, each with its logo or icon, plugging into the port it
- * implements (adapter-vault-mcp McpVault: NotesRepository, Library, SessionLog, VaultFiling; adapter-ollama:
+ * implements. The slide names two ports at most, the ones that matter, never "+ N more" (all of them:
+ * adapter-vault-mcp McpVault: NotesRepository, Library, SessionLog, VaultFiling; adapter-ollama:
  * SparringPartner + 6 more, the synthesis, structure, study, elaboration and teach partners and the style
  * classifier; gemini · Judge; local-state · PendingJudgements, Clock). The application: one use case per
  * command (read, synthesize, group, generate, spar, judge, study, elaborate, due, teach, climb). Every arrow points inward. Then an arrow tries to point
- * out from the domain to an adapter, turns red with a ✕ and fades: "lint enforces it"
- * (@nx/enforce-module-boundaries). No props.
+ * out from the domain to an adapter, turns red with a ✕ and fades: "Architecture is protected by [Nx logo] enforce module boundaries"
+ * (@nx/enforce-module-boundaries), plain text under the hexagon. No props.
  */
 const { at } = useTimeline(5.2)
 const uid = useId()
@@ -20,6 +21,8 @@ const id = (name: string) => `kt-clayers-${name}-${uid}`
 
 // flat-top hexagons around (CX, CY)
 const CX = 380
+/** the Nx line: where "protected by" ends and the logo starts (measured: the whole line centred on CX) */
+const NX = { x: CX - 21 }
 const CY = 215
 const R = 180
 const RI = 100
@@ -43,8 +46,8 @@ const AX = 690
 const AW = 200
 const AH = 70
 const adapters = [
-  { name: 'vault-mcp', tech: 'kb-template', port: ['NotesRepository · Library', 'SessionLog · VaultFiling'], tone: 'local', logo: '/images/logos/pushbased-mark.png' },
-  { name: 'ollama', tech: 'Gemma · offline', port: ['SparringPartner', '+ 6 more partners'], tone: 'local', logo: '/images/logos/gemma-mark.png' },
+  { name: 'vault-mcp', tech: 'kb-template', port: ['NotesRepository · SessionLog'], tone: 'local', logo: '/images/logos/pushbased-mark.png' },
+  { name: 'ollama', tech: 'Gemma · offline', port: ['SparringPartner'], tone: 'local', logo: '/images/logos/gemma-mark.png' },
   { name: 'gemini', tech: 'Argon · online', port: ['Judge'], tone: 'cloud', logo: '/images/logos/gemini-mark.png' },
   { name: 'local-state', tech: 'queue · clock', port: ['PendingJudgements · Clock'], tone: 'local', logo: '' },
 ].map((a, i) => {
@@ -56,7 +59,7 @@ const adapters = [
 
 <template>
   <svg class="kt-clayers" viewBox="0 0 900 430" role="img"
-    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. The application has one use case per command. On the driven side four adapters plug into the application's ports: vault-mcp for kb-template, ollama for Gemma's seven partners, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: lint enforces it.">
+    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. The application has one use case per command. On the driven side four adapters plug into the application's ports: vault-mcp for kb-template, ollama for Gemma's seven partners, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: architecture is protected by Nx enforce module boundaries.">
     <defs>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M1 1 L 9 5 L 1 9" class="kt-clayers__head" />
@@ -129,11 +132,11 @@ const adapters = [
       </g>
     </g>
 
-    <!-- lint enforces it -->
+    <!-- the boundaries, enforced by Nx -->
     <g class="kt-clayers__pop" :class="{ 'is-on': at(3.2) }">
-      <rect :x="CX - 200" y="398" width="400" height="28" rx="14" class="kt-clayers__pill" />
-      <solar-shield-check-bold-duotone :x="CX - 186" y="402" width="20" height="20" class="kt-clayers__icon is-good" />
-      <text :x="CX + 12" y="417" text-anchor="middle" class="kt-clayers__pilltext">every arrow points in · lint enforces it</text>
+      <text :x="NX.x" y="415" text-anchor="end" class="kt-clayers__nx">Architecture is protected by</text>
+      <image href="/images/logos/nx.svg" :x="NX.x + 7" y="401" width="35" height="19" class="kt-clayers__nxlogo" />
+      <text :x="NX.x + 49" y="415" class="kt-clayers__nx">enforce module boundaries</text>
     </g>
   </svg>
 </template>
@@ -208,7 +211,7 @@ const adapters = [
 .kt-clayers__wrong.is-bad .kt-clayers__x,
 .kt-clayers__wrong.is-bad .kt-clayers__xmark { opacity: 1; }
 
-/* the pill */
+/* the Nx line, after the red arrow */
 .kt-clayers__pop {
   opacity: 0;
   transform-box: fill-box;
@@ -217,8 +220,9 @@ const adapters = [
   transition: opacity 0.2s, transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1);
 }
 .kt-clayers__pop.is-on { opacity: 1; transform: none; }
-.kt-clayers__pill { fill: var(--kt-tint-success); stroke: var(--kt-good); stroke-width: 1.5; }
-.kt-clayers__pilltext { font: 800 13px var(--font-family-mono); fill: var(--kt-good); }
+.kt-clayers__nx { font-size: 17px; font-weight: 700; fill: var(--kt-fg); }
+/* the official Nx logo is near-black: shown white on the dark slide */
+.kt-clayers__nxlogo { filter: invert(1); }
 
 @media (prefers-reduced-motion: reduce) {
   .kt-clayers__wire { animation: none !important; }

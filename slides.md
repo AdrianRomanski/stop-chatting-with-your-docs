@@ -7,7 +7,7 @@ info: |
   answers without ever seeing the notes.
 colorSchema: dark
 themeConfig:
-  eventLogo: /images/logos/js-poland.webp
+  eventLogo: /images/logos/gdg.png
   speaker:
     name: Adrian Romanski
     handle: ''

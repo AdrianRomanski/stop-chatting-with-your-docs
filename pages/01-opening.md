@@ -2,10 +2,10 @@
 layout: cover
 scheme: light
 surface: soft
-# the JS Poland logo sits by my name here; in the corner it would land on the illustration
+# the GDG logo sits by my name here; in the corner it would land on the illustration
 frame: false
-partner: /images/logos/js-poland.webp
-partnerLabel: 'JS Poland · 18 Nov 2026'
+partner: /images/logos/gdg.png
+partnerLabel: 'DevFest Wrocław · 14 Nov 2026'
 subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & Gemini 4 Argon"
 ---
 
@@ -19,11 +19,11 @@ subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & G
 :global(.kt-cover__sub) { max-width: 600px; }
 :global(.kt-cover__by) { font-size: 22px; gap: 18px; }
 :global(.kt-cover__logo) { height: 40px; }
-/* the event, JS Poland, above the title: the bottom belongs to the illustration */
+/* the event, DevFest Wrocław, above the title: the bottom belongs to the illustration */
 :global(.slidev-layout.kt-cover) { justify-content: flex-start !important; padding-top: 58px !important; }
 :global(.kt-cover__body) { display: flex; flex-direction: column; }
 :global(.kt-cover__partner) { order: -1; margin: 0 0 18px !important; }
-:global(.kt-cover__partner img) { height: 44px !important; }
+:global(.kt-cover__partner img) { height: 44px !important; width: 92px; object-fit: cover; object-position: left; } /* the GDG mark only: its wordmark is white */
 </style>
 
 <!--
@@ -159,7 +159,7 @@ status: in-progress
 <h1 class="s">Stop learning from <span class="hot">summaries</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="0" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge']" :at="0" :from="1" />
 </div>
 
 <!--

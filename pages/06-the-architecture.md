@@ -6,7 +6,7 @@ align: center
 <h1 class="s">Push the <span class="hot">challenge</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge', 'judge blind']" :at="3" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge']" :at="3" :from="1" />
 </div>
 
 <!--
@@ -247,62 +247,4 @@ status: in-progress
 (3, answer) Gemma 4B, the small model, offline, asks. One question at a time, never the answer: highlighting helps, so why not highlight half the page? And I answer, in my own words: then nothing stands out; each layer keeps 10 to 20 percent of the last.
 
 (4, check) But the small model doesn't grade me. A stronger one does: Gemma 12B, still on my laptop. One core assertion at a time, and it only ticks one off when it can quote my own words as evidence. (covered) Here it can. (pass) Pass.
--->
-
-
-
----
-status: in-progress
----
-
-# The loop inside the <span class="hot">climb</span>
-
-<div class="kt-center" style="margin-top: 14px">
-  <CoachLoop />
-</div>
-
-<!--
-⏱ 0:50 · script: [STEPS] The loop inside the *climb* | the README loop with the climb's seven steps numbered on it: 1 read (+ distill, synthesize the bridge) ticked; 2 group, 3 generate before the loop; spar · judge · study = 4 Retrieve; 5 elaborate after a round; review = 6 Space; 7 teach after a spaced pass; the ladder under review [^ladder] ⏱ 50s
-
-(the left zone) Read, distill, and the bridge, synthesize: you just saw those. That half lives in the knowledge base, my second brain: (the logos) Obsidian, where I read and mark, on a kb-template vault.
-
-(the coach) Everything else is ai-coach, and every step of the climb has its place. (2) Group: once a book has its concepts, I sort them into layers I name myself. (3) Generate: before I spar a concept for the first time, I guess what it says from its title alone, then check.
-
-(the ring) Then the loop. Spar, offline, with Gemma. Judge, online, with Argon. Study what you missed. (Retrieve) Those three together are step four: Retrieve, from memory, note closed.
-
-(5) After a round, elaborate: why does it work, what does it link to, where would I use it. (6) And review: the idea comes back when it's due, and I spar it again after a gap. That's Space.
-
-(7) Pass a spaced review, and the last step opens: teach it, to a student who gets it wrong.
-
-(the tags) And under each step, who does the work. Read, distill, review: no AI, just code. Synthesize, group, generate, teach: Gemma, offline, as a plain helper. Only spar, study and elaborate speak in the note's style, feynman, socratic, cornell or devil. And the judge, Argon, online, grades by the style I sparred in.
-
-(the ladder) The schedule: fail, and it's back tomorrow. A new idea comes back tomorrow too, even when I pass. After that, the sparring partner's pass gives three days. Pass the judge, and the gap grows: seven days, fourteen, thirty, up to a year.
--->
-
-
----
-status: in-progress
----
-
-# Ports and <span class="hot">adapters</span>
-
-<div class="kt-center" style="margin-top: 4px">
-  <div style="width: 800px">
-    <CoachLayers />
-  </div>
-</div>
-
-
-<!--
-⏱ 0:40 · script: [FILES "hexagonal architecture"] Ports and *adapters* | the hexagon: domain inside application, cli driving from the left, four adapters plugging into ports on the right ⏱ 40s
-
-Hexagonal, enforced by Nx.
-
-(the hexagon) In the middle, the application: one use case per command. Read, synthesize, group, generate, spar, judge, study, elaborate, teach, and climb, which shows where each idea stands. Inside it, the domain: the rules of learning, including the four coaching styles, feynman, socratic, cornell and devil; more on those in a minute. It imports nothing, not even Node.
-
-(the cli) On the left, the driving side: the terminal and the cli, the composition root, the only place a port meets its adapter.
-
-(the adapters) On the right, the driven side. The core defines the ports, and each piece of technology plugs in: the vault over MCP, Gemma on Ollama, which plays seven parts now, the sparring partner, the synthesis partner, the student I teach and four more, Argon as the judge, and local state for the queue and the clock. Swapping Gemma for another model is one new adapter.
-
-(the red arrow) Every arrow points in. If one points out, lint fails the build.
 -->

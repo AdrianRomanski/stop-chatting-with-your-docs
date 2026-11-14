@@ -40,7 +40,7 @@ withDefaults(defineProps<{ label: string; file?: string; width?: number; height?
 
 .kt-asset b {
   color: var(--kt-warn);
-  font-family: var(--kt-font-mono, ui-monospace, monospace);
+  font-family: var(--font-family-mono);
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;

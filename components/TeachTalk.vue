@@ -4,14 +4,13 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * The payoff of the climb (MasteryStairs, ClimbCheckpoint): the last step, Teach, is this talk, given at
- * JS Poland 2026 in a Multikino hall (Złote Tarasy, Warsaw; js-poland.pl).
- * 1. On the cinema screen, the stairs of ClimbCheckpoint (Read, the Synthesize bridge, Group … Space, Teach)
+ * GDG DevFest Wrocław 2026, in a lecture hall at Uniwersytet Ekonomiczny (Komandorska 118/120, Wrocław).
+ * 1. On the projector screen, the stairs of ClimbCheckpoint (Read, the Synthesize bridge, Group … Space, Teach)
  *    light up block by block as I hop up them; on Teach (the Protégé Effect, yellow) a flag and confetti,
  *    and under its name "this talk".
- * 2. Below the screen, the hall: stepped rows of cinema seats (rows A–C, two aisles), people in them;
+ * 2. Below the screen, the hall: stepped rows of seats (rows A–C, two aisles), people in them;
  *    row by row they light up warm: the students. "the students: you".
- * 3. At the foot, the two logos: JS Poland and Multikino (its file also carries the parent brand "vue";
- *    the image is cropped to the Multikino wordmark, so no Vue.js confusion).
+ * 3. At the foot, the GDG logo with DevFest Wrocław, and the venue.
  * No props.
  */
 const { t, at } = useTimeline(7)
@@ -31,7 +30,7 @@ const blocks = ['Read', 'Synthesize', 'Group', 'Generate', 'Retrieve', 'Elaborat
   top: 126 - i * 14,
   kind: i === 0 ? 'basb' : i === 1 ? 'synth' : i === 7 ? 'teach' : 'mis',
 }))
-// each block in the colors of the books over it (as on ClimbCheckpoint's slide 37): Building a Second Brain
+// each block in the colors of the books over it (as on the "Six steps up the climb" ClimbCheckpoint): Building a Second Brain
 // blue, Make It Stick green, the styles' books yellow, Feynman's Mental Models yellow, Tomorrowmind white
 const BOOKS: [string, number, number][] = [['basb', 0, 3], ['mis', 2, 6], ['style', 4, 6], ['teach', 7, 7], ['tm', 0, 7]]
 const striped = blocks.map(b => {
@@ -85,7 +84,7 @@ const rowsX = 440 - rowW / 2 - 18
 
 <template>
   <svg class="kt-teachtalk" viewBox="0 0 880 400" role="img"
-    aria-label="A cinema hall at JS Poland, in Multikino. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this talk. Below the screen, rows A to C of cinema seats with people in them light up: the students, you. At the bottom, the JS Poland and Multikino logos.">
+    aria-label="A lecture hall at DevFest Wrocław, at Uniwersytet Ekonomiczny. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this talk. Below the screen, rows A to C of seats with people in them light up: the students, you. At the bottom, the GDG logo, DevFest Wrocław, and the venue.">
     <defs>
       <clipPath :id="face" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
       <linearGradient v-for="(g, i) in striped" :id="`${crop}-st${i}`" :key="`st${i}`" x1="0" y1="0" x2="1" y2="0">
@@ -149,14 +148,13 @@ const rowsX = 440 - rowW / 2 - 18
     <!-- the room, and who's in it -->
     <g class="kt-teachtalk__fade" :class="{ 'is-on': at(LIGHT + 0.5) }">
       <path d="M22 352 H 858" class="kt-teachtalk__floor" />
-      <image href="/images/logos/js-poland.webp" x="26" y="360" width="38" height="32" preserveAspectRatio="xMidYMid meet" />
-      <text x="72" y="381" class="kt-teachtalk__event">JS Poland</text>
-      <text x="440" y="383" text-anchor="middle" class="kt-teachtalk__you">the students: <tspan class="is-hot">you</tspan></text>
-      <!-- the Multikino wordmark only: its file also carries the parent brand "vue" -->
-      <svg x="754" y="364" width="104" height="20" viewBox="0 0 306 58" preserveAspectRatio="xMaxYMid meet">
-        <image href="/images/logos/multikino.png" x="0" y="0" width="444" height="58" />
+      <!-- the GDG mark only: its wordmark is white -->
+      <svg x="26" y="364" width="42" height="20" viewBox="0 0 222 107" preserveAspectRatio="xMinYMid meet">
+        <image href="/images/logos/gdg.png" x="0" y="0" width="501" height="107" />
       </svg>
-      <text x="858" y="396" text-anchor="end" class="kt-teachtalk__venue">Złote Tarasy</text>
+      <text x="72" y="381" class="kt-teachtalk__event">DevFest Wrocław</text>
+      <text x="440" y="383" text-anchor="middle" class="kt-teachtalk__you">the students: <tspan class="is-hot">you</tspan></text>
+      <text x="858" y="381" text-anchor="end" class="kt-teachtalk__event">Uniwersytet Ekonomiczny</text>
     </g>
   </svg>
 </template>
@@ -166,7 +164,7 @@ const rowsX = 440 - rowW / 2 - 18
 .kt-teachtalk__fade { opacity: 0; transition: opacity 0.4s; }
 .kt-teachtalk__fade.is-on { opacity: 1; }
 
-/* the cinema screen and the projector's light under it */
+/* the projector screen and the projector's light under it */
 .kt-teachtalk__screen { fill: color-mix(in srgb, var(--kt-fg) 5%, var(--kt-bg)); stroke: var(--kt-line-strong); stroke-width: 2; }
 .kt-teachtalk__beam0 { stop-color: var(--kt-fg); stop-opacity: 0.07; }
 .kt-teachtalk__beam1 { stop-color: var(--kt-fg); stop-opacity: 0; }
@@ -208,7 +206,7 @@ const rowsX = 440 - rowW / 2 - 18
 .kt-teachtalk__ring { fill: none; stroke: var(--kt-c-primary-soft); stroke-width: 3; transition: stroke 0.4s; }
 .kt-teachtalk__ring.is-top { stroke: var(--kt-warn); }
 
-/* the hall: cinema seats in the venue's pink, people in them */
+/* the hall: seats in the talk's hot color, people in them */
 .kt-teachtalk__rowname { font: 800 12px var(--font-family-mono); fill: var(--kt-muted); }
 .kt-teachtalk__tier { stroke: var(--kt-line); stroke-width: 1.5; }
 .kt-teachtalk__seat { opacity: 0; transition: opacity 0.4s; }

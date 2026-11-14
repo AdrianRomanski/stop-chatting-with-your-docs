@@ -1,60 +1,4 @@
 
-# Five books, one <span class="hot">talk</span>
-
-<div class="kt-center" style="margin-top: 14px">
-  <BooksToTalk />
-</div>
-
-<!--
-⏱ 0:20 · script: [STAGE BooksToTalk "how this talk was made"] Five books, one *talk* | the five covers land, their lines run into notes → distill → concepts → this talk ⏱ 20s
-
-(the books) Everything you heard today started here. Building a Second Brain: my notes are a resource, not a graveyard. Make It Stick: recalling beats rereading. Feynman: if you can't explain it plainly, you don't get it. Farnsworth's Socratic Method: claim, why, counterexample. And Tomorrowmind: hand all your thinking to AI and you lose the resilience to adapt; use it as a coach and you keep it.
-
-(notes) I read them and marked what resonated. (distill) I distilled the marks, layer by layer. (concepts) I turned them into concepts, one idea in my words, and the coach sparred with me on them.
-
-(this talk) And from those concepts, I built this talk.
--->
----
-status: in-progress
----
-
-# The application <span class="hot">flow</span>
-
-<div class="kt-center" style="margin-top: 33px">
-  <ArchFlow />
-</div>
-
-<style>
-/* two dots (2 × 24px) higher than the other headlines, so the diagram can grow */
-h1 { margin-top: -48px; }
-</style>
-
-<!--
-⏱ 1:25 · script: [ARCH #arch] The application *flow* | one story up the climb, Read to Space, through the architecture (ArchFlow) ⏱ 85s
-Paced to this narration (S in ArchFlow.vue): the map builds in the first 8 s; read 0:08, synthesize 0:15, group 0:23, generate 0:30, spar 0:36, judge 0:45, study 0:51, judge again 0:56, elaborate 1:01, due · spar · judge 1:07, the lock 1:19. The chip on top names the climb step; only the parts a command uses light up.
-
-(the map) Now the whole thing, in one go. My laptop, offline. My second brain, in Obsidian; kb-template, the only way in. The coach, Gemma 4B and 12B on Ollama. And the judge, Argon, in the cloud.
-
-(1 · Read) coach read. A page comes out of the vault; my notes and my summary go back in. No model lights up: no AI.
-
-(bridge · Synthesize) coach synthesize. My marks go to Gemma 4B. It groups them, asks me what my summary left out, and drafts from my answers. A concept note goes back to the vault.
-
-(2 · Group) coach group. The book's concepts go to Gemma; it asks about my layers, never proposes one. The structure goes back.
-
-(3 · Generate) coach generate. The title only. I guess first; the bigger Gemma checks my "got it"s. Not graded.
-
-(4 · Retrieve) coach spar. Gemma asks. My first answer is weak, so it digs: a follow-up. My better answer ends the round, and 12B checks it: Tier 1, passed. (judge) Then online, coach judge: only my answer and my claims cross. Argon finds the gap: Tier 2, failed. (study) coach study: a hint, I explain it again. (judge) Back to the judge: passed.
-
-(5 · Elaborate) coach elaborate. Why does it work, what does it link to, where would I use it. My answers go into the note.
-
-(6 · Space) And a day later, coach due: the vault brings it back. Spar, judge, passed. Next time in seven days, then fourteen, thirty, up to a year.
-
-(the lock) And my notes? One tries to leave. It stops at the lock. Read to Space, and my notes never left the laptop.
--->
-
-
----
-
 # Back on the <span class="hot">train</span>
 
 <div class="kt-center" style="margin-top: 22px">
@@ -76,9 +20,26 @@ Remember the train? No signal, a finished book, and one question: how can I know
 
 One step is still open.
 
-(If asked: this slide is the loop as I use it, not a recorded session; my real first session is the one on slide 36, and that one failed.)
+(If asked: this slide is the loop as I use it, not a recorded session; my real first session is the one on the AnswerGap slide ("It found the gap I couldn't see"), and that one failed.)
 -->
 
+---
+
+# Five books, one <span class="hot">talk</span>
+
+<div class="kt-center" style="margin-top: 14px">
+  <BooksToTalk />
+</div>
+
+<!--
+⏱ 0:20 · script: [STAGE BooksToTalk "how this talk was made"] Five books, one *talk* | the five covers land, their lines run into notes → distill → concepts → this talk ⏱ 20s
+
+(the books) Everything you heard today started here. Building a Second Brain: my notes are a resource, not a graveyard. Make It Stick: recalling beats rereading. Feynman: if you can't explain it plainly, you don't get it. Farnsworth's Socratic Method: claim, why, counterexample. And Tomorrowmind: hand all your thinking to AI and you lose the resilience to adapt; use it as a coach and you keep it.
+
+(notes) I read them and marked what resonated. (distill) I distilled the marks, layer by layer. (concepts) I turned them into concepts, one idea in my words, and the coach sparred with me on them.
+
+(this talk) And from those concepts, I built this talk.
+-->
 
 ---
 status: in-progress
@@ -91,13 +52,13 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *talk* | pays off slide 8's summit (TEACH, the Protégé Effect) and slide 28's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this talk"; below, a Multikino hall, rows A–C, lights up: the students, you; JS Poland and Multikino logos at the foot ⏱ 25s
+⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *talk* | pays off slide 8's summit (TEACH, the Protégé Effect) and slide 28's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this talk"; below, a lecture hall, rows A–C, lights up: the students, you; the GDG logo with DevFest Wrocław and the venue, Uniwersytet Ekonomiczny, at the foot ⏱ 25s
 
 (the stairs light up, I hop) Remember the top of the stairs? Teach. The Protégé Effect: you understand something best when you have to explain it to someone else.
 
 (the flag) So, what about teaching? Ladies and gentlemen: I just did it. (this talk) The last step of my climb was this talk.
 
-(the hall lights up, row by row) And the students were you, here in this hall at JS Poland. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
+(the hall lights up, row by row) And the students were you, here in this hall at DevFest Wrocław. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
 
 Thank you.
 -->
