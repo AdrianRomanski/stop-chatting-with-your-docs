@@ -6,7 +6,7 @@ align: center
 <h1 class="s">Push the <span class="hot">challenge</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge']" :at="3" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'push the challenge']" :at="2" :from="1" />
 </div>
 
 <!--
@@ -202,9 +202,9 @@ status: in-progress
 
 (the card) Cornell is built for non-technical books, essays and big ideas. No nitpicking tiny mechanical details: the big picture. What is the author's main argument, and why did they use this story, this metaphor, to prove it?
 
-(the question) Why does the author argue you should treat "Future You" like an impatient stranger? And how does that change the way you save a note today?
+(the question) Why does the author say you write notes for a Future You who has lost today's context?
 
-(winning answer) Because six months from now, I won't remember the context I have in my head today. If I just save a raw 30-page article, Future Me won't have time to re-read it under a deadline. So I highlight the core takeaway now, as a gift to my future self.
+(winning answer) Because six months from now, the context I have in my head today is gone. Without notes, I'd have to read the whole thing again from the beginning to get it back. With notes, I just read my own notes and the summary I wrote, and I'm back in.
 -->
 
 ---
@@ -222,29 +222,55 @@ status: in-progress
 
 (the card) Devil's advocate: a skeptical teammate in a design review. It assumes my idea works fine on a sunny day, and asks right away what happens when things go wrong in real life: when I'm busy, stressed, or dealing with massive scale.
 
-(the question) This note-taking system sounds great when you have free time on Sunday. But where does it break during a chaotic crunch week at work, and how do you recover?
+(the question) Distilling sounds great on a quiet Sunday. But what happens in a crunch week at work, when you have no time for it?
 
-(winning answer) It breaks if I bold and summarize every article the moment I save it: that's unpaid homework. The fix is just-in-time: I only compress a note when I open it again for a real project. And if my inbox overflows, I archive the batch and start fresh.
+(winning answer) I only distill a note when a project needs it, not the moment I save it. So I can skip a day, and in a crunch week I just focus on the work. Nothing breaks: notes are a marathon, not a sprint.
 -->
 
 ---
 status: in-progress
 ---
 
-# One round of <span class="hot">sparring</span>
+# One round of sparring, one <span class="hot">gap</span>
 
 <div class="kt-center" style="margin-top: 6px">
   <SparRound />
 </div>
 
 <!--
-⏱ 0:40 · script: [STAGE SparRound "coach spar"] One round of *sparring* | four beats: pick a concept (Distillation) → pick the coach's style (socratic) → Gemma 4B asks, I answer → Gemma 12B verifies each core assertion against my words: covered, pass ⏱ 40s
+⏱ 0:40 · script: [STAGE SparRound "coach spar"] One round of sparring, one *gap* | four beats: pick a concept (Distillation) → pick the coach's style (socratic) → Gemma 4B asks, I answer, vaguely → Gemma 12B verifies each core assertion against my words: no words of mine say it, missed, fail, one gap; next: coach study ⏱ 40s
+Status: changed 2026-11-16, the round now fails so the study session can follow. The answer is illustrative.
 
 (1, concept) Sparring starts with a choice: which concept do I want to be sparred on? From the book's concepts, I pick Distillation.
 
 (2, style) Then, how the coach should push me: one of four styles. This time, socratic.
 
-(3, answer) Gemma 4B, the small model, offline, asks. One question at a time, never the answer: highlighting helps, so why not highlight half the page? And I answer, in my own words: then nothing stands out; each layer keeps 10 to 20 percent of the last.
+(3, answer) Gemma 4B, the small model, offline, asks. One question at a time, never the answer: highlighting helps, so why not highlight half the page? And I answer, in my own words: it still helps, you see what matters when you skim. Sounds fine, right?
 
-(4, check) But the small model doesn't grade me. A stronger one does: Gemma 12B, still on my laptop. One core assertion at a time, and it only ticks one off when it can quote my own words as evidence. (covered) Here it can. (pass) Pass.
+(4, check) But the small model doesn't grade me. A stronger one does: Gemma 12B, still on my laptop. One core assertion at a time, and it only ticks one off when it can quote my own words as evidence. (missed) Here it can't. Nothing I said is about highlighting only inside the bold. (fail) Fail, one gap. (next) So I don't move on. I study.
+-->
+
+---
+status: in-progress
+---
+
+# Study the <span class="hot">gap</span>
+
+<div class="kt-center" style="margin-top: 6px">
+  <StudySession />
+</div>
+
+<!--
+⏱ 0:45 · script: [STAGE StudySession "coach study"] Study the *gap* | four beats: the open gap from the failed round (highlight portions of the bold), coach study → Gemma 4B asks a guiding question, never the answer → try 1: a miss, and the author's words to reread, Building a Second Brain p. 119 → try 2 in my own words: gap closed → coach spar again: pass ⏱ 45s
+Status: new 2026-11-16 (ADR-AIC-0017, ADR-AIC-0020). Real: the rules and the book quote (p. 119). Illustrative: my two tries.
+
+(1, gap) coach study takes the gap from the round I just failed: the learner highlights portions of the bolded text. Offline, and nothing is recorded. It doesn't change my score.
+
+(2, guide) Gemma asks one guiding question. After you bold, what do you do with only the bold? It points at the gap. It never gives me the answer.
+
+(3, try 1) I try: I highlight what matters. (miss) Still vague. A miss. (the book) So now, and only now, the coach shows me where to look: the author's own words, with the page. Now read through only the bolded passages, and highlight the best of the best. Page 119.
+
+(4, try 2) I put the book away and explain it again, in my words: I reread only my bold, and mark the best few lines of it. (closed) Gap closed. Two tries per gap, and asking for a hint never costs one.
+
+(spar again) But studying isn't the test. The next spar is. (pass) Pass.
 -->

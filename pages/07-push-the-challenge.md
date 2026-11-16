@@ -1,35 +1,30 @@
-# Asking is cheap, <span class="hot">checking</span> isn't
+# Why can't the same model check its <span class="hot">questions</span>?
 
-<div class="kt-center" style="margin-top: 14px">
-  <VerifyAsym />
+<div style="position: absolute; left: -52px; top: 118px; width: 920px">
+  <WhySmallChecks />
 </div>
 
 <!--
-⏱ 0:35 · script: [STAGE VerifyAsym "verification asymmetry"] Asking is cheap, *checking* isn't
+⏱ 0:20 · script: [STAGE WhySmallChecks "why two models"] Why can't the same model check its *questions*? | the two models from the round, bigger, on the laptop: Gemma 4B asks, my answer goes right, Gemma 12B verifies; both pills centered in their boxes; one line from "ask question" through "my answer" to "verify answer"; "offline" with the Ollama logo top middle. Bridges SparRound and StudySession to VerifierLaw ⏱ 20s
 
-So why is the small model allowed to ask? Because of an asymmetry.
+(4B asks) In those rounds, two models did the work. Gemma 4B asked. (my answer, 12B verifies) And a bigger one, Gemma 12B, checked my answers: the miss, and after studying, the pass.
 
-(ask) Asking is generating. Gemma 4B fires questions, in any style. (so-so question) Some of them are a bit off. And that's fine: (spark) a so-so question still makes me think. A wrong question is cheap.
+(the line) So why can't the same model that asked the question check the answer?
 
-(check) Checking is verifying. Did my answer really cover each of my six core assertions? Here a mistake is expensive. (4B: pass, struck) If a model says "pass" when I didn't get it, that's the fluency illusion again: I walk away thinking I understand.
-
-So the check goes to a bigger model, Gemma 12B, still on my laptop. Temperature zero, one assertion at a time, and it only ticks one off when it can quote my own words as evidence.
-
-(the seesaw tips) That's verification asymmetry: the cost of a mistake decides the model. Small model asks. Bigger model checks.
+It turns out the two jobs are not the same size.
 -->
-
 ---
 
 # Verification <span class="hot">asymmetry</span>
 
-<div class="kt-center" style="margin-top: 18px">
+<div class="kt-center" style="margin-top: 0; zoom: 0.95">
   <VerifierLaw />
 </div>
 
 <!--
 ⏱ 0:40 · script: [STAGE VerifierLaw "verifier's law"] Verification *asymmetry* | two panels, classic vs inverted asymmetry, then Jason Wei's verifier's law and the conclusion: the check gets Gemma 12B ⏱ 40s
 
-Why does the check need a bigger model? Verification asymmetry: the effort to check an answer is not the effort to make it.
+Because of verification asymmetry: the effort to check an answer is not the effort to make it.
 
 (classic) The classic kind: hard to solve, easy to check. Math, code with tests, a schedule. Finding the answer takes work; checking it takes seconds.
 

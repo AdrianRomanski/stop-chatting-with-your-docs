@@ -7,7 +7,7 @@ status: in-progress
 <h1 class="s">Build the <span class="hot">brain</span></h1>
 
 <div style="margin-top: 64px">
-  <Journey :stops="['stop learning from summaries', 'build the brain', 'create concepts', 'push the challenge']" :at="1" :from="1" />
+  <Journey :stops="['stop learning from summaries', 'build the brain', 'push the challenge']" :at="1" :from="1" />
 </div>
 
 <!--
@@ -19,11 +19,11 @@ status: in-progress
 # The first three <span class="hot">mistakes</span>
 
 <div class="kt-center" style="margin-top: 18px">
-  <FirstMistakes />
+  <FirstMistakes still />
 </div>
 
 <!--
-⏱ 1:05 · script: [STAGE FirstMistakes "before the first note"] The first three *mistakes* ⏱ 65s
+⏱ 1:05 · script: [STAGE FirstMistakes "before the first note"] The first three *mistakes* | static: all three panels shown at once, no motion ⏱ 65s
 
 Three mistakes almost everybody makes when they start a second brain. I made all three.
 
@@ -218,7 +218,7 @@ Express. Don't start from a blank page. Assemble what you've already distilled. 
 
 And you've already seen the result. (packets appear) Three packets: Forte's "not get a PhD in notetaking". David Allen's "Your mind is for having ideas, not holding them". And the note we just followed: "Feeling over logic."
 
-(they fly into the slide) Over-structuring. Holding it all in your head. Overthinking the note. (stamp) Slide 13. The first three mistakes, a few minutes ago.
+(they fly into the slide) Over-structuring. Holding it all in your head. Overthinking the note. (the slide fills) The first three mistakes, a few minutes ago.
 
 That slide wasn't written from scratch. It was assembled from notes. That's Express.
 -->

@@ -4,28 +4,28 @@ import { useTimeline } from '../theme/composables/useTimeline'
 /**
  * Climb step 6, Space, before its two rounds: the same check as Retrieve (spar offline with Gemma,
  * then the judge, Argon, blind), done again after a gap, and in more than one style.
- * Three day cards land left to right, a "≥ 1 day" gap between them:
+ * Three cards land left to right, a gap arrow labelled with the wait between them:
  * 1. day 0, Retrieve: spar → judge, failed once, studied, passed (the AnswerGap slide).
- * 2. day 1, Space in the note's own style, feynman: spar ✓ → judge ✓.
- * 3. day 2, Space in a second style: the coach switches to socratic by itself: spar ✓ → judge ✓.
+ * 2. ≥ 1 day later, day 1, Space in the note's own style, feynman: spar ✓ → judge ✓.
+ * 3. a week later, Space in a second style: the coach switches to socratic by itself: spar ✓ → judge ✓.
  * Sources: ai-performance-coach ADR-0047 (2026-11-11), docs/guide/the-climb.md "6. Space".
  * The days are illustrative. No props.
  */
 const { at } = useTimeline(4.5)
 
 const days = [
-  { day: 'day 0', step: 'Retrieve', style: 'feynman', at: 0.2, past: true },
-  { day: 'day 1', step: 'Space', style: 'feynman', at: 1.4 },
-  { day: 'day 2', step: 'Space', style: 'socratic', at: 2.9 },
+  { day: 'day 0', gap: '', step: 'Retrieve', style: 'feynman', at: 0.2, past: true },
+  { day: 'day 1', gap: '≥ 1 day', step: 'Space', style: 'feynman', at: 1.4 },
+  { day: 'a week later', gap: '1 week', step: 'Space', style: 'socratic', at: 2.9 },
 ]
 </script>
 
 <template>
   <div class="kt-sdays" role="img"
-    aria-label="Space: the same check as Retrieve, again after a gap. Day 0, Retrieve: spar offline with Gemma, then the judge, Argon, blind. At least a day later, day 1, Space in the note's own style, feynman: spar passed, judge passed. At least a day later, day 2, Space in a second style, socratic: spar passed, judge passed.">
+    aria-label="Space: the same check as Retrieve, again after a gap. Day 0, Retrieve: spar offline with Gemma, then the judge, Argon, blind. At least a day later, day 1, Space in the note's own style, feynman: spar passed, judge passed. A week later, Space in a second style, socratic: spar passed, judge passed.">
     <div class="kt-sdays__row">
       <template v-for="(d, i) in days" :key="d.day">
-        <div v-if="i" class="kt-sdays__gap" :class="{ 'is-on': at(d.at - 0.4) }"><span>≥ 1 day</span><i /></div>
+        <div v-if="i" class="kt-sdays__gap" :class="{ 'is-on': at(d.at - 0.4) }"><span>{{ d.gap }}</span><i /></div>
         <div class="kt-sdays__card" :class="{ 'is-on': at(d.at), 'is-past': d.past }">
           <div class="kt-sdays__day">{{ d.day }}</div>
           <div class="kt-sdays__step">{{ d.step }}</div>

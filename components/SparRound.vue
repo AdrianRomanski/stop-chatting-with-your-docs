@@ -10,7 +10,9 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * 2. style: I pick the coach's style, one of four (as on CoachStyles): socratic.
  * 3. answer: Gemma 4B, offline, asks (the socratic question of CoachStyles); my answer types in.
  * 4. check: Gemma 12B, offline, verifies: one core assertion at a time (as on ConceptNote), ticked
- *    only with my own words quoted as evidence. Covered ✓, pass.
+ *    only with my own words quoted as evidence. My answer is vague, so no words of mine say it:
+ *    missed ✗, fail, one gap, and the next step is `coach study` (StudySession, the next slide).
+ *    The answer is illustrative, as on StyleRound.
  * No props.
  */
 const { t, at } = useTimeline(10.5)
@@ -47,7 +49,7 @@ const PICKED_S = B.style + 1.1
 // 3. the question, and my answer typing in
 const MX = col(2)
 const question = ['Highlighting helps.', 'So why not highlight', 'half the page?']
-const answer = ['Then nothing stands out.', 'Each layer keeps', '10–20% of the last.']
+const answer = ['It still helps.', 'You see what matters', 'when you skim.']
 const TYPE: [number, number] = [B.answer + 0.9, B.answer + 3.1]
 const total = answer.join(' ').length
 const typed = computed(() => {
@@ -66,7 +68,7 @@ const C = { assertion: B.check + 0.4, evidence: B.check + 1.1, covered: B.check 
 
 <template>
   <svg class="kt-spar" viewBox="0 0 880 344" role="img"
-    aria-label="One sparring round, in four beats. One, concept: I pick the concept to be sparred on: Distillation. Two, style: I pick the coach's style, one of four: socratic. Three, answer: Gemma 4B, offline, asks: Highlighting helps. So why not highlight half the page? I answer: Then nothing stands out. Each layer keeps 10 to 20 percent of the last. Four, check: Gemma 12B, offline, verifies one core assertion at a time, against my own words: the learner then highlights portions of the bolded text; my words: each layer keeps 10 to 20 percent of the last. Covered. Pass.">
+    aria-label="One sparring round, in four beats. One, concept: I pick the concept to be sparred on: Distillation. Two, style: I pick the coach's style, one of four: socratic. Three, answer: Gemma 4B, offline, asks: Highlighting helps. So why not highlight half the page? I answer: It still helps. You see what matters when you skim. Four, check: Gemma 12B, offline, verifies one core assertion at a time, against my own words: the learner then highlights portions of the bolded text; no words of mine say this. Missed. Fail, one gap. Next: coach study.">
     <!-- the four beats, one over each column -->
     <g v-for="b in beats" :key="b.n" class="kt-spar__beat" :class="{ 'is-on': beat >= b.n, 'is-now': beat === b.n }">
       <rect :x="b.x" y="0" :width="CW" height="30" rx="15" class="kt-spar__beatbox" />
@@ -120,7 +122,7 @@ const C = { assertion: B.check + 0.4, evidence: B.check + 1.1, covered: B.check 
 
     <!-- 4. Gemma 12B verifies -->
     <g class="kt-spar__fade" :class="{ 'is-on': at(B.check) }">
-      <rect :x="RX" y="42" :width="CW" height="298" rx="14" class="kt-spar__panel is-check" />
+      <rect :x="RX" y="42" :width="CW" height="298" rx="14" class="kt-spar__panel is-check" :class="{ 'is-failed': at(C.covered) }" />
       <image href="/images/logos/gemma-mark.png" :x="RX + 14" y="56" width="16" height="16" />
       <text :x="RX + 36" y="69" class="kt-spar__who is-check">Gemma 12B · verifies</text>
     </g>
@@ -132,24 +134,24 @@ const C = { assertion: B.check + 0.4, evidence: B.check + 1.1, covered: B.check 
       <text :x="RX + 22" y="155" class="kt-spar__btext">the bolded text.</text>
     </g>
     <g class="kt-spar__fade" :class="{ 'is-on': at(C.evidence) }">
-      <rect :x="RX + 10" y="176" :width="CW - 20" height="64" rx="10" class="kt-spar__ebox" :class="{ 'is-ok': at(C.covered) }" />
+      <rect :x="RX + 10" y="176" :width="CW - 20" height="64" rx="10" class="kt-spar__ebox" :class="{ 'is-bad': at(C.covered) }" />
       <text :x="RX + 22" y="194" class="kt-spar__key">quote from my words</text>
-      <text :x="RX + 22" y="213" class="kt-spar__btext">“Each layer keeps</text>
-      <text :x="RX + 22" y="230" class="kt-spar__btext">10–20% of the last.”</text>
+      <text :x="RX + 22" y="213" class="kt-spar__btext is-none">no words of mine</text>
+      <text :x="RX + 22" y="230" class="kt-spar__btext is-none">say this</text>
     </g>
     <g class="kt-spar__fade" :class="{ 'is-on': at(C.covered) }">
-      <circle :cx="RX + 24" cy="262" r="10" class="kt-spar__ok" />
-      <path :d="`M${RX + 19} 262 l 3.5 3.5 6.5 -7`" class="kt-spar__oktick" />
-      <text :x="RX + 42" y="267" class="kt-spar__covered">covered</text>
+      <circle :cx="RX + 24" cy="262" r="10" class="kt-spar__miss" />
+      <path :d="`M${RX + 20} 258 l 8 8 M${RX + 28} 258 l -8 8`" class="kt-spar__oktick" />
+      <text :x="RX + 42" y="267" class="kt-spar__missed">missed</text>
     </g>
     <g :transform="`translate(${RX + CW / 2} 290)`">
       <g class="kt-spar__stamp" :class="{ 'is-on': at(C.pass) }">
         <rect :x="-(CW - 20) / 2" y="-15" :width="CW - 20" height="30" rx="8" class="kt-spar__stampbox" />
-        <text y="5" text-anchor="middle" class="kt-spar__stamptext">pass ✓</text>
+        <text y="5" text-anchor="middle" class="kt-spar__stamptext">fail ✗ · 1 gap</text>
       </g>
     </g>
     <g class="kt-spar__fade" :class="{ 'is-on': at(B.check) }">
-      <text :x="RX + 14" y="324" class="kt-spar__small">one assertion at a time</text>
+      <text :x="RX + 14" y="324" class="kt-spar__small is-next">next: coach study</text>
     </g>
   </svg>
 </template>
@@ -171,7 +173,8 @@ const C = { assertion: B.check + 0.4, evidence: B.check + 1.1, covered: B.check 
 
 .kt-spar__panel { fill: var(--kt-code-bg); stroke: var(--kt-line-strong); stroke-width: 1.8; }
 .kt-spar__panel.is-local { stroke: var(--kt-c-primary); }
-.kt-spar__panel.is-check { stroke: var(--kt-good); }
+.kt-spar__panel.is-check { stroke: var(--kt-good); transition: stroke 0.3s; }
+.kt-spar__panel.is-check.is-failed { stroke: var(--kt-bad); }
 .kt-spar__label { font: 700 11.5px var(--font-family-mono); fill: var(--kt-muted); letter-spacing: 0.04em; text-transform: uppercase; }
 .kt-spar__small { font: 600 11px var(--font-family-mono); fill: var(--kt-muted); }
 .kt-spar__key { font: 700 10.5px var(--font-family-mono); fill: var(--kt-muted); }
@@ -209,14 +212,18 @@ const C = { assertion: B.check + 0.4, evidence: B.check + 1.1, covered: B.check 
 /* the check */
 .kt-spar__abox { fill: color-mix(in srgb, var(--kt-fg) 4%, var(--kt-bg)); stroke: var(--kt-card-line); stroke-width: 1.2; }
 .kt-spar__ebox { fill: var(--kt-bg); stroke: var(--kt-line-strong); stroke-width: 1.4; transition: stroke 0.3s; }
-.kt-spar__ebox.is-ok { stroke: var(--kt-good); }
+.kt-spar__ebox.is-bad { stroke: var(--kt-bad); }
+.kt-spar__btext.is-none { fill: var(--kt-muted); font-style: italic; }
+.kt-spar__miss { fill: var(--kt-bad); }
+.kt-spar__missed { font: 800 13px var(--font-family-mono); fill: var(--kt-bad); }
+.kt-spar__small.is-next { fill: var(--kt-hot); font-weight: 800; }
 .kt-spar__btext { font-size: 12.5px; font-weight: 700; fill: var(--kt-fg); }
 .kt-spar__ok { fill: var(--kt-good); }
 .kt-spar__oktick { fill: none; stroke: var(--kt-bg); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .kt-spar__covered { font: 800 13px var(--font-family-mono); fill: var(--kt-good); }
 .kt-spar__stamp { opacity: 0; transform: scale(1.4); transform-box: fill-box; transform-origin: center; transition: opacity 0.25s, transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1); }
 .kt-spar__stamp.is-on { opacity: 1; transform: none; }
-.kt-spar__stampbox { fill: none; stroke: var(--kt-good); stroke-width: 2; }
-.kt-spar__stamptext { font: 800 14px var(--font-family-mono); fill: var(--kt-good); }
+.kt-spar__stampbox { fill: none; stroke: var(--kt-bad); stroke-width: 2; }
+.kt-spar__stamptext { font: 800 14px var(--font-family-mono); fill: var(--kt-bad); }
 
 </style>

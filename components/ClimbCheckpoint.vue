@@ -112,8 +112,8 @@ const nextBlock = blocks.find(b => !b.done)?.i ?? -1
 const next = props.done < NAMES.length ? props.done : -1
 
 const HOP = 0.7
-const HOP_FOR = 0.45
-const HOP_DT = 0.55
+const HOP_FOR = 0.26 // one hop; the same as TeachTalk, so every climb moves at the same speed
+const HOP_DT = 0.3
 const LIT = (i: number) => HOP + i * HOP_DT + HOP_FOR // a block lights as I land on it
 const CMD = Math.max(1.9, LIT(lastBlock) + 0.4)
 const OUT = CMD + 0.9
@@ -228,14 +228,8 @@ const me = computed(() => {
         <rect :x="b.x" :y="b.top" :width="W" :height="GROUND - b.top" rx="9" fill="none" :stroke="`url(#${face}-st${b.i})`" class="kt-climbcp__stline" />
       </g>
       <text :x="big ? b.x + W / 2 : b.x + 8" :y="b.top + 20 * LBL" :text-anchor="big ? 'middle' : 'start'" class="kt-climbcp__name" :class="{ 'is-open': !b.done }">{{ b.name }}</text>
-      <!-- on the bridge the dashed outline alone says next: its "bridge" tag sits where "next" would -->
+      <!-- on the bridge the dashed outline alone says next -->
       <text v-if="b.i === nextBlock && b.k >= 0 && !outsourced" :x="big ? b.x + W / 2 : b.x + 8" :y="b.top + 38 * LBL" :text-anchor="big ? 'middle' : 'start'" class="kt-climbcp__next" :class="{ 'is-on': at(OUT) }">next</text>
-      <!-- big: no bridge tag, only the centered name -->
-      <g v-if="b.k < 0 && !outsourced && !big">
-        <text :x="b.x + 8" :y="b.top + 38 * LBL" class="kt-climbcp__bridgetag" :class="{ 'is-lit': b.done && at(LIT(b.i)) }">bridge</text>
-        <path :d="`M${b.x + W - 18} ${b.top + 25 * LBL + (LBL - 1) * 20} l 7 8 l -7 8 l -7 -8 z`" class="kt-climbcp__bridge"
-          :class="{ 'is-lit': b.done && at(LIT(b.i)) }" />
-      </g>
     </g>
 
     <!-- which book each step comes from -->
@@ -330,10 +324,6 @@ const me = computed(() => {
 .kt-climbcp__step.is-lit.is-teach { fill: color-mix(in srgb, var(--kt-warn) 26%, var(--kt-bg)); stroke: var(--kt-warn); stroke-width: 2; }
 .kt-climbcp__step.is-next { stroke: var(--kt-c-primary-soft); stroke-dasharray: 6 5; stroke-width: 2; }
 .kt-climbcp__step.is-lit.is-synth { fill: color-mix(in srgb, var(--kt-hot) 20%, var(--kt-bg)); stroke: var(--kt-hot); stroke-width: 2; }
-.kt-climbcp__bridge { fill: none; stroke: var(--kt-line-strong); stroke-width: 1.8; transition: fill 0.4s, stroke 0.4s; }
-.kt-climbcp__bridge.is-lit { fill: color-mix(in srgb, var(--kt-hot) 40%, var(--kt-bg)); stroke: var(--kt-hot); }
-.kt-climbcp__bridgetag { font: 700 12px var(--font-family-mono); fill: var(--kt-muted); transition: fill 0.4s; }
-.kt-climbcp__bridgetag.is-lit { fill: var(--kt-hot); }
 .kt-climbcp__name { font-size: 14px; font-weight: 800; fill: var(--kt-heading); }
 .kt-climbcp__name.is-open { fill: var(--kt-muted); }
 .kt-climbcp__next { font: 700 12px var(--font-family-mono); fill: var(--kt-c-primary-soft); opacity: 0; transition: opacity 0.3s; }
@@ -394,7 +384,6 @@ const me = computed(() => {
 .kt-climbcp.has-covers .kt-climbcp__book { font-size: 12.5px; }
 .kt-climbcp.is-tall .kt-climbcp__name { font-size: 14.5px; letter-spacing: -0.015em; }
 .kt-climbcp.is-tall .kt-climbcp__next,
-.kt-climbcp.is-tall .kt-climbcp__bridgetag { font-size: 13.5px; }
 .kt-climbcp__covershadow { fill: var(--kt-bg); opacity: 0.6; }
 .kt-climbcp__book.is-basb { fill: var(--kt-info); }
 .kt-climbcp__book.is-mis { fill: var(--kt-good); }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useId } from 'vue'
-import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * ai-coach as ports and adapters (ARCHITECTURE.md): a hexagon, "application" with the "domain"
@@ -13,9 +12,9 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * classifier; gemini · Judge; local-state · PendingJudgements, Clock). The application: one use case per
  * command (read, synthesize, group, generate, spar, judge, study, elaborate, due, teach, climb). Every arrow points inward. Then an arrow tries to point
  * out from the domain to an adapter, turns red with a ✕ and fades: "Architecture is protected by [Nx logo] enforce module boundaries"
- * (@nx/enforce-module-boundaries), plain text under the hexagon. No props.
+ * (@nx/enforce-module-boundaries), plain text under the hexagon. Static: no motion, all of it shown at once. No props.
  */
-const { at } = useTimeline(5.2)
+const at = (_t: number) => true
 const uid = useId()
 const id = (name: string) => `kt-clayers-${name}-${uid}`
 
@@ -46,7 +45,7 @@ const AX = 690
 const AW = 200
 const AH = 70
 const adapters = [
-  { name: 'vault-mcp', tech: 'kb-template', port: ['NotesRepository · SessionLog'], tone: 'local', logo: '/images/logos/pushbased-mark.png' },
+  { name: 'vault-mcp', tech: 'coach-vault · MCP', port: ['NotesRepository · SessionLog'], tone: 'local', logo: '/images/logos/pushbased-mark.png' },
   { name: 'ollama', tech: 'Gemma · offline', port: ['SparringPartner'], tone: 'local', logo: '/images/logos/gemma-mark.png' },
   { name: 'gemini', tech: 'Argon · online', port: ['Judge'], tone: 'cloud', logo: '/images/logos/gemini-mark.png' },
   { name: 'local-state', tech: 'queue · clock', port: ['PendingJudgements · Clock'], tone: 'local', logo: '' },
@@ -59,7 +58,7 @@ const adapters = [
 
 <template>
   <svg class="kt-clayers" viewBox="0 0 900 430" role="img"
-    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. The application has one use case per command. On the driven side four adapters plug into the application's ports: vault-mcp for kb-template, ollama for Gemma's seven partners, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: architecture is protected by Nx enforce module boundaries.">
+    aria-label="Ports and adapters: the application hexagon with the domain inside, holding the four coaching styles: feynman, socratic, cornell, devil. On the driving side the terminal and the cli, the composition root. The application has one use case per command. On the driven side four adapters plug into the application's ports: vault-mcp for coach-vault, the vault server over MCP, ollama for Gemma's seven partners, gemini for Argon, local-state for the queue and the clock. Every arrow points inward; an arrow pointing out from the domain is rejected: architecture is protected by Nx enforce module boundaries.">
     <defs>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M1 1 L 9 5 L 1 9" class="kt-clayers__head" />
@@ -123,7 +122,7 @@ const adapters = [
     </g>
 
     <!-- an arrow that points the wrong way: rejected -->
-    <g class="kt-clayers__wrong" :class="{ 'is-on': at(2.6), 'is-bad': at(3.0), 'is-gone': at(4.6) }">
+    <g class="kt-clayers__wrong" :class="{ 'is-on': at(2.6), 'is-bad': at(3.0) }">
       <path :d="`M${CX + RI + 4} ${CY} C ${CX + 200} ${CY}, ${AX - 80} ${CY - 6}, ${AX - 4} ${CY - 18}`"
         class="kt-clayers__up" :marker-end="`url(#${id('bad')})`" />
       <g :transform="`translate(${CX + 200} ${CY - 2})`">
@@ -151,7 +150,6 @@ const adapters = [
 
 .kt-clayers__part {
   opacity: 0;
-  transition: opacity 0.45s;
 }
 
 .kt-clayers__part.is-on { opacity: 1; }
@@ -191,23 +189,18 @@ const adapters = [
   stroke: var(--kt-line-strong);
   stroke-width: 2.2;
   stroke-dasharray: 6 5;
-  animation: kt-clayers-flow 1.2s linear infinite;
 }
 .kt-clayers__head { fill: none; stroke: var(--kt-line-strong); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .kt-clayers__head.is-bad { stroke: var(--kt-bad); }
 
-@keyframes kt-clayers-flow {
-  to { stroke-dashoffset: -22; }
-}
 
 /* the wrong-way arrow */
-.kt-clayers__wrong { opacity: 0; transition: opacity 0.45s; }
+.kt-clayers__wrong { opacity: 0; }
 .kt-clayers__wrong.is-on { opacity: 1; }
-.kt-clayers__wrong.is-on.is-gone { opacity: 0.25; }
-.kt-clayers__up { fill: none; stroke: var(--kt-subtle); stroke-width: 2.2; stroke-dasharray: 6 5; transition: stroke 0.3s; }
+.kt-clayers__up { fill: none; stroke: var(--kt-subtle); stroke-width: 2.2; stroke-dasharray: 6 5; }
 .kt-clayers__wrong.is-bad .kt-clayers__up { stroke: var(--kt-bad); }
-.kt-clayers__x { fill: var(--kt-bad); opacity: 0; transition: opacity 0.3s; }
-.kt-clayers__xmark { stroke: var(--kt-bg); stroke-width: 2.8; stroke-linecap: round; opacity: 0; transition: opacity 0.3s; }
+.kt-clayers__x { fill: var(--kt-bad); opacity: 0; }
+.kt-clayers__xmark { stroke: var(--kt-bg); stroke-width: 2.8; stroke-linecap: round; opacity: 0; }
 .kt-clayers__wrong.is-bad .kt-clayers__x,
 .kt-clayers__wrong.is-bad .kt-clayers__xmark { opacity: 1; }
 
@@ -216,15 +209,10 @@ const adapters = [
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  transform: scale(0.6);
-  transition: opacity 0.2s, transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1);
 }
 .kt-clayers__pop.is-on { opacity: 1; transform: none; }
 .kt-clayers__nx { font-size: 17px; font-weight: 700; fill: var(--kt-fg); }
 /* the official Nx logo is near-black: shown white on the dark slide */
 .kt-clayers__nxlogo { filter: invert(1); }
 
-@media (prefers-reduced-motion: reduce) {
-  .kt-clayers__wire { animation: none !important; }
-}
 </style>

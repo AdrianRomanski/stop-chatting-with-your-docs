@@ -4,13 +4,13 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * The payoff of the climb (MasteryStairs, ClimbCheckpoint): the last step, Teach, is this talk, given at
- * GDG DevFest Wrocław 2026, in a lecture hall at Uniwersytet Ekonomiczny (Komandorska 118/120, Wrocław).
+ * GDG JS Poland 2026, in a lecture hall at Multikino (Komandorska 118/120, Wrocław).
  * 1. On the projector screen, the stairs of ClimbCheckpoint (Read, the Synthesize bridge, Group … Space, Teach)
  *    light up block by block as I hop up them; on Teach (the Protégé Effect, yellow) a flag and confetti,
  *    and under its name "this talk".
  * 2. Below the screen, the hall: stepped rows of seats (rows A–C, two aisles), people in them;
  *    row by row they light up warm: the students. "the students: you".
- * 3. At the foot, the GDG logo with DevFest Wrocław, and the venue.
+ * 3. At the foot, the JS Poland logo with JS Poland, and the venue.
  * No props.
  */
 const { t, at } = useTimeline(7)
@@ -38,8 +38,8 @@ const striped = blocks.map(b => {
   return { keys, stops: keys.flatMap((k, j) => [{ k, o: j / keys.length }, { k, o: (j + 1) / keys.length }]) }
 })
 const HOP0 = 0.5
-const HOP_DT = 0.38
-const HOP_FOR = 0.32
+const HOP_DT = 0.3
+const HOP_FOR = 0.26 // one hop; the same as ClimbCheckpoint, so every climb moves at the same speed
 const LIT = (i: number) => HOP0 + i * HOP_DT + HOP_FOR
 const TOP = LIT(7)
 
@@ -84,7 +84,7 @@ const rowsX = 440 - rowW / 2 - 18
 
 <template>
   <svg class="kt-teachtalk" viewBox="0 0 880 400" role="img"
-    aria-label="A lecture hall at DevFest Wrocław, at Uniwersytet Ekonomiczny. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this talk. Below the screen, rows A to C of seats with people in them light up: the students, you. At the bottom, the GDG logo, DevFest Wrocław, and the venue.">
+    aria-label="A lecture hall at JS Poland, at Multikino. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this talk. Below the screen, rows A to C of seats with people in them light up: the students, you. At the bottom, the JS Poland logo, JS Poland, and the venue.">
     <defs>
       <clipPath :id="face" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
       <linearGradient v-for="(g, i) in striped" :id="`${crop}-st${i}`" :key="`st${i}`" x1="0" y1="0" x2="1" y2="0">
@@ -148,13 +148,10 @@ const rowsX = 440 - rowW / 2 - 18
     <!-- the room, and who's in it -->
     <g class="kt-teachtalk__fade" :class="{ 'is-on': at(LIGHT + 0.5) }">
       <path d="M22 352 H 858" class="kt-teachtalk__floor" />
-      <!-- the GDG mark only: its wordmark is white -->
-      <svg x="26" y="364" width="42" height="20" viewBox="0 0 222 107" preserveAspectRatio="xMinYMid meet">
-        <image href="/images/logos/gdg.png" x="0" y="0" width="501" height="107" />
-      </svg>
-      <text x="72" y="381" class="kt-teachtalk__event">DevFest Wrocław</text>
+      <image href="/images/logos/js-poland.webp" x="26" y="362" width="29" height="24" preserveAspectRatio="xMinYMid meet" />
+      <text x="62" y="381" class="kt-teachtalk__event">JS Poland</text>
       <text x="440" y="383" text-anchor="middle" class="kt-teachtalk__you">the students: <tspan class="is-hot">you</tspan></text>
-      <text x="858" y="381" text-anchor="end" class="kt-teachtalk__event">Uniwersytet Ekonomiczny</text>
+      <text x="858" y="381" text-anchor="end" class="kt-teachtalk__event">Multikino</text>
     </g>
   </svg>
 </template>

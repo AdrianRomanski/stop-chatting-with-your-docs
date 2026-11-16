@@ -7,11 +7,11 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * shapes (the 52 × 64 note, the code-bg engine box, your photo in a ring, dashed wires).
  * - `compact`: false (the full architecture) | true (the boundary only, for the judge statement)
  *
- * Full: on the laptop, offline, two homes, as on CoachLoop. "second brain" (Obsidian, kb-template):
- * "notes", the vault, reached only through "kb-template · MCP vault server".
+ * Full: on the laptop, offline, two homes, as on CoachLoop. "second brain" (Obsidian, coach-vault):
+ * "notes", the vault, reached only through "coach-vault · MCP vault server".
  * "ai-coach": the "coach" CLI, talking MCP to the vault server, and a dashed "Ollama"
  * group with "Gemma 4B · creates questions" and "Gemma 12B · checks answers"; one turn every 6 s:
- * the concept note (the diamond) travels from the vault through kb-template and the coach to 4B,
+ * the concept note (the diamond) travels from the vault through coach-vault and the coach to 4B,
  * 4B glows and a "?" travels to me, my answer travels down to 12B, 12B glows and a ✓ pops.
  * You talk with the judge too: the packet leaves from you, and Argon's verdict and gaps come back
  * to you on a green line through the same gate. The note that tries leaves from the vault.
@@ -20,9 +20,12 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * In the cloud, "Gemini 4 Argon · judge". Compact: you and your notes on the laptop, the judge in
  * the cloud. In both, only the packet "challenge + answer + your claims" crosses the gate; a note
  * that tries is stopped at the lock and slides back.
+ * Compact is static: everything is there at once, the packet sits past the gate, the note sits
+ * stopped at the red lock; only the dashed wires flow.
  */
 const props = withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
-const { at } = useTimeline(props.compact ? 3 : 5)
+const timeline = useTimeline(props.compact ? 3 : 5)
+const at = (s: number) => props.compact || timeline.at(s)
 const uid = useId()
 const id = (name: string) => `kt-tiers-${name}-${uid}`
 const full = computed(() => !props.compact)
@@ -46,7 +49,7 @@ const g = computed(() => full.value
       cross: 'M104 96 H 548',
       label: { x: 262, y: 70, anchor: 'middle' },
       note: 'M118 184 H 384',
-      noteLabel: { x: 262, y: 170 },
+      noteLabel: { x: 232, y: 170 },
       judge: { x: 548, y: 66, w: 190 },
       tl: { zones: 0.1, cloud: 0.2, boundary: 0.6, judge: 0.8, cross: 1.1, packet: 1.3, note: 1.6, noteGo: 1.8 },
     })
@@ -57,7 +60,7 @@ const g = computed(() => full.value
   <svg class="kt-tiers" :class="{ 'is-compact': compact }" :viewBox="g.vb" role="img"
     :aria-label="compact
       ? 'Only the packet challenge plus answer plus your claims crosses the boundary to the judge; your notes are stopped at the lock and stay on the laptop'
-      : 'On the laptop, offline. In the second brain, Obsidian and kb-template: your notes, reached only through the kb-template MCP vault server. In ai-coach: the coach CLI talks MCP to the vault server, and on Ollama Gemma 4B gets a concept note from the vault, through kb-template and the coach, creates the questions on it and asks you; your answer goes to Gemma 12B, which checks it. In the cloud, still inside ai-coach as one more adapter: Gemini 4 Argon, the judge. Only challenge, answer and your claims cross the boundary to it, and its verdict and gaps come back to you; your notes never do.'">
+      : 'On the laptop, offline. In the second brain, Obsidian and coach-vault: your notes, reached only through coach-vault, the MCP vault server. In ai-coach: the coach CLI talks MCP to the vault server, and on Ollama Gemma 4B gets a concept note from the vault, through coach-vault and the coach, creates the questions on it and asks you; your answer goes to Gemma 12B, which checks it. In the cloud, still inside ai-coach as one more adapter: Gemini 4 Argon, the judge. Only challenge, answer and your claims cross the boundary to it, and its verdict and gaps come back to you; your notes never do.'">
     <defs>
       <clipPath :id="id('face')" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -82,14 +85,14 @@ const g = computed(() => full.value
     </g>
 
     <template v-if="full">
-      <!-- the second brain: the notes, reached only through kb-template's MCP server -->
+      <!-- the second brain: the notes, reached only through coach-vault's MCP server -->
       <g class="kt-tiers__part" :class="{ 'is-on': at(0.2) }">
         <rect x="14" y="46" width="172" height="262" rx="14" class="kt-tiers__home is-kb" />
         <text x="26" y="66" class="kt-tiers__homename is-kb">second brain</text>
         <image href="/images/logos/obsidian.webp" x="22" y="281" width="17" height="17" />
         <text x="42" y="295" class="kt-tiers__tool">Obsidian</text>
-        <image href="/images/logos/kb-template-mark.png" x="100" y="281" width="12" height="17" />
-        <text x="116" y="295" class="kt-tiers__tool">kb-template</text>
+        <image href="/images/logos/pushbased-mark.png" x="100" y="281" width="15" height="15" />
+        <text x="119" y="295" class="kt-tiers__tool">coach-vault</text>
       </g>
       <g class="kt-tiers__part" :class="{ 'is-on': at(0.3) }">
         <rect x="66" y="78" width="52" height="64" rx="5" class="kt-tiers__note is-back" />
@@ -102,7 +105,7 @@ const g = computed(() => full.value
         :class="{ 'is-on': at(0.7) }" />
       <g class="kt-tiers__part" :class="{ 'is-on': at(0.7) }">
         <rect x="30" y="222" width="140" height="50" rx="14" class="kt-tiers__engine" />
-        <text x="100" y="243" text-anchor="middle" class="kt-tiers__name">kb-template</text>
+        <text x="100" y="243" text-anchor="middle" class="kt-tiers__name">coach-vault</text>
         <text x="100" y="260" text-anchor="middle" class="kt-tiers__does">MCP vault server</text>
       </g>
 
@@ -155,7 +158,7 @@ const g = computed(() => full.value
         <circle cx="552" cy="128" r="28" class="kt-tiers__ring" />
         <text x="552" y="184" text-anchor="middle" class="kt-tiers__name">you</text>
       </g>
-      <!-- one turn, 6 s: the concept note travels from the vault (kb-template, coach) to 4B; 4B asks
+      <!-- one turn, 6 s: the concept note travels from the vault (coach-vault, coach) to 4B; 4B asks
            (glow, "?" to me); I answer (to 12B); 12B checks (glow, ✓) -->
       <path :id="id('concept')" d="M100 198 V 247 H 330 Q 340 247 340 237 V 138 Q 340 128 350 128" class="kt-tiers__route" />
       
@@ -234,12 +237,12 @@ const g = computed(() => full.value
     <text v-if="compact" :x="g.label.x" :y="g.label.y" :text-anchor="g.label.anchor" class="kt-tiers__tag is-cross kt-tiers__part"
       :class="{ 'is-on': at(g.tl.cross) }">{{ PACKET }}</text>
     <g class="kt-tiers__part" :class="{ 'is-on': at(g.tl.packet) }">
-      <g>
+      <g :transform="compact ? 'translate(486 96)' : undefined">
         <rect x="-32" y="-14" width="64" height="28" rx="8" class="kt-tiers__packet" />
         <text x="-19" y="5" text-anchor="middle" class="kt-tiers__ptext">?</text>
         <path d="M-8 -5 h14 M-8 1 h14 M-8 7 h9" class="kt-tiers__plines" />
         <path d="M20 -7 l7 7 -7 7 -7 -7z" class="kt-tiers__claim" />
-        <animateMotion dur="3.2s" repeatCount="indefinite"><mpath :href="`#${id('cross')}`" /></animateMotion>
+        <animateMotion v-if="!compact" dur="3.2s" repeatCount="indefinite"><mpath :href="`#${id('cross')}`" /></animateMotion>
       </g>
     </g>
 
@@ -263,19 +266,21 @@ const g = computed(() => full.value
     <text :x="g.noteLabel.x" :y="g.noteLabel.y" text-anchor="middle" class="kt-tiers__tag is-private kt-tiers__part"
       :class="{ 'is-on': at(g.tl.note) }">🔒 notes stay private</text>
     <g class="kt-tiers__part" :class="{ 'is-on': at(g.tl.noteGo) }">
-      <g>
+      <g :transform="compact ? 'translate(357 184)' : undefined">
         <rect x="-13" y="-16" width="26" height="32" rx="4" class="kt-tiers__note" />
         <path d="M-7 -7 h14 M-7 -1 h10 M-7 5 h13" class="kt-tiers__text is-thin" />
-        <animateMotion dur="3s" repeatCount="indefinite" calcMode="linear"
-          keyTimes="0;0.55;0.65;0.8;1" keyPoints="0;1;0.9;0.9;0.9"><mpath :href="`#${id('note')}`" /></animateMotion>
-        <animate attributeName="opacity" dur="3s" repeatCount="indefinite"
-          keyTimes="0;0.08;0.75;0.9;1" values="0;1;1;0;0" />
+        <template v-if="!compact">
+          <animateMotion dur="3s" repeatCount="indefinite" calcMode="linear"
+            keyTimes="0;0.55;0.65;0.8;1" keyPoints="0;1;0.9;0.9;0.9"><mpath :href="`#${id('note')}`" /></animateMotion>
+          <animate attributeName="opacity" dur="3s" repeatCount="indefinite"
+            keyTimes="0;0.08;0.75;0.9;1" values="0;1;1;0;0" />
+        </template>
       </g>
     </g>
     <g class="kt-tiers__part" :class="{ 'is-on': at(g.tl.note) }" :transform="`translate(${g.line} ${g.lock})`">
       <circle r="18" class="kt-tiers__lockbg" />
-      <circle r="18" class="kt-tiers__lockhit">
-        <animate attributeName="opacity" dur="3s" repeatCount="indefinite"
+      <circle r="18" class="kt-tiers__lockhit" :class="{ 'is-shut': compact }">
+        <animate v-if="!compact" attributeName="opacity" dur="3s" repeatCount="indefinite"
           keyTimes="0;0.53;0.57;0.8;0.9;1" values="0;0;1;1;0;0" />
       </circle>
       <path d="M-6 -3 v-5 a6 6 0 0 1 12 0 v5" class="kt-tiers__shackle" />
@@ -447,6 +452,9 @@ const g = computed(() => full.value
 
 .kt-tiers__lockbg { fill: var(--kt-bg); stroke: var(--kt-heading); stroke-width: 2.5; }
 .kt-tiers__lockhit { fill: var(--kt-tint-secondary); stroke: var(--kt-bad); stroke-width: 3.5; opacity: 0; }
+.kt-tiers__lockhit.is-shut { opacity: 1; }
+.kt-tiers.is-compact .kt-tiers__glow { animation: none; }
+.kt-tiers.is-compact .kt-tiers__part { transition: none; }
 .kt-tiers__shackle { fill: none; stroke: var(--kt-heading); stroke-width: 2.5; stroke-linecap: round; }
 .kt-tiers__lockbody { fill: var(--kt-heading); }
 

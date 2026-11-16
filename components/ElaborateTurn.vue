@@ -45,7 +45,7 @@ const ROUNDS: Record<string, { dur: number; turns: Turn[] }> = {
     dur: 6,
     turns: [
       { who: 'coach', label: 'apply', text: 'Where would you use Distillation in your own work this month?', at: 0.3 },
-      { who: 'me', label: 'my answer', check: '✓ 1.Projects', text: 'In [[1.Projects/Stop Chatting with Your Docs]], when I turn my raw chapter notes from five books into the slides for this talk, without re-reading 1,200 pages the night before DevFest Wrocław.', at: 2.2 },
+      { who: 'me', label: 'my answer', check: '✓ 1.Projects', text: 'In [[1.Projects/Stop Chatting with Your Docs]], when I turn my raw chapter notes from five books into the slides for this talk, without re-reading 1,200 pages the night before JS Poland.', at: 2.2 },
     ],
   },
 }

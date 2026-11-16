@@ -12,40 +12,41 @@ const props = defineProps<{ name: 'feynman' | 'socratic' | 'cornell' | 'devil' }
 
 type Turn = { who: 'me' | 'coach'; label: string; text: string; win?: boolean }
 
-const STYLES: Record<string, { does: string; turns: Turn[] }> = {
+const STYLES: Record<string, { does: string; banned?: string[]; turns: Turn[] }> = {
   feynman: {
-    does: 'It stops you from hiding behind fancy buzzwords. Often we think we understand a concept just because we know its name. Feynman mode bans the main keywords from your note and asks you to explain how the idea works in simple, everyday language.',
+    does: 'Bans buzzwords. You explain how the idea works in everyday words.',
+    banned: ['Progressive Summarization', 'Distillation', 'Executive summary'],
     turns: [
-      { who: 'coach', label: 'coach question', text: 'Without using the phrase “Progressive Summarization”, how do you prepare a long note today so that Future You can find the main point in 10 seconds, six months from now?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'Each time I revisit the note, I mark only the best 10⁠–⁠20% of what’s there: first I bold key sentences, then I highlight the best of the bold, and finally I write a two-sentence takeaway at the top, in my own words, so I never have to reread the whole page.' },
+      { who: 'coach', label: 'coach question', text: 'Without saying “Progressive Summarization”: how do you prep a long note so Future You finds the point in 10 seconds?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'Each visit I keep the best 10⁠–⁠20%: bold, then highlight the bold, then a two-line summary.' },
     ],
   },
   socratic: {
-    does: 'Instead of asking “what is X?”, it tests the limits of your statement. Give a general rule that sounds right on the surface, and the coach pushes your own logic to an extreme to see where it breaks, forcing you to explain the exact boundary or rule that makes it work.',
+    does: 'Pushes your rule to the extreme to find where it breaks. You explain the boundary.',
     turns: [
       { who: 'me', label: 'you say', text: 'Highlighting helps me spot the important parts faster.' },
-      { who: 'coach', label: 'coach pushes back', text: 'If highlighting makes things easier to find, what happens if you highlight half the page? Does that still help?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'No: if half the page is highlighted, nothing stands out and my eyes still have to read everything. It only saves time if each layer compresses the previous one to about 10⁠–⁠20%, trading full detail for fast scanning.' },
+      { who: 'coach', label: 'coach pushes back', text: 'What if you highlight half the page? Still faster?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'No, then nothing stands out. Each layer keeps only 10⁠–⁠20% of the one before.' },
     ],
   },
   cornell: {
-    does: 'Built for non-technical books, essays and big ideas. Instead of nitpicking tiny mechanical details, it focuses on the big picture: what is the author’s main argument, and why did they use this specific story or metaphor to prove it?',
+    does: 'For books and big ideas. Skips the details: what’s the author’s argument, and why this story?',
     turns: [
-      { who: 'coach', label: 'coach question', text: 'Why does the author argue you should treat “Future You” like an impatient stranger, and how does that change the way you save a note today?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'Because six months from now, I won’t remember the context I have in my head today. If I just save a raw 30-page article, Future Me won’t have time to re-read it under a deadline, so I have to highlight the core takeaway now, as a gift to my future self.' },
+      { who: 'coach', label: 'coach question', text: 'Why does the author say you write notes for a Future You who has lost today’s context?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'In six months the context is gone. Without notes I’d reread it all from the start. With them, I just read my own summary.' },
     ],
   },
   devil: {
-    does: 'Acts like a skeptical teammate in a design review. It assumes your idea works fine on a sunny day, and immediately asks what happens when things go wrong in real life: when you’re busy, stressed, or dealing with massive scale.',
+    does: 'A skeptical teammate in a design review: fine on a sunny day, but what about a bad week?',
     turns: [
-      { who: 'coach', label: 'coach question', text: 'This note-taking system sounds great when you have free time on Sunday, but where does it break during a chaotic crunch week at work, and how do you recover?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'It breaks if I bold and summarize every article the moment I save it: that’s unpaid homework. The fix is just-in-time: I only compress a note when I open it again for a real project, and if my inbox overflows, I archive the batch and start fresh.' },
+      { who: 'coach', label: 'coach question', text: 'Distilling works on a quiet Sunday. What happens in a crunch week, when you have no time for it?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'I distill only when a project needs it. In a crunch week I skip it and focus on the work. Notes are a marathon, not a sprint.' },
     ],
   },
 }
 
 const s = computed(() => STYLES[props.name])
-const label = computed(() => `The ${props.name} sparring style. ${s.value.does} ${s.value.turns.map(t => `${t.label}: ${t.text}`).join(' ')}`)
+const label = computed(() => `The ${props.name} sparring style. ${s.value.does} ${s.value.banned ? `Banned: ${s.value.banned.join(', ')}.` : ''} ${s.value.turns.map(t => `${t.label}: ${t.text}`).join(' ')}`)
 </script>
 
 <template>
@@ -56,6 +57,9 @@ const label = computed(() => `The ${props.name} sparring style. ${s.value.does} 
         <div class="kt-sround__name">{{ name }}</div>
         <div class="kt-sround__key">what this sparring style does</div>
         <p class="kt-sround__does">{{ s.does }}</p>
+        <div v-if="s.banned" class="kt-sround__banned">
+          <span v-for="w in s.banned" :key="w"><solar-forbidden-circle-bold />{{ w }}</span>
+        </div>
       </div>
 
       <!-- the round: the coach's question, the winning answer -->
@@ -93,15 +97,18 @@ const label = computed(() => `The ${props.name} sparring style. ${s.value.does} 
   box-shadow: 0 0 24px color-mix(in srgb, var(--tone) 25%, transparent);
 }
 .kt-sround__name { font: 700 28px var(--font-family-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--tone); }
-.kt-sround__key { margin-top: 12px; font: 700 12.5px var(--font-family-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--tone); }
-.kt-sround__does { margin: 6px 0 0; font-size: 17px; line-height: 1.45; color: var(--kt-fg); }
+.kt-sround__key { margin-top: 16px; font: 700 12.5px var(--font-family-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--tone); }
+.kt-sround__banned { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.kt-sround__banned span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 8px; border-radius: 999px; border: 1.5px solid var(--kt-bad); background: color-mix(in srgb, var(--kt-bad) 14%, transparent); color: var(--kt-heading); font-size: 16px; font-weight: 700; white-space: nowrap; }
+.kt-sround__banned svg { flex: none; width: 18px; height: 18px; color: var(--kt-bad); }
+.kt-sround__does { margin: 10px 0 0; font-size: 22px; line-height: 1.4; color: var(--kt-fg); }
 
 /* the round */
 .kt-sround__turns { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
 .kt-sround__turn { display: flex; align-items: flex-start; gap: 10px; }
 .kt-sround__turn.is-me { flex-direction: row-reverse; }
 .kt-sround__turn img { flex: none; width: 34px; height: 34px; margin-top: 6px; border-radius: 50%; object-fit: cover; }
-.kt-sround__turn span { padding: 10px 16px; border-radius: 14px; font-size: 17.5px; line-height: 1.42; }
+.kt-sround__turn span { padding: 12px 18px; border-radius: 14px; font-size: 21px; line-height: 1.38; }
 .kt-sround__turn small { display: block; margin-bottom: 4px; font: 700 12px var(--font-family-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--kt-muted); }
 .kt-sround__turn.is-coach span { border: 1.5px solid var(--tone); border-top-left-radius: 3px; background: color-mix(in srgb, var(--tone) 12%, transparent); color: var(--kt-heading); font-weight: 700; }
 .kt-sround__turn.is-me span { border-top-right-radius: 3px; background: var(--kt-tint-secondary); color: var(--kt-fg); font-weight: 600; }

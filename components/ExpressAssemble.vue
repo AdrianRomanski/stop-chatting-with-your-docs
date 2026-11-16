@@ -5,10 +5,11 @@ import FirstMistakes from './FirstMistakes.vue'
 /**
  * E · Express, the example is this talk: three intermediate packets (distilled notes from Building
  * a Second Brain, Ch. 5, Ch. 1 epigraph, Ch. 3) fly one by one into an empty slide frame and fill
- * its three panels of a still, miniature FirstMistakes: slide 13, "The first three mistakes", which the audience saw a few minutes
+ * its three panels of a still, miniature FirstMistakes: slide 12, "The first three mistakes", which the audience saw a few minutes
  * earlier. Each packet stays, dimmed and ticked, while a copy of it flies. All three packets look
  * the same: none is special.
  * The third packet is the note captured, organized and distilled on the slides before.
+ * No "slide 12" stamp and no caption under it: the slide speaks for itself.
  * No props, no numbers.
  */
 const { at } = useTimeline(5.6)
@@ -58,10 +59,7 @@ const slots = [
         <div v-for="(s, i) in slots" :key="i" class="kt-expr__slot" :class="{ 'is-filled': at(flyAt(i) + 0.3) }"
           :style="{ left: s.left, width: s.width }" />
       </div>
-      <div class="kt-expr__stamp" :class="{ 'is-on': at(4.0) }">slide 13</div>
     </div>
-
-    <div class="kt-expr__tag kt-expr__fade" :class="{ 'is-on': at(4.6) }">assembled, not written from a blank page</div>
   </div>
 </template>
 
@@ -184,30 +182,4 @@ const slots = [
 }
 
 .kt-expr__slot.is-filled { opacity: 0; }
-
-.kt-expr__stamp {
-  position: absolute;
-  right: -14px;
-  top: -16px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--kt-hot);
-  font: 700 14px var(--font-family-mono);
-  color: var(--kt-bg);
-  opacity: 0;
-  transform: scale(1.6) rotate(-6deg);
-  transition: opacity 0.25s, transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-
-.kt-expr__stamp.is-on { opacity: 1; transform: rotate(-6deg); }
-
-.kt-expr__tag {
-  position: absolute;
-  right: 0;
-  width: 480px;
-  bottom: 12px;
-  text-align: center;
-  font: 600 16px var(--font-family-mono);
-  color: var(--kt-hot);
-}
 </style>

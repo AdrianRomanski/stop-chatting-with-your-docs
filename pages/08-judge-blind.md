@@ -10,9 +10,9 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:25 · script: [STATEMENT] The judge never sees your *notes* / only your answer and your claims | pays #arch and #claims; the compact TwoTiers below, the packet crossing labelled "challenge + answer + your claims"
+⏱ 0:25 · script: [STATEMENT] The judge never sees your *notes* / only your answer and your claims | pays #arch and #claims; the compact TwoTiers below, static except the flowing wires: the packet "challenge + answer + your claims" past the gate, my notes stopped at the lock
 
-A boundary between my laptop and the cloud. The notes try to cross and bounce off the lock.
+A boundary between my laptop and the cloud. My notes stop at the lock.
 
 What crosses the boundary is my explanation, in my words, and the claims I wrote myself when I distilled the note. That's exactly what should be graded.
 
@@ -46,7 +46,7 @@ align: center
 status: in-progress
 ---
 
-<h1 class="s">It found the gap<br>I <span class="hot">couldn't</span> see</h1>
+<h1 class="s">It found the gap<br>I <span class="hot">couldn’t</span> see</h1>
 
 <div class="kt-center" style="margin-top: 28px">
   <AnswerGap />
@@ -88,88 +88,23 @@ status: in-progress
 
 # Elaborate: how does it fit my <span class="hot">world</span>?
 
-<div class="kt-center" style="margin-top: 18px">
-  <ElaborateSteps />
+<div class="kt-center" style="margin-top: 0px">
+  <ElaborateAll />
 </div>
 
 <!--
-⏱ 0:30 · script: [STEPS ElaborateSteps "climb step 5 · elaborate"] Elaborate: how does it fit my *world*? | three boxes, in the order the coach asks: why (a reason, + follow-ups), connect (a link outside the note; the only question the style changes), apply (a real place, 1.Projects); at the foot: checked in code, not graded, no review, into ## My elaborations ⏱ 30s
+⏱ 1:15 · script: [STEPS ElaborateAll "climb step 5 · elaborate"] Elaborate: how does it fit my *world*? | static, one slide for the whole step (was ElaborateSteps + three ElaborateTurn slides): three columns in the order the coach asks, why · connect · apply; in each, Gemma's question, my answer with the code's check, and what the code needs; at the foot: checked in code, not graded, no review, into ## My elaborations ⏱ 75s
+Status: merged 2026-11-16. Real: the questions (the code's fixed wording) and the rules. Illustrative: my answers (written 2026-11-14, shortened here).
 
-Retrieve asks: is it in my head? Step five looks the other way. Elaborate asks: how does it fit into everything else I know?
+Retrieve asks: is it in my head? Step five looks the other way. Elaborate asks: how does it fit into everything else I know? coach elaborate asks three questions, always in this order. On Distillation.
 
-(why) coach elaborate asks three questions, always in this order. First, why: why is it built this way, what would break without it? It only takes an answer with a reason in it: because, so that, otherwise.
+(1, why) Why is Distillation built this way? What would break if it were not? My answer: thin layers, because Future Me, opening a note under a deadline, has ten seconds, not ten minutes. Otherwise a wall of text gets skipped. (✓ a reason) The code only takes an answer with a reason in it: because, so that, otherwise. And Gemma may dig with a follow-up: what has to be true for that to work? Each pass keeps only ten to twenty percent of the layer before it.
 
-(connect) Second, connect: what is it like? And the answer has to link to another note, or to something from my own work. This is the only question the sparring style changes.
+(2, connect) The note is in the Feynman style, so: what everyday thing is it like? No jargon. (my answer) Like reducing a sauce: you simmer it down until only the flavor is left. The way an Executive summary keeps just the one decision that matters. (✓ linked) A real link: connect takes a link to anything: a note, a project, an area. A nice metaphor that links to nothing is still an island. This is the only question the sparring style changes.
 
-(apply) Third, apply: where would I use it this month? A real project, a file, a team.
+(3, apply) Where would you use it this month? In my project, Stop Chatting with Your Docs: five books of notes become this talk, without re-reading twelve hundred pages the night before JS Poland. (✓ 1.Projects) Apply only counts with a project: accepted.
 
-(the foot) No model checks these: plain TypeScript does. Nothing is graded, no review gets scheduled. The answers just go into the note. Three more threads back to the idea. Let's do it on Distillation.
--->
-
----
-status: in-progress
----
-
-# Why: give it a <span class="hot">reason</span>
-
-<div class="kt-center" style="margin-top: 4px">
-  <ElaborateTurn kind="why" />
-</div>
-
-<!--
-⏱ 0:35 · script: [STAGE ElaborateTurn why "elaborate · why"] Why: give it a *reason* | Gemma's why question; my answer (✓ a reason: because, otherwise); the follow-up "What has to be true for that to work?"; my answer (✓ so that) ⏱ 35s
-
-(the question) Why is Distillation built this way? What would break if it were not?
-
-(my answer) We mark in thin layers because Future Me, opening a note under a deadline, has ten seconds, not ten minutes. Otherwise a three-page wall of text gets skipped, and I might as well never have saved it. (✓) The code finds the reason: "because", and enough words after it.
-
-(follow-up) Then Gemma may dig, but only with one of three fixed questions. This one: what has to be true for that to work?
-
-(my answer) Each pass keeps only ten to twenty percent of the layer before it, so that the yellow marks actually pop out when I scan the page. (✓)
-
-(If asked: the questions are the code's fixed wording; the answers are mine, written for this talk, not a recorded session. Why may get two follow-ups; connect and apply one each.)
--->
-
----
-status: in-progress
----
-
-# Connect: link it to something <span class="hot">outside</span>
-
-<div class="kt-center" style="margin-top: 4px">
-  <ElaborateTurn kind="connect" />
-</div>
-
-<!--
-⏱ 0:40 · script: [STAGE ElaborateTurn connect "elaborate · connect"] Connect: link it to something *outside* | the feynman connect question; my first try, soup into sauce (✗ no link); the code's refusal; the second try with [[Executive summary]] and [[Fluency illusion]] (✓ linked) ⏱ 40s
-
-(the question) The note is in the Feynman style, so the connect question is: what everyday thing is Distillation like? No jargon.
-
-(1st try) It's like boiling a pot of soup down into a rich sauce, so only the flavor stays. Nice, right? (✗)
-
-(refused) Refused. Not by a model: by the code. Connect it to something outside this note. A nice metaphor that links to nothing is still an island.
-
-(2nd try) So: like boiling sap into syrup, or how an Executive summary gives you the main decision on page one. Except, unlike an AI summary that causes the Fluency illusion, I boiled the layers down myself. (✓ linked) Two real links, to two notes I already have. And the second one is where this talk started.
--->
-
----
-status: in-progress
----
-
-# Apply: name a real <span class="hot">place</span>
-
-<div class="kt-center" style="margin-top: 70px">
-  <ElaborateTurn kind="apply" />
-</div>
-
-<!--
-⏱ 0:25 · script: [STAGE ElaborateTurn apply "elaborate · apply"] Apply: name a real *place* | the apply question; my answer, a link to the talk's own project under 1.Projects (✓ 1.Projects) ⏱ 25s
-
-(the question) Last: where would you use Distillation in your own work this month?
-
-(my answer) In my project, Stop Chatting with Your Docs. When I turn my raw chapter notes from five books into the slides for this talk, without re-reading twelve hundred pages the night before DevFest. (✓) A link under Projects: accepted.
-
-And the three answers go into the note, under My elaborations. Not graded, no review. Step five: done.
+(the foot) No model checks these: plain TypeScript does. Nothing is graded, no review gets scheduled. The answers go into the note, under My elaborations. Step five: done.
 -->
 
 ---
@@ -203,13 +138,13 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:30 · script: [STEPS SpaceDays "climb step 6 · space"] Space: explain it again, a day *later* | three day cards: day 0 Retrieve (spar → judge, failed once, studied, passed); ≥ 1 day; day 1 Space, feynman, spar ✓ judge ✓; ≥ 1 day; day 2 Space, socratic (the coach switches), spar ✓ judge ✓ ⏱ 30s
+⏱ 0:30 · script: [STEPS SpaceDays "climb step 6 · space"] Space: explain it again, a day *later* | three day cards: day 0 Retrieve (spar → judge, failed once, studied, passed); ≥ 1 day; day 1 Space, feynman, spar ✓ judge ✓; 1 week; a week later Space, socratic (the coach switches), spar ✓ judge ✓ ⏱ 30s
 
 (day 0) Step six, Space, is the judge step again. Same loop as Retrieve: spar offline with Gemma, then Argon judges, blind. On day zero I failed once, studied, and passed.
 
 (≥ 1 day, day 1) But Space only counts when I come back at least a day later. Recalling something just before you forget it is what makes it last. Day one: same note, its own style, Feynman. Spar, pass. Judge, pass.
 
-(day 2) And then the coach does something on its own: it switches the style. Day two: Socratic. Same idea, asked from a different side.
+(1 week, a week later) And a week later, the coach does something on its own: it switches the style. Socratic. Same idea, asked from a different side.
 
 A judgement alone doesn't count: the judge grades an answer I already gave, it's not a new recall. And the last step, Teach, stays locked until I've passed in two different styles.
 
@@ -278,7 +213,7 @@ status: in-progress
   </div>
 </div>
 
-<div class="kt-hexcredit kt-stagger">
+<div class="kt-hexcredit">
   <img class="is-face" src="/images/people/greg-radzio.webp" alt="Greg Radzio">
   <div>
     <small>the hexagon, stolen from</small>
@@ -288,7 +223,7 @@ status: in-progress
   <div class="kt-hexcredit__event"><img src="/images/logos/ng-poland.webp" alt=""><small>NG Poland<br>2022</small></div>
 </div>
 
-<div class="kt-hexwatch kt-stagger">
+<div class="kt-hexwatch">
   <QR url="https://www.youtube.com/watch?v=nNIUTBHaiG8" :size="62" />
   <div>
     <small>the original</small>
@@ -327,7 +262,7 @@ status: in-progress
 
 (the cli) On the left, the driving side: the terminal and the cli, the composition root, the only place a port meets its adapter.
 
-(the adapters) On the right, the driven side. The core defines the ports, and each piece of technology plugs in: the vault over MCP, Gemma on Ollama, which plays seven parts now, the sparring partner, the synthesis partner, the student I teach and four more, Argon as the judge, and local state for the queue and the clock. Swapping Gemma for another model is one new adapter.
+(the adapters) On the right, the driven side. The core defines the ports, and each piece of technology plugs in: the vault over MCP, through coach-vault, my own vault server, Gemma on Ollama, which plays seven parts now, the sparring partner, the synthesis partner, the student I teach and four more, Argon as the judge, and local state for the queue and the clock. Swapping Gemma for another model is one new adapter.
 
 (the red arrow, the Nx line) Every arrow points in, and Nx enforces the boundaries: if one points out, the module-boundaries rule fails the build.
 -->
@@ -336,20 +271,53 @@ status: in-progress
 status: in-progress
 ---
 
+<h1 class="kt-cv-title" style="left: 159px"><span class="hot">Coach</span></h1>
+<h1 class="kt-cv-title" style="left: 593px"><span class="hot">Vault</span></h1>
+
+<style>
+.kt-cv-title { position: absolute; top: 0; margin: 0 !important; transform: translateX(-50%); white-space: nowrap; }
+</style>
+
+<div style="position: absolute; left: -52px; top: 53px; width: 920px">
+  <VaultBoundary />
+</div>
+
+<!--
+⏱ 0:40 · script: [ARCH VaultBoundary "coach and vault"] *Coach* over the coach side, *Vault* over the vault side (no headline) | static, no motion, names and logos only: the coach's hexagon, Gemma (Ollama) and Argon (cloud) under it; the wall in the middle guarded by Gandalf with the Nx logo, one gate, MCP; Gandalf's comic bubble: YOU SHALL NOT PASS!; the vault: coach-vault, vault engine, climb board (Angular logo); Skills with five agent logos (Antigravity, Claude, Codex, Cursor, Kiro) and Obsidian on the right; a credit pill with Kirill's photo: vault engine by Kirill ⏱ 40s
+Status: reworked 2026-11-16 (ADR-AIC-0048). Real: the Nx rule (type:vault depends only on type:vault), the 38 tools, the import from kb-template.
+
+(the whole picture) Zoom out from the hexagon: the coach and the vault. Until last weekend, the vault server lived in a second repo, kb-template. Now it all lives with the coach.
+
+(the coach) On the left, the hexagon you just saw. (the models) Under it, the two models: Gemma, local, on Ollama, and Argon, the judge, in the cloud.
+
+(the vault) On the right, the vault: coach-vault, my MCP vault server, thirty-eight tools, and every write is a preview first. Under it the engine. (Kirill) The vault engine is Kirill's work, from my team. Thanks, Kirill. And the climb board, drawn in Angular with ng-diagram.
+
+(the gate) Between them, one way through: MCP. (Obsidian) Only the vault touches my notes.
+
+(Skills) And the server isn't only the coach's. Any agent plans my weeks through it: Antigravity, Claude Code, Codex, Cursor, Kiro. The skills are plain markdown, the server is plain MCP.
+
+(Gandalf) So the vault code is two folders away. Can the domain just import it? You shall not pass. That's Nx: type vault depends only on type vault. Same repo, still a wall.
+-->
+
+
+---
+status: in-progress
+---
+
 # The application <span class="hot">flow</span>
 
-<div class="kt-center" style="margin-top: 24px">
+<div class="kt-center" style="margin-top: 56px">
   <AppFlow />
 </div>
 
 <!--
-⏱ 0:35 · script: [ARCH AppFlow "the whole flow"] The application *flow* | cloud band on top, Argon only over Retrieve and Space; eight step cards: number, step, two or three words, the helper's mark; Retrieve and Space tagged EXAM (one style, then more); laptop band below: Obsidian, kb-template · MCP, Gemma · Ollama ⏱ 35s
+⏱ 0:35 · script: [ARCH AppFlow "the whole flow"] The application *flow* | eight step cards, colored by kind (INPUT and PREP blue, PRACTICE green, EXAM red like the cloud, OUTPUT gold like ON SITE): number, step, two or three words, the helper's mark; a tag on each: INPUT, PREP, PRACTICE (Group, Generate, Elaborate), EXAM (Retrieve, Space: one style, then more), OUTPUT (Teach); Retrieve and Space with Argon's mark in a red ring (online); OFFLINE · OFF|ONLINE · ON SITE under each card ⏱ 35s
 
 (the cards) One idea, start to finish. One command per step, and I do the work in every one.
 
 Read: raw material, and I keep the notes that resonate. No AI. Synthesize: bold, highlight, summarize. Then the climb. Group: I make areas and sort every concept into one. Generate: I write what I know, before anyone asks. (exam) Retrieve is an exam: from memory, questioned in one style. Elaborate: why, like, use. Space is the exam again, a day, a week or a month later, in more and more styles. And teach.
 
-(offline) Five steps run fully offline: on the train, in airplane mode. (Teach, on site) And Teach happens on site: in front of real people. Like right now. (the cloud) Retrieve and Space spar offline too, and only the judge goes online. Argon gets my answer, never my notes.
+(offline) Five steps run fully offline: on the train, in airplane mode. (Teach, on site) And Teach happens on site: in front of real people. Like right now. (OFF | ONLINE) Retrieve and Space spar offline too, and only the judge goes online. Argon gets my answer, never my notes.
 
-(the laptop) Everything else stays here: Obsidian, kb-template, Gemma on Ollama.
+(close) Everything else stays on the laptop: Obsidian, coach-vault, Gemma on Ollama.
 -->

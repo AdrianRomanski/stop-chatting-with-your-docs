@@ -27,7 +27,7 @@ One step is still open.
 
 # Five books, one <span class="hot">talk</span>
 
-<div class="kt-center" style="margin-top: 14px">
+<div class="kt-center" style="margin-top: 4px; zoom: 0.95">
   <BooksToTalk />
 </div>
 
@@ -52,13 +52,13 @@ status: in-progress
 </div>
 
 <!--
-⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *talk* | pays off slide 8's summit (TEACH, the Protégé Effect) and slide 28's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this talk"; below, a lecture hall, rows A–C, lights up: the students, you; the GDG logo with DevFest Wrocław and the venue, Uniwersytet Ekonomiczny, at the foot ⏱ 25s
+⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *talk* | pays off slide 8's summit (TEACH, the Protégé Effect) and slide 28's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this talk"; below, a lecture hall, rows A–C, lights up: the students, you; the JS Poland logo and the venue, Multikino, at the foot ⏱ 25s
 
 (the stairs light up, I hop) Remember the top of the stairs? Teach. The Protégé Effect: you understand something best when you have to explain it to someone else.
 
 (the flag) So, what about teaching? Ladies and gentlemen: I just did it. (this talk) The last step of my climb was this talk.
 
-(the hall lights up, row by row) And the students were you, here in this hall at DevFest Wrocław. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
+(the hall lights up, row by row) And the students were you, here in this hall at JS Poland. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
 
 Thank you.
 -->
