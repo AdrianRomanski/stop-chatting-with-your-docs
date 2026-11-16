@@ -4,7 +4,8 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * Never outsource synthesis, on one source: Julia's design system architecture, ~200 pages of docs
- * (JuliaStory's pile). Plays once, in three parts:
+ * (JuliaStory's pile). Three parts; only the right one moves (the two left panels are static, shown in
+ * their final state from the start):
  * Left top, the pull-based architecture (AI at the wheel): the pile flies into the AI, its sparkle
  * spins, out pops summary.md, pulled to me (grey, idle); it goes dull, and the panel's header
  * reads "fluency illusion" (the slide before). (This and the next panel used to be PullPush, slide "Pull a summary, or get pushed".)
@@ -12,7 +13,8 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * synthesize the concepts into my diagram, layer by layer, bottom-up, with a "builds on" arrow; the
  * AI pushes back, "why this way?", a "?" lands on the diagram, I answer and it becomes a tick; the
  * panel's header reads "mastering concepts".
- * Right, the payoff, the next group meeting: I draw it on the whiteboard, the team, in color, asks
+ * Right, the payoff, the next group meeting, animated from the moment the slide shows: I draw it on the
+ * whiteboard, the team, in color, asks
  * for it one at a time; Julia, the creator, last; CLAP CLAP.
  * The layer names are the ones I draw in JuliaStory. Sets up AccessRevoked ("Pull-based? At
  * PushBased?"). No props.
@@ -43,7 +45,7 @@ const ANSWER_AT = ASK_AT + 1.6 // I answer
 const DONE_AT = ANSWER_AT + 1.2
 
 // ---- right: the next group meeting
-const MEET_AT = DONE_AT + 1.0
+const MEET_AT = 0.2 // the meeting starts at once: the two panels on the left are static
 const DRAW_AT = MEET_AT + 0.9
 type Pt = [number, number]
 const box = (y: number): Pt[] => [[540, y], [760, y], [760, y + 26], [540, y + 26], [540, y]]
@@ -77,8 +79,10 @@ const questions = [
 const CLAP_AT = ASKS_AT + 5.6
 
 const { at } = useTimeline(CLAP_AT + 0.5)
-const busy = computed(() => at(BUSY_AT) && !at(SUMMARY_AT))
-const asking = computed(() => at(ASK_AT) && !at(ASK_AT + 0.9))
+// the left half shows its final state, no motion: every beat there counts as passed
+const still = (_s: number) => true
+const busy = computed(() => false)
+const asking = computed(() => false)
 const talking = (who: number) => questions.some(q => q.who === who && at(ASKS_AT + q.at) && !at(ASKS_AT + q.until))
 </script>
 
@@ -102,36 +106,36 @@ const talking = (who: number) => questions.some(q => q.who === who && at(ASKS_AT
     </defs>
 
     <!-- ============ left top: the pull-based architecture, the AI at the wheel ============ -->
-    <g class="kt-smine__part" :class="{ 'is-on': at(0.2) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(0.2) }">
       <rect x="10" y="8" width="420" height="172" rx="16" class="kt-smine__panel is-trap" />
       <text x="28" y="32" class="kt-smine__tag">✕ pull-based architecture</text>
     </g>
-    <g v-for="(s, i) in topPile" :key="`f${i}`" class="kt-smine__part" :class="{ 'is-on': at(0.6) }">
-      <rect class="kt-smine__sheet kt-smine__fly" :class="{ 'is-gone': at(s.on) }" :x="s.x" :y="s.y" width="60" height="6" rx="2"
-        :style="at(s.on) ? { transform: `translate(${s.dx}px, ${s.dy}px) scale(0.3)` } : {}" />
+    <!-- the ~200 pages, before the arrow into the AI (static: the left half doesn't move) -->
+    <g class="kt-smine__part is-on">
+      <rect v-for="(p, i) in topPile" :key="`f${i}`" class="kt-smine__sheet" :x="p.x" :y="p.y" width="60" height="6" rx="2" />
+      <text x="56" y="152" text-anchor="middle" class="kt-smine__small">~200 pages</text>
     </g>
-    <text x="56" y="152" text-anchor="middle" class="kt-smine__part kt-smine__small" :class="{ 'is-on': at(0.6) && !at(BUSY_AT) }">~200 pages</text>
-    <path d="M96 100 H 132" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': at(1.4) }" :marker-end="`url(#${id('head')})`" />
+    <path d="M96 100 H 132" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': still(1.4) }" :marker-end="`url(#${id('head')})`" />
 
-    <g class="kt-smine__part" :class="{ 'is-on': at(0.6) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(0.6) }">
       <rect :x="AI.x - 40" :y="AI.y - 28" width="80" height="56" rx="14" class="kt-smine__ai" :class="{ 'is-busy': busy }" />
       <g :transform="`translate(${AI.x - 18} ${AI.y})`">
         <path d="M0 -9 l3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3z" class="kt-smine__spark" :class="{ 'is-busy': busy }" />
       </g>
       <text :x="AI.x + 12" :y="AI.y + 8" text-anchor="middle" class="kt-smine__ainame">AI</text>
     </g>
-    <path d="M224 100 H 250" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': at(SUMMARY_AT) }" :marker-end="`url(#${id('head')})`" />
+    <path d="M224 100 H 250" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': still(SUMMARY_AT) }" :marker-end="`url(#${id('head')})`" />
 
-    <g class="kt-smine__pop" :class="{ 'is-on': at(SUMMARY_AT) }">
-      <g class="kt-smine__gem" :class="{ 'is-dull': at(DULL_AT) }">
+    <g class="kt-smine__pop" :class="{ 'is-on': still(SUMMARY_AT) }">
+      <g class="kt-smine__gem" :class="{ 'is-dull': still(DULL_AT) }">
         <rect x="256" y="74" width="40" height="52" rx="5" class="kt-smine__doc" />
         <path d="M264 86 h24 M264 97 h18 M264 108 h22 M264 118 h14" class="kt-smine__hl" />
       </g>
     </g>
-    <text x="276" y="152" text-anchor="middle" class="kt-smine__part kt-smine__small" :class="{ 'is-on': at(SUMMARY_AT) }">summary.md</text>
-    <path d="M304 100 H 334" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': at(IDLE_AT) }" :marker-end="`url(#${id('head')})`" />
+    <text x="276" y="152" text-anchor="middle" class="kt-smine__part kt-smine__small" :class="{ 'is-on': still(SUMMARY_AT) }">summary.md</text>
+    <path d="M304 100 H 334" class="kt-smine__part kt-smine__wire" :class="{ 'is-on': still(IDLE_AT) }" :marker-end="`url(#${id('head')})`" />
 
-    <g class="kt-smine__part" :class="{ 'is-on': at(IDLE_AT) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(IDLE_AT) }">
       <circle cx="372" cy="100" r="26" class="kt-smine__ring" />
       <image href="/images/speaker.webp" x="348" y="76" width="48" height="48" :clip-path="`url(#${id('face')})`"
         preserveAspectRatio="xMidYMid slice" class="kt-smine__me is-idle" />
@@ -139,21 +143,21 @@ const talking = (who: number) => questions.some(q => q.who === who && at(ASKS_AT
     </g>
 
     <!-- the outcome, in the header row, opposite the name -->
-    <g class="kt-smine__verdict" :class="{ 'is-on': at(STAMP_AT) }">
+    <g class="kt-smine__verdict" :class="{ 'is-on': still(STAMP_AT) }">
       <rect x="270" y="17" width="146" height="22" rx="11" class="kt-smine__verdictbox is-bad" />
       <text x="343" y="32" text-anchor="middle" class="kt-smine__verdicttext is-bad">fluency illusion</text>
     </g>
 
     <!-- ============ left bottom: the push-based architecture, me at the wheel ============ -->
-    <g class="kt-smine__part" :class="{ 'is-on': at(MINE_AT) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(MINE_AT) }">
       <rect x="10" y="194" width="420" height="178" rx="16" class="kt-smine__panel is-mine" />
       <text x="28" y="218" class="kt-smine__tag is-good">✓ push-based architecture</text>
     </g>
-    <g class="kt-smine__part" :class="{ 'is-on': at(MINE_AT + 0.4) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(MINE_AT + 0.4) }">
       <rect v-for="(dx, i) in jitter" :key="`s${i}`" :x="26 + dx" :y="300 - i * 7" width="60" height="6" rx="2" class="kt-smine__sheet" />
       <text x="56" y="320" text-anchor="middle" class="kt-smine__small">~200 pages</text>
     </g>
-    <g class="kt-smine__part" :class="{ 'is-on': at(MINE_AT + 0.8) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(MINE_AT + 0.8) }">
       <circle cx="122" cy="290" r="24" class="kt-smine__ring is-on" />
       <image href="/images/speaker.webp" x="100" y="268" width="44" height="44" :clip-path="`url(#${id('face')})`"
         preserveAspectRatio="xMidYMid slice" class="kt-smine__me" />
@@ -161,28 +165,28 @@ const talking = (who: number) => questions.some(q => q.who === who && at(ASKS_AT
     </g>
 
     <!-- my diagram, bottom-up -->
-    <rect x="166" y="232" width="146" height="132" rx="8" class="kt-smine__part kt-smine__board" :class="{ 'is-on': at(MINE_AT + 1.1) }" />
+    <rect x="166" y="232" width="146" height="132" rx="8" class="kt-smine__part kt-smine__board" :class="{ 'is-on': still(MINE_AT + 1.1) }" />
     <g v-for="l in layers" :key="`d${l.name}`">
-      <rect x="176" :y="l.y" width="104" height="22" rx="4" pathLength="1" class="kt-smine__layer" :class="{ 'is-on': at(l.on) }" />
-      <text x="228" :y="l.y + 15" text-anchor="middle" class="kt-smine__part kt-smine__layername" :class="{ 'is-on': at(l.on + 0.4) }">{{ l.name }}</text>
+      <rect x="176" :y="l.y" width="104" height="22" rx="4" pathLength="1" class="kt-smine__layer" :class="{ 'is-on': still(l.on) }" />
+      <text x="228" :y="l.y + 15" text-anchor="middle" class="kt-smine__part kt-smine__layername" :class="{ 'is-on': still(l.on + 0.4) }">{{ l.name }}</text>
     </g>
-    <path d="M296 352 V 246" pathLength="1" class="kt-smine__builds" :class="{ 'is-on': at(ARROW_AT) }" :marker-end="`url(#${id('ink')})`" />
+    <path d="M296 352 V 246" pathLength="1" class="kt-smine__builds" :class="{ 'is-on': still(ARROW_AT) }" :marker-end="`url(#${id('ink')})`" />
 
     <!-- the AI pushes back: its question lands on my diagram; I answer, the "?" becomes a tick -->
-    <g class="kt-smine__pop" :class="{ 'is-on': at(ASK_AT + 0.7) && !at(ANSWER_AT + 0.4) }" transform="translate(296 298)">
+    <g class="kt-smine__pop" :class="{ 'is-on': still(ASK_AT + 0.7) && !still(ANSWER_AT + 0.4) }" transform="translate(296 298)">
       <circle r="10" class="kt-smine__q" />
       <text y="5" text-anchor="middle" class="kt-smine__qtext">?</text>
     </g>
-    <g class="kt-smine__pop" :class="{ 'is-on': at(ANSWER_AT + 0.4) }" transform="translate(296 298)">
+    <g class="kt-smine__pop" :class="{ 'is-on': still(ANSWER_AT + 0.4) }" transform="translate(296 298)">
       <circle r="10" class="kt-smine__fixed" />
       <path d="M-5 0 l3.5 4 l6.5 -8" class="kt-smine__fixedmark" />
     </g>
-    <g class="kt-smine__part" :class="{ 'is-on': at(ASK_AT + 0.3) }">
+    <g class="kt-smine__part" :class="{ 'is-on': still(ASK_AT + 0.3) }">
       <rect x="320" y="234" width="104" height="26" rx="13" class="kt-smine__bubble is-push" />
       <text x="372" y="252" text-anchor="middle" class="kt-smine__prompt">why this way?</text>
     </g>
-    <path d="M336 290 H 312" class="kt-smine__part kt-smine__wire is-push" :class="{ 'is-on': at(ASK_AT + 0.4) }" :marker-end="`url(#${id('push')})`" />
-    <g class="kt-smine__part" :class="{ 'is-on': at(ASK_AT) }">
+    <path d="M336 290 H 312" class="kt-smine__part kt-smine__wire is-push" :class="{ 'is-on': still(ASK_AT + 0.4) }" :marker-end="`url(#${id('push')})`" />
+    <g class="kt-smine__part" :class="{ 'is-on': still(ASK_AT) }">
       <rect x="336" y="272" width="72" height="40" rx="12" class="kt-smine__ai" :class="{ 'is-busy': asking }" />
       <g transform="translate(356 292)">
         <path d="M0 -8 l2.5 5.5 5.5 2.5 -5.5 2.5 -2.5 5.5 -2.5 -5.5 -5.5 -2.5 5.5 -2.5z" class="kt-smine__spark" :class="{ 'is-busy': asking }" />
@@ -190,10 +194,10 @@ const talking = (who: number) => questions.some(q => q.who === who && at(ASKS_AT
       <text x="384" y="299" text-anchor="middle" class="kt-smine__ainame is-small">AI</text>
     </g>
     <!-- my answer goes back -->
-    <path d="M312 306 H 334" class="kt-smine__part kt-smine__wire is-back" :class="{ 'is-on': at(ANSWER_AT) }" :marker-end="`url(#${id('back')})`" />
+    <path d="M312 306 H 334" class="kt-smine__part kt-smine__wire is-back" :class="{ 'is-on': still(ANSWER_AT) }" :marker-end="`url(#${id('back')})`" />
 
     <!-- the outcome, in the header row, opposite the name -->
-    <g class="kt-smine__verdict" :class="{ 'is-on': at(DONE_AT) }">
+    <g class="kt-smine__verdict" :class="{ 'is-on': still(DONE_AT) }">
       <rect x="262" y="203" width="154" height="22" rx="11" class="kt-smine__verdictbox is-good" />
       <text x="339" y="218" text-anchor="middle" class="kt-smine__verdicttext is-good">mastering concepts</text>
     </g>

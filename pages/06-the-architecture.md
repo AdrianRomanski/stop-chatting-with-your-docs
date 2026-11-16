@@ -180,11 +180,11 @@ status: in-progress
 
 (the card) Socratic never asks "what is X". It tests the limits of what I say. I give a general rule that sounds right on the surface, and the coach pushes my own logic to an extreme, to see where it breaks.
 
-(you say) I say: highlighting helps me spot the important parts faster.
+(you say) I say: distilling makes my notes faster to use.
 
-(the coach pushes back) If highlighting makes things easier to find, what happens if you highlight half the page? Does that still help?
+(the coach pushes back) If shorter is faster, why not distill every note down to one line?
 
-(winning answer) No. If half the page is highlighted, nothing stands out, and my eyes still have to read everything. It only saves time if each layer compresses the one before to about 10 to 20 percent: I trade full detail for fast scanning.
+(winning answer) Because one line loses the context I need to act on it. Each layer keeps only the best 10 to 20 percent of the one before, and the full note is still underneath: I can always drill back down.
 -->
 
 ---

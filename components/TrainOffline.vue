@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The talk's origin story, as a gag in five beats, plays once:
+ * The talk's origin story, plays once, one short thought cloud over the person:
  * 1. on the train, the book snaps shut into its real cover (Building a Second Brain): finished
- * 2. the laptop opens on the PKP Intercity Wi-Fi: "connecting…", then "no internet" and a #@%&!
- * 3. so the notes start: they spray out of the laptop, then links draw between them, a note graph
- * 4. the graph tangles, the person beside it thinks "Organize that CHAOS using PARA"; the notes snap into
- *    the four PARA folders, P · A · R · A (Projects, Areas, Resources, Archives): "Finally Structured"
- * 5. still unsure: "How can I know that I understand it?"; the reflex, "Just ask AI for a summary?", and
- *    then the memory: "Wait… remember the architecture docs?" (the next slide's story)
- * 6. the doubt turns into the idea, a lightbulb over the thought: "What if a local model acts as a teacher?"
- * Sets up the structure (PARA) and the plan (CODE) of "build the brain"; the bulb pays off on
- * "Airplane mode, on". No props.
+ * 2. the laptop opens on the PKP Intercity Wi-Fi: "connecting…", then PKP Intercity "no internet", which stays
+ *    on the screen to the end; the person: "I'm bored…"
+ * 3. "ADHD won't let me sit still": the notes spray out of the laptop, then links draw between them
+ * 4. the graph tangles: "Let's organize my notes"; the notes snap into the four PARA folders, P · A · R · A
+ *    (Projects, Areas, Resources, Archives)
+ * The person is drawn 1.8× from the feet, right of the folders; the cloud and the bulb sit high above the head.
+ * 5. the lightbulb, the cloud turns amber: "A sparring partner, Matrix-style. Offline!", and the person's head
+ *    and body fill with Matrix code rain (MATRIX letters, ones and zeros, falling for as long as the slide is up). The next slide
+ *    (NeoGrind) tells the Matrix scene
+ * Sets up the structure (PARA) and the plan (CODE) of "build the brain"; the bulb leads into the Matrix
+ * storyboard (NeoGrind), the next slide, and pays off on "Airplane mode, on". No props.
  */
-const { at } = useTimeline(15)
+const { at } = useTimeline(11)
 const poles = [0, 1, 2]
 // where the spammed notes land: x, y, rotation
 const notes = [
@@ -36,10 +38,28 @@ const columns = [600, 644, 688, 732]
 const para = ['P', 'A', 'R', 'A']
 const ordered = notes.map((_, i) => [columns[i % 4], 128 + Math.floor(i / 4) * 52, 0])
 const ORDER_AT = 8.4
-const DOUBT_AT = 9.8
-const SUMMARY_AT = 11.2
-const RECALL_AT = 12.6
-const IDEA_AT = 14
+const IDEA_AT = 9.8 // the bulb, once the notes are filed
+const BORED_AT = 2.9 // no internet: the person, and the first thought
+// the thought: bored, then ADHD while the notes fly and link, then organize them, then the idea
+const ADHD_AT = 4.3 // the notes are already flying: sitting still was never an option
+// the Matrix rain in the person's head: the letters of MATRIX and ones and zeros, like the cover's;
+// each column falls on its own CSS loop (speed and phase per column), so it rains for as long as the slide is up
+const rainClip = `kt-train-rain-${useId()}`
+const GLYPHS = 'MATRIX01'
+const rain = Array.from({ length: 6 }, (_, c) => ({
+  x: 806 + c * 6.4,
+  chars: Array.from({ length: 12 }, (_, k) => GLYPHS[(c * 13 + k * k * 7 + k * 3 + ((c * k) % 5)) % GLYPHS.length]),
+  dur: 1.4 + ((c * 37) % 9) / 10,
+  delay: ((c * 53) % 20) / 10,
+}))
+const bodyClip = `kt-train-body-${useId()}`
+const bodyRain = Array.from({ length: 14 }, (_, c) => ({
+  x: 782 + c * 6.4,
+  chars: Array.from({ length: 15 }, (_, k) => GLYPHS[(c * 11 + k * k * 5 + k * 7 + ((c * k) % 3)) % GLYPHS.length]),
+  dur: 1.3 + ((c * 29) % 9) / 10,
+  delay: ((c * 41) % 20) / 10,
+}))
+const thought = computed(() => (at(IDEA_AT) ? 'idea' : at(PILE_AT) ? 'organize' : at(ADHD_AT) ? 'adhd' : 'bored'))
 // a folder per column, drawn like ParaBuckets': tab top left, the notes sit inside
 const folder = (x: number) => `M${x - 19} 98 h14 l5 6 h19 v154 h-38z`
 // a note sits where it landed until the folders are out, then they pull it in, a few at a time
@@ -50,13 +70,11 @@ function place(i: number) {
     transitionDelay: at(ORDER_AT) ? `${0.35 + i * 0.04}s` : '0s',
   }
 }
-const thought = computed(() =>
-  at(IDEA_AT) ? 'idea' : at(RECALL_AT) ? 'recall' : at(SUMMARY_AT) ? 'summary' : at(DOUBT_AT) ? 'doubt' : at(ORDER_AT) ? 'plan' : 'pile')
 </script>
 
 <template>
   <svg class="kt-train" viewBox="0 0 880 340" role="img"
-    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. So the notes pile up into a tangle: organize that chaos using PARA. They file into the four PARA folders, Projects, Areas, Resources, Archives: finally structured. How can I know that I understand it? Just ask AI for a summary? Wait, remember the architecture docs? An idea lights up: what if a local model acts as a teacher?">
+    aria-label="On the train: the book is finished. The laptop can't connect to the train Wi-Fi. I'm bored. ADHD won't let me sit still, so the notes pile up into a tangle. Let's organize my notes: they file into the four PARA folders, Projects, Areas, Resources, Archives. Then a lightbulb: a sparring partner, Matrix-style. Offline! The head and body fill with Matrix code rain.">
     <defs>
       <clipPath id="kt-train-window">
         <rect x="20" y="40" width="250" height="200" rx="30" />
@@ -109,26 +127,17 @@ const thought = computed(() =>
         <circle cx="435" cy="190" r="14" class="kt-train__spinner" />
       </g>
 
-      <!-- no internet -->
-      <g class="kt-train__state" :class="{ 'is-on': at(2.7) && !at(3.4) }">
-        <circle cx="435" cy="122" r="28" class="kt-train__xring" />
-        <path d="M423 110 l24 24 M447 110 l-24 24" class="kt-train__x" />
-        <text x="435" y="186" text-anchor="middle" class="kt-train__screentext is-bad">no internet</text>
+      <!-- PKP Intercity, no internet: stays on the screen to the end -->
+      <g class="kt-train__state" :class="{ 'is-on': at(2.7) }">
+        <rect x="330" y="76" width="210" height="44" rx="8" class="kt-train__plate" />
+        <image href="/images/logos/pkp-intercity.png" x="340" y="85" width="190" height="24" />
+        <circle cx="435" cy="158" r="22" class="kt-train__xring" />
+        <path d="M426 149 l18 18 M444 149 l-18 18" class="kt-train__x" />
+        <text x="435" y="208" text-anchor="middle" class="kt-train__screentext is-bad">no internet</text>
       </g>
 
-      <!-- …so: notes.md, typing like mad -->
-      <g class="kt-train__state" :class="{ 'is-on': at(3.4) }">
-        <text x="330" y="84" class="kt-train__file">notes.md</text>
-        <path v-for="(w, i) in [150, 110, 170, 90, 140, 160, 120]" :key="i" :d="`M330 ${104 + i * 16} h${w}`"
-          class="kt-train__typed" :class="{ 'is-on': at(NOTE_AT + i * 0.22) }" />
-      </g>
     </g>
 
-    <!-- the rage bubble -->
-    <g class="kt-train__rage" :class="{ 'is-on': at(2.85) && !at(3.9) }">
-      <path d="M520 14 h86 a14 14 0 0 1 14 14 v20 a14 14 0 0 1 -14 14 h-56 l-14 14 l2 -14 h-18 a14 14 0 0 1 -14 -14 v-20 a14 14 0 0 1 14 -14z" class="kt-train__bubble" />
-      <text x="563" y="45" text-anchor="middle" class="kt-train__ragetext">#@%&amp;!</text>
-    </g>
 
     <!-- beat 3: the notes spam, then the links between them -->
     <!-- the notes sit high, clear of the person -->
@@ -163,51 +172,59 @@ const thought = computed(() =>
 
     <!-- the person, up and to the right, clear of the notes -->
     <g transform="translate(28 -40)">
-      <!-- the person, unsure: pile → plan → doubt → idea -->
-      <g class="kt-train__part" :class="{ 'is-on': at(LINK_AT) }">
+      <!-- the person, 1.8× from the feet, right of the folders: bored → let's organize → the idea -->
+      <g transform="translate(808 352) scale(1.8) translate(-822 -352)">
+      <g class="kt-train__part" :class="{ 'is-on': at(BORED_AT) }">
         <circle cx="822" cy="282" r="18" class="kt-train__person" />
         <path d="M778 352 q0 -46 44 -46 q44 0 44 46z" class="kt-train__person" />
       </g>
-      <g class="kt-train__think" :class="[`is-${thought}`, { 'is-on': at(PILE_AT) }]">
-        <circle cx="806" cy="252" r="4" class="kt-train__thought" />
-        <circle cx="796" cy="238" r="6" class="kt-train__thought" />
-        <g class="kt-train__cloud">
-          <rect x="740" y="120" width="138" height="104" rx="26" class="kt-train__thought" />
-          <g class="kt-train__word is-pile">
-            <text x="809" y="157" text-anchor="middle" class="kt-train__thinktext">Organize</text>
-            <text x="809" y="177" text-anchor="middle" class="kt-train__thinktext">that <tspan class="kt-train__q">CHAOS</tspan></text>
-            <text x="809" y="197" text-anchor="middle" class="kt-train__thinktext">using PARA</text>
-          </g>
-          <g class="kt-train__word is-plan">
-            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">Finally</text>
-            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">Structured</text>
-          </g>
-          <g class="kt-train__word is-doubt">
-            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">How can I</text>
-            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">know that I</text>
-            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">understand</text>
-            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">it<tspan class="kt-train__q">?</tspan></text>
-          </g>
-          <g class="kt-train__word is-summary">
-            <text x="809" y="157" text-anchor="middle" class="kt-train__thinktext">Just ask AI</text>
-            <text x="809" y="177" text-anchor="middle" class="kt-train__thinktext">for a</text>
-            <text x="809" y="197" text-anchor="middle" class="kt-train__thinktext">summary<tspan class="kt-train__q">?</tspan></text>
-          </g>
-          <g class="kt-train__word is-recall">
-            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">Wait…</text>
-            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">remember the</text>
-            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext kt-train__q">architecture</text>
-            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">docs<tspan class="kt-train__q">?</tspan></text>
-          </g>
-          <g class="kt-train__word is-idea">
-            <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">What if a</text>
-            <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">local model</text>
-            <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext">acts as a</text>
-            <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext">teacher<tspan class="kt-train__q">?</tspan></text>
-          </g>
+      <!-- the idea: the head fills with Matrix code rain, and it keeps falling -->
+      <defs>
+        <clipPath :id="rainClip"><circle cx="822" cy="282" r="16.5" /></clipPath>
+        <clipPath :id="bodyClip"><path d="M779.5 351 q0 -44.5 42.5 -44.5 q42.5 0 42.5 44.5z" /></clipPath>
+      </defs>
+      <g class="kt-train__state" :class="{ 'is-on': at(IDEA_AT) }" :clip-path="`url(#${rainClip})`">
+        <circle cx="822" cy="282" r="17" class="kt-train__rainbg" />
+        <g v-for="c in rain" :key="c.x" class="kt-train__raincol" :style="{ animationDuration: `${c.dur}s`, animationDelay: `${-c.delay}s` }">
+          <text v-for="(g, k) in c.chars" :key="k" :x="c.x" :y="k * 7" text-anchor="middle" class="kt-train__rain"
+            :class="{ 'is-head': k === c.chars.length - 1 }" :style="{ opacity: 0.25 + 0.75 * (k / (c.chars.length - 1)) }">{{ g }}</text>
         </g>
       </g>
-      <g transform="translate(-5 -30)">
+      <!-- …and the body too -->
+      <g class="kt-train__state" :class="{ 'is-on': at(IDEA_AT) }" :clip-path="`url(#${bodyClip})`">
+        <path d="M778 352 q0 -46 44 -46 q44 0 44 46z" class="kt-train__rainbg" />
+        <g v-for="c in bodyRain" :key="c.x" class="kt-train__raincol is-body" :style="{ animationDuration: `${c.dur}s`, animationDelay: `${-c.delay}s` }">
+          <text v-for="(g, k) in c.chars" :key="k" :x="c.x" :y="k * 7" text-anchor="middle" class="kt-train__rain"
+            :class="{ 'is-head': k === c.chars.length - 1 }" :style="{ opacity: 0.25 + 0.75 * (k / (c.chars.length - 1)) }">{{ g }}</text>
+        </g>
+      </g>
+      </g>
+      <!-- one thought cloud, pushed up over the bigger head -->
+      <g transform="translate(12 -84)">
+      <g class="kt-train__think" :class="[`is-${thought}`, { 'is-on': at(BORED_AT) }]">
+        <circle cx="806" cy="252" r="4" class="kt-train__thought" />
+        <circle cx="796" cy="238" r="6" class="kt-train__thought" />
+        <rect x="736" y="120" width="146" height="104" rx="26" class="kt-train__thought" />
+        <g class="kt-train__word is-bored">
+          <text x="809" y="178" text-anchor="middle" class="kt-train__thinktext">I'm bored…</text>
+        </g>
+        <g class="kt-train__word is-adhd">
+          <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext"><tspan class="kt-train__adhd">ADHD</tspan> won't let</text>
+          <text x="809" y="189" text-anchor="middle" class="kt-train__thinktext">me sit still</text>
+        </g>
+        <g class="kt-train__word is-organize">
+          <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">Let's organize</text>
+          <text x="809" y="189" text-anchor="middle" class="kt-train__thinktext">my notes</text>
+        </g>
+        <g class="kt-train__word is-idea">
+          <text x="809" y="147" text-anchor="middle" class="kt-train__thinktext">A sparring</text>
+          <text x="809" y="167" text-anchor="middle" class="kt-train__thinktext">partner,</text>
+          <text x="809" y="187" text-anchor="middle" class="kt-train__thinktext kt-train__matrix">Matrix-style.</text>
+          <text x="809" y="207" text-anchor="middle" class="kt-train__thinktext kt-train__offline">Offline!</text>
+        </g>
+      </g>
+      </g>
+      <g transform="translate(1 -101)"> <!-- the bulb, over the cloud -->
         <g class="kt-train__idea" :class="{ 'is-on': at(IDEA_AT) }">
           <circle cx="820" cy="80" r="60" fill="url(#kt-train-bulbglow)" class="kt-train__glow" />
           <path d="M820 48 a30 30 0 0 1 18 54 v12 h-36 v-12 a30 30 0 0 1 18 -54z" class="kt-train__bulb" />
@@ -288,23 +305,7 @@ const thought = computed(() =>
 @keyframes kt-train-spin { to { transform: rotate(360deg); } }
 .kt-train__xring { fill: var(--kt-tint-secondary); stroke: var(--kt-hot); stroke-width: 3; }
 .kt-train__x { stroke: var(--kt-hot); stroke-width: 4; stroke-linecap: round; }
-.kt-train__file { font: 700 13px var(--font-family-mono); fill: var(--kt-c-primary-soft); }
-.kt-train__typed {
-  stroke: var(--kt-subtle);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  transition: stroke-dashoffset 0.25s linear;
-}
-.kt-train__typed.is-on { stroke-dashoffset: 0; }
 
-/* the rage bubble: pops, shakes */
-.kt-train__rage { opacity: 0; transform-box: fill-box; transform-origin: 20% 100%; transform: scale(0.4); transition: opacity 0.15s, transform 0.3s cubic-bezier(0.3, 1.9, 0.5, 1); }
-.kt-train__rage.is-on { opacity: 1; transform: none; animation: kt-train-shake 0.18s linear 0.3s 4; }
-@keyframes kt-train-shake { 25% { transform: translateX(-3px) rotate(-2deg); } 75% { transform: translateX(3px) rotate(2deg); } }
-.kt-train__bubble { fill: var(--kt-tint-secondary); stroke: var(--kt-hot); stroke-width: 2.5; }
-.kt-train__ragetext { font: 900 20px var(--font-family-mono); fill: var(--kt-hot); }
 
 /* the spam: notes fly out of the laptop and land at an angle */
 .kt-train__note {
@@ -356,25 +357,31 @@ const thought = computed(() =>
 .kt-train__steptext { font: 800 17px var(--font-family-mono); fill: var(--kt-good); }
 
 /* the person, unsure */
-.kt-train__person { fill: var(--kt-tint-neutral); stroke: var(--kt-c-primary-soft); stroke-width: 2.5; }
+/* the thought cloud: fades in once, its words swap; amber when the idea lands */
 .kt-train__think { opacity: 0; transition: opacity 0.3s; }
 .kt-train__think.is-on { opacity: 1; }
 .kt-train__thought { fill: var(--kt-card); stroke: var(--kt-line-strong); stroke-width: 2; transition: stroke 0.3s, fill 0.3s; }
 .kt-train__think.is-idea .kt-train__thought { stroke: var(--kt-warn); fill: color-mix(in srgb, var(--kt-warn) 12%, var(--kt-bg)); }
-.kt-train__cloud { transform-box: fill-box; transform-origin: 40% 100%; }
-.kt-train__think.is-plan .kt-train__thought { stroke: var(--kt-good); fill: color-mix(in srgb, var(--kt-good) 12%, var(--kt-bg)); }
-.kt-train__think.is-on:is(.is-pile, .is-doubt, .is-recall) .kt-train__cloud { animation: kt-train-wobble 1.6s ease-in-out infinite; }
-@keyframes kt-train-wobble { 25% { transform: rotate(-2.5deg); } 75% { transform: rotate(2.5deg); } }
-.kt-train__thinktext { font: 700 15px var(--font-family-mono); fill: var(--kt-heading); }
-.kt-train__q { fill: var(--kt-hot); font-weight: 900; }
-/* one word at a time: the old one fades out before the new one fades in, never text on text */
+.kt-train__thinktext { font: 700 16px var(--font-family-mono); fill: var(--kt-heading); }
+.kt-train__matrix { fill: var(--kt-good); }
+.kt-train__adhd { fill: var(--kt-hot); font-weight: 900; }
+.kt-train__offline { fill: var(--kt-warn); font-weight: 900; }
 .kt-train__word { opacity: 0; transition: opacity 0.12s; }
-.kt-train__think.is-pile .kt-train__word.is-pile,
-.kt-train__think.is-plan .kt-train__word.is-plan,
-.kt-train__think.is-doubt .kt-train__word.is-doubt,
-.kt-train__think.is-summary .kt-train__word.is-summary,
-.kt-train__think.is-recall .kt-train__word.is-recall,
+.kt-train__think.is-bored .kt-train__word.is-bored,
+.kt-train__think.is-adhd .kt-train__word.is-adhd,
+.kt-train__think.is-organize .kt-train__word.is-organize,
 .kt-train__think.is-idea .kt-train__word.is-idea { opacity: 1; transition: opacity 0.2s 0.14s; }
+/* the Matrix rain in the head: black like the film (not a theme surface), light green glyphs, white heads */
+.kt-train__rainbg { fill: black; }
+.kt-train__rain { font: 700 7px var(--font-family-mono); fill: color-mix(in srgb, var(--kt-good) 70%, white); }
+.kt-train__rain.is-head { fill: white; }
+.kt-train__raincol { animation: kt-train-rain linear infinite; }
+.kt-train__raincol.is-body { animation-name: kt-train-bodyrain; }
+@keyframes kt-train-bodyrain { from { transform: translateY(200px); } to { transform: translateY(356px); } }
+@keyframes kt-train-rain { from { transform: translateY(186px); } to { transform: translateY(304px); } }
+@media (prefers-reduced-motion: reduce) { .kt-train__raincol { animation: none; transform: translateY(244px); } .kt-train__raincol.is-body { transform: translateY(300px); } }
+.kt-train__person { fill: var(--kt-tint-neutral); stroke: var(--kt-c-primary-soft); stroke-width: 2.5; }
+/* one word at a time: the old one fades out before the new one fades in, never text on text */
 
 /* the idea */
 .kt-train__idea { opacity: 0; transform-box: fill-box; transform-origin: 50% 70%; transform: scale(0.3); transition: opacity 0.2s, transform 0.45s cubic-bezier(0.3, 1.8, 0.5, 1); }
@@ -394,7 +401,6 @@ const thought = computed(() =>
   .kt-train__spinner,
   .kt-train__dots,
   .kt-train__glow,
-  .kt-train__cloud,
-  .kt-train__notebody { animation: none !important; }
+    .kt-train__notebody { animation: none !important; }
 }
 </style>

@@ -6,7 +6,7 @@
 </div>
 
 <!--
-⏱ 0:30 · script: [STAGE BackOnTrain "where it started"] Back on the *train* | bookend to TrainOffline (slide 4), three beats on the same PKP Intercity laptop: offline sparring, five minutes of train Wi-Fi to get judged, then "no internet. again."; the doubt "How can I know that I understand it?" is struck and answered "I explain it. offline, then judged" ⏱ 30s
+⏱ 0:30 · script: [STAGE BackOnTrain "where it started"] Back on the *train* | bookend to TrainOffline, three beats on the same PKP Intercity laptop: offline sparring, five minutes of train Wi-Fi to get judged, then "no internet. again."; the doubt "How can I know that I understand it?" is struck and answered "I explain it. offline, then judged" ⏱ 30s
 
 Remember the train? No signal, a finished book, and one question: how can I know that I understand it?
 

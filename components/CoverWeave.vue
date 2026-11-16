@@ -11,17 +11,17 @@ import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue'
  *    plus answer (never the notes: blind) rises to the judge (Gemini Argon, in the cloud, top
  *    right), which comes online for this act. Its verdict lands on the node: a check, and that
  *    node's links thicken (what you retrieve gets stronger); the third verdict finds a gap, the link
- *    flashes red, is redrawn, then passes. Finally the judge schedules the next review.
- * 5. The payoff, the Matrix dojo scene: the tested brain becomes "I know RxJS" (Neo, inside the
- *    brain), and Morpheus answers "Show me." from beside it. Everything holds there.
- * It plays once (END seconds) and stays on the final frame, so the room can read the meme.
+ *    flashes red, is redrawn, then passes.
+ * 5. The payoff, the Matrix look: the tested brain fills with falling green code that never stops
+ *    (the letters of MATRIX and ones and zeros; no film stills: the Matrix scene itself comes after
+ *    the train, NeoGrind).
+ * It plays once (END seconds) and stays on the final frame, except the code rain, which keeps falling.
  * The art stays out of the title block (the strip under the byline and the right ~25%).
- * Reduced motion: the final state (the tested brain, its checks and the meme), still.
+ * Reduced motion: the final state (the tested brain, its checks and the code rain), still.
  */
 const uid = useId()
-const MEME_AT = 17.7 // after the judge's last verdict and the next-review pill
-const SHOW_AT = MEME_AT + 1.3 // the judge answers
-const END = SHOW_AT + 0.7
+const MEME_AT = 17.7 // after the judge's last verdict
+const END = MEME_AT + 0.6 // the brain fills; the code rain keeps falling after (its own clock)
 
 const t = ref(END)
 let raf = 0
@@ -36,7 +36,20 @@ onMounted(() => {
   t0 = performance.now()
   raf = requestAnimationFrame(tick)
 })
-onBeforeUnmount(() => cancelAnimationFrame(raf))
+// the code rain never stops: its own clock keeps running after the rest of the cover holds
+const rainT = ref(0)
+let rainRaf = 0
+let rainT0 = 0
+function rainTick(now: number) {
+  rainT.value = (now - rainT0) / 1000
+  rainRaf = requestAnimationFrame(rainTick)
+}
+onMounted(() => {
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+  rainT0 = performance.now()
+  rainRaf = requestAnimationFrame(rainTick)
+})
+onBeforeUnmount(() => { cancelAnimationFrame(raf); cancelAnimationFrame(rainRaf) })
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v))
 const ease = (p: number) => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2)
@@ -200,7 +213,6 @@ const hitAt = (q: Quiz) => q.s + Q_DUR
 const sendAt = (q: Quiz) => hitAt(q) + 0.15
 const verdictAt = (q: Quiz) => sendAt(q) + A_DUR + 0.1
 const passAt = (q: Quiz) => verdictAt(q) + (q.gap ? 1.3 : 0.05)
-const REVIEW_AT = 17.0
 // the blind hand-off: from the answering node up to the cloud, arcing out to the right
 const answerPaths = quizzes.map((q) => {
   const n = nodes[q.n]
@@ -226,7 +238,6 @@ const judgeLit = computed(() => {
   }
   return { good: good * layer.value, bad: bad * layer.value }
 })
-const reviewP = computed(() => ease(prog(REVIEW_AT, 0.5)) * layer.value)
 const verdictRing = computed(() => quizzes.map((q) => {
   const d = t.value - verdictAt(q)
   return d > 0 && d < 0.7 ? { r: 8 + d * 26, o: 1 - d / 0.7 } : { r: 8, o: 0 }
@@ -280,15 +291,24 @@ const brainGrow = computed(() => prog(NODE_AT, nodeOrder.length * NODE_STEP + 0.
 // ---- the moving layer fades in once, and stays
 const layer = computed(() => clamp(t.value / 0.4))
 
-// ---- beat 5: the payoff, the meme fills the brain (clipped to its outline)
-// the brain is 76×64 at scale 2.7; the picture sits a little low so the caption clears the curve
+// ---- beat 5: the payoff, the brain fills with Matrix code rain (clipped to its outline)
 const brainPath = 'M0 -32 c-22 0 -38 14 -38 32 c0 18 16 32 38 32 c22 0 38 -14 38 -32 c0 -18 -16 -32 -38 -32z'
-const meme = { w: 76 * brain.s, h: 64 * brain.s, dy: 14 } // neo-matrix.png is 1152×760
 const memeP = computed(() => ease(prog(MEME_AT, 0.5)))
-// the answer: Morpheus in a panel left of the brain (right of the subtitle, above Gemma's label),
-// cropped to his face and the caption so "Show me." reads from the back row
-const show = { x: 630, y: 252, w: 132, h: 128 } // show-me.png is 790×760, cropped to 560×540
-const showP = computed(() => ease(prog(SHOW_AT, 0.5)))
+const RAIN = { w: 76 * brain.s, h: 64 * brain.s, col: 14, row: 15 }
+const GLYPHS = 'MATRIX01' // the letters of MATRIX, and ones and zeros
+// each column: a fixed string, a speed and a start offset (deterministic, so every run looks the same)
+const rainCols = Array.from({ length: Math.floor(RAIN.w / RAIN.col) }, (_, c) => {
+  const n = 18
+  const chars = Array.from({ length: n }, (_, k) => GLYPHS[(c * 13 + k * k * 7 + k * 3 + ((c * k) % 5)) % GLYPHS.length]) // scrambled per column
+  // a start offset per column, so the streams don't fall in step
+  return { x: -RAIN.w / 2 + 7 + c * RAIN.col, chars, speed: 70 + ((c * 37) % 60), offset: (c * 97) % 400 }
+})
+// each column falls through the brain and starts again from the top, forever (the film's rain);
+// reduced motion: rainT stays 0 and the columns stand still where their offsets put them
+const RAIN_COL_H = 18 * RAIN.row
+const RAIN_LOOP = RAIN.h + RAIN_COL_H
+const rainY = (c: { speed: number; offset: number }) =>
+  -RAIN.h / 2 - RAIN_COL_H + ((c.offset + rainT.value * c.speed) % RAIN_LOOP)
 const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 0 0 1 48.6 -5 A16 16 0 0 1 48.6 26 Z'
 </script>
 
@@ -333,11 +353,6 @@ const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 
       <image href="/images/logos/gemini-mark.png" x="-39.9" y="-13" width="26" height="25" :style="{ opacity: 0.45 + 0.55 * cloudOn }" />
       <text x="-7.9" y="6" class="kt-cweave__name" :style="{ opacity: 0.45 + 0.55 * cloudOn }">Argon</text>
       <text x="0" y="-42" text-anchor="middle" class="kt-cweave__tag is-role">JUDGE · CLOUD</text>
-      <g :style="{ opacity: reviewP, transform: `translateY(${(1 - reviewP) * -6}px)` }">
-        <rect x="-90" y="36" width="180" height="26" rx="13" class="kt-cweave__review" />
-        <path d="M-77 43 h12 v12 h-12z M-77 47 h12 M-73.5 41 v3 M-68.5 41 v3" class="kt-cweave__cal" />
-        <text x="-58" y="54" class="kt-cweave__tag is-review">next review · 3d</text>
-      </g>
     </g>
 
     <!-- the sparring partner (local Gemma), mirroring the learner; its mark lights when it asks -->
@@ -431,30 +446,19 @@ const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 
       </g>
     </g>
 
-    <!-- beat 5: "I know RxJS" fills the tested brain, and holds to the end -->
+    <!-- beat 5: the tested brain fills with Matrix code rain, and holds to the end -->
     <g :style="{ opacity: memeP, transform: `translate(${brain.x}px, ${brain.y}px) scale(${0.85 + 0.15 * memeP})` }">
       <clipPath :id="`kt-cweave-meme-${uid}`">
         <path :d="brainPath" :transform="`scale(${brain.s})`" />
       </clipPath>
-      <!-- the picture sits low to clear the curve: the strip above it continues its black caption band -->
-      <rect :x="-meme.w / 2" :y="-meme.h / 2" :width="meme.w" :height="meme.dy + 2" class="kt-cweave__memeband"
-        :clip-path="`url(#kt-cweave-meme-${uid})`" />
-      <image href="/images/memes/neo-matrix.png" :x="-meme.w / 2" :y="-meme.h / 2 + meme.dy" :width="meme.w" :height="meme.h"
-        preserveAspectRatio="xMidYMin slice" :clip-path="`url(#kt-cweave-meme-${uid})`" />
-      <path :d="brainPath" :transform="`scale(${brain.s})`" class="kt-cweave__memeframe" />
-    </g>
-
-    <!-- beat 5: Morpheus answers "Show me." beside the brain -->
-    <g :style="{ opacity: showP, transform: `translate(${show.x + show.w}px, ${show.y + show.h / 2}px) scale(${0.85 + 0.15 * showP}) translate(${-show.w}px, ${-show.h / 2}px)` }">
-      <clipPath :id="`kt-cweave-show-${uid}`">
-        <rect :width="show.w" :height="show.h" rx="14" />
-      </clipPath>
-      <g :clip-path="`url(#kt-cweave-show-${uid})`">
-        <svg :width="show.w" :height="show.h" viewBox="130 120 560 540" preserveAspectRatio="xMidYMid slice">
-          <image href="/images/memes/show-me.png" width="790" height="760" />
-        </svg>
+      <g :clip-path="`url(#kt-cweave-meme-${uid})`">
+        <rect :x="-RAIN.w / 2" :y="-RAIN.h / 2" :width="RAIN.w" :height="RAIN.h" class="kt-cweave__rainbg" />
+        <g v-for="(c, ci) in rainCols" :key="ci" :transform="`translate(${c.x} ${rainY(c)})`">
+          <text v-for="(g, k) in c.chars" :key="k" :y="k * RAIN.row" text-anchor="middle" class="kt-cweave__rain"
+            :class="{ 'is-head': k === c.chars.length - 1 }" :style="{ opacity: 0.25 + 0.75 * (k / (c.chars.length - 1)) }">{{ g }}</text>
+        </g>
       </g>
-      <rect :width="show.w" :height="show.h" rx="14" class="kt-cweave__memeframe" />
+      <path :d="brainPath" :transform="`scale(${brain.s})`" class="kt-cweave__memeframe" />
     </g>
 
     <!-- the pen: stays with the person -->
@@ -631,9 +635,6 @@ const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 
 .kt-scheme-light .kt-cweave__logo { filter: brightness(0.72) saturate(1.4); }
 .kt-scheme-light .kt-cweave__tag.is-role { fill: var(--kt-cool); }
 .kt-cweave__tag.is-role { font-size: 15px; font-weight: 700; letter-spacing: 0.03em; fill: var(--kt-c-primary-soft); }
-.kt-cweave__tag.is-review { font-size: 14px; font-weight: 700; fill: var(--kt-good); }
-.kt-cweave__review { fill: color-mix(in srgb, var(--kt-good) 14%, var(--kt-bg)); stroke: var(--kt-good); stroke-width: 1.5; }
-.kt-cweave__cal { fill: none; stroke: var(--kt-good); stroke-width: 1.4; stroke-linecap: round; }
 .kt-cweave__answer { fill: var(--kt-tint-primary); stroke: var(--kt-c-primary); stroke-width: 1.8; }
 .kt-cweave__answerlines { fill: none; stroke: var(--kt-c-primary-soft); stroke-width: 1.8; stroke-linecap: round; }
 .kt-cweave__hit.is-answer { stroke: var(--kt-c-primary-soft); }
@@ -643,8 +644,10 @@ const cloudPath = 'M-51.4 26 A21 21 0 0 1 -43.4 -12 A30 30 0 0 1 8.6 -26 A26 26 
 .kt-cweave__bad-out { stop-color: var(--kt-bad); stop-opacity: 0; }
 
 /* beat 5: the meme bubble */
-/* the meme's own caption band is pure black, so the strip that extends it is too (photo, not theme) */
-.kt-cweave__memeband { fill: black; }
+/* the code rain: the Matrix screen is black on a light cover too (film, not theme), glyphs a light success green, the head of each column white */
+.kt-cweave__rainbg { fill: black; }
+.kt-cweave__rain { font: 700 13px var(--font-family-mono); fill: color-mix(in srgb, var(--kt-good) 55%, white); }
+.kt-cweave__rain.is-head { fill: white; }
 .kt-cweave__memeframe { fill: none; stroke: var(--kt-c-primary); stroke-width: 3; vector-effect: non-scaling-stroke; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -4,23 +4,25 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * O · Organize, the PARA method as one routing flow (Forte Ch. 5, p. 101–3), every step animated.
- * It opens on the idea from TrainOffline: the same person, the yellow thought "I Need OFFLINE
- * Sparring Partner" and its bulb; the thought turns into today's daily note and the person makes
+ * It opens on the idea from TrainOffline: the same person, the yellow thought "A sparring partner,
+ * Matrix-style. Offline!" (Matrix-style in green, as on the train) and its bulb; the thought turns into today's daily note and the person makes
  * way for the Dewey shelf ("by topic"), struck out. The flow comes in: project? → area? →
  * resource? → else Archives, all folders empty. Then three things travel it, stopping at every
  * question until one says yes (green): the idea → Projects (this talk); a second note, "I want to
  * find my voice on stage and mature as a speaker" → Areas (public speaking); the five books behind
  * this talk, from the left → Resources. Last, my last talk shows up in Archives: project finished.
- * Replaces DeweyShelf and ParaBuckets on stage. No props, no numbers.
+ * Each note sits in the daily note long enough to read and narrate (the idea until 7 s, the voice note
+ * 8.9–12.4 s) before it travels. Replaces DeweyShelf and ParaBuckets on stage. No props, no numbers.
  */
-const { t, at } = useTimeline(13)
+const { t, at } = useTimeline(17.8) // the two notes stay up long enough to read and narrate
 const steps = [
-  { cx: 250, q: 'project?', name: 'Projects', rule: 'has a deadline', ex: 'this talk', catchAt: 5.6, fileAt: 6.3 },
-  { cx: 440, q: 'area?', name: 'Areas', rule: 'no end date', ex: 'public speaking', catchAt: 8.4, fileAt: 9.1 },
-  { cx: 630, q: 'resource?', name: 'Resources', rule: 'might be useful', ex: '', catchAt: 11.1, fileAt: 11.7 },
-  { cx: 800, q: '', name: 'Archives', rule: 'inactive', ex: 'my last talk', why: 'project finished', catchAt: 99, fileAt: 12.3 },
+  { cx: 250, q: 'project?', name: 'Projects', rule: 'has a deadline', ex: 'this talk', catchAt: 7.6, fileAt: 8.3 },
+  { cx: 440, q: 'area?', name: 'Areas', rule: 'no end date', ex: 'public speaking', catchAt: 13.2, fileAt: 13.9 },
+  { cx: 630, q: 'resource?', name: 'Resources', rule: 'might be useful', ex: '', catchAt: 15.9, fileAt: 16.5 },
+  { cx: 800, q: '', name: 'Archives', rule: 'inactive', ex: 'my last talk', why: 'project finished', catchAt: 99, fileAt: 17.1 },
 ]
-const idea = ['I Need', 'OFFLINE', 'Sparring', 'Partner']
+// the same words as the idea cloud on the train (TrainOffline)
+const idea = ['A sparring', 'partner,', 'Matrix-style.', 'Offline!']
 const voice = ['I want to find', 'my voice on', 'stage and', 'mature as', 'a speaker']
 const shownAt = (i: number) => 3.0 + i * 0.4
 const noted = computed(() => at(1.8))
@@ -48,9 +50,9 @@ const place = (stops: Stop[], scale = 1) => {
 }
 
 // the idea: project? yes
-const ideaStops: Stop[] = [[5.0, 85, 78], [5.5, 250, 82], [5.9, 250, 82], [6.3, 250, 292]]
+const ideaStops: Stop[] = [[7, 85, 78], [7.5, 250, 82], [7.9, 250, 82], [8.3, 250, 292]]
 // the second note: project? no, area? yes
-const voiceStops: Stop[] = [[7.6, 85, 78], [8.0, 250, 82], [8.2, 250, 82], [8.6, 440, 82], [8.8, 440, 82], [9.1, 440, 292]]
+const voiceStops: Stop[] = [[12.4, 85, 78], [12.8, 250, 82], [13, 250, 82], [13.4, 440, 82], [13.6, 440, 82], [13.9, 440, 292]]
 // the books, in from the left: project? no, area? no, resource? yes
 const books = [
   { href: '/images/books/building-a-second-brain.webp', w: 30, r: -6, fx: 588 },
@@ -62,13 +64,13 @@ const books = [
 const bookStep = 0.2
 const bookStops = (i: number, fx: number): Stop[] => {
   const d = i * bookStep
-  return [[9.7 + d, -30, 82], [10.1 + d, 85, 82], [10.4 + d, 250, 82], [10.7 + d, 440, 82], [11.0 + d, 630, 82], [11.4 + d, fx, 264]]
+  return [[14.5 + d, -30, 82], [14.9 + d, 85, 82], [15.2 + d, 250, 82], [15.5 + d, 440, 82], [15.8 + d, 630, 82], [16.2 + d, fx, 264]]
 }
 </script>
 
 <template>
   <svg class="kt-org" :class="{ 'is-noted': noted }" viewBox="0 0 880 340" role="img"
-    aria-label="PARA as a flow. The idea from the train, I need an offline sparring partner, becomes today's daily note. Not by topic like a library shelf. Is it a project? an area? a resource? If none, archive it. The idea is a project: this talk. I want to find my voice on stage is an area: public speaking. The books behind this talk are resources. My last talk is archived: project finished.">
+    aria-label="PARA as a flow. The idea from the train, a sparring partner, Matrix-style, offline, becomes today's daily note. Not by topic like a library shelf. Is it a project? an area? a resource? If none, archive it. The idea is a project: this talk. I want to find my voice on stage is an area: public speaking. The books behind this talk are resources. My last talk is archived: project finished.">
     <defs>
       <radialGradient id="kt-org-bulbglow">
         <stop offset="0%" class="kt-org__glow-in" />
@@ -88,13 +90,14 @@ const bookStops = (i: number, fx: number): Stop[] => {
     <g class="kt-org__part" :class="{ 'is-on': at(0.2) }">
       <rect x="10" y="20" width="150" height="116" class="kt-org__daily" />
       <text x="24" y="40" class="kt-org__file">daily note</text>
-      <g class="kt-org__entry" :class="{ 'is-gone': at(5.0) }">
-        <text v-for="(w, i) in idea" :key="w" x="85" :y="62 + i * 20" text-anchor="middle" class="kt-org__idea">{{ w }}</text>
+      <g class="kt-org__entry" :class="{ 'is-gone': at(7) }">
+        <text v-for="(w, i) in idea" :key="w" x="85" :y="62 + i * 20" text-anchor="middle" class="kt-org__idea"
+          :class="{ 'is-matrix': w === 'Matrix-style.' }">{{ w }}</text>
       </g>
-      <g class="kt-org__entry is-later" :class="{ 'is-in': at(6.9), 'is-gone': at(7.6) }">
+      <g class="kt-org__entry is-later" :class="{ 'is-in': at(8.9), 'is-gone': at(12.4) }">
         <text v-for="(w, i) in voice" :key="w" x="85" :y="60 + i * 17" text-anchor="middle" class="kt-org__voice">{{ w }}</text>
       </g>
-      <text x="85" y="94" text-anchor="middle" class="kt-org__entry is-later kt-org__done" :class="{ 'is-in': at(12.0) }">all filed ✓</text>
+      <text x="85" y="94" text-anchor="middle" class="kt-org__entry is-later kt-org__done" :class="{ 'is-in': at(16.8) }">all filed ✓</text>
     </g>
 
     <g class="kt-org__bulb" :class="{ 'is-on': at(0.8) }">
@@ -142,19 +145,19 @@ const bookStops = (i: number, fx: number): Stop[] => {
     </g>
 
     <!-- the travellers -->
-    <g class="kt-org__note" :class="{ 'is-on': at(5.0), 'is-filed': at(6.3) }" :transform="place(ideaStops, 0.7)">
+    <g class="kt-org__note" :class="{ 'is-on': at(7), 'is-filed': at(8.3) }" :transform="place(ideaStops, 0.7)">
       <rect x="-13" y="-16" width="26" height="32" rx="3" class="kt-org__ndoc" />
       <path d="M-6 -6 h12 M-6 0 h12 M-6 6 h8" class="kt-org__nlines" />
     </g>
-    <g class="kt-org__note is-voice" :class="{ 'is-on': at(7.6), 'is-filed': at(9.1) }" :transform="place(voiceStops, 0.7)">
+    <g class="kt-org__note is-voice" :class="{ 'is-on': at(12.4), 'is-filed': at(13.9) }" :transform="place(voiceStops, 0.7)">
       <rect x="-13" y="-16" width="26" height="32" rx="3" class="kt-org__ndoc" />
       <path d="M-6 -6 h12 M-6 0 h12 M-6 6 h8" class="kt-org__nlines" />
     </g>
-    <g v-for="(b, i) in books" :key="b.href" class="kt-org__book" :class="{ 'is-on': at(9.7 + i * bookStep) }" :transform="place(bookStops(i, b.fx))">
+    <g v-for="(b, i) in books" :key="b.href" class="kt-org__book" :class="{ 'is-on': at(14.5 + i * bookStep) }" :transform="place(bookStops(i, b.fx))">
       <image :href="b.href" :x="-b.w / 2" y="-22" :width="b.w" height="44" preserveAspectRatio="xMidYMid slice" :transform="`rotate(${b.r})`" />
     </g>
 
-    <text x="440" y="332" text-anchor="middle" class="kt-org__tag kt-org__part" :class="{ 'is-on': at(12.6) }">where it's going, not where it came from</text>
+    <text x="440" y="332" text-anchor="middle" class="kt-org__tag kt-org__part" :class="{ 'is-on': at(17.4) }">where it's going, not where it came from</text>
   </svg>
 </template>
 
@@ -207,6 +210,7 @@ const bookStops = (i: number, fx: number): Stop[] => {
 .kt-org__file { font: 12px var(--font-family-mono); fill: var(--kt-subtle); opacity: 0; transition: opacity 0.45s 0.3s; }
 .kt-org.is-noted .kt-org__file { opacity: 1; }
 .kt-org__idea { font: 700 14px var(--font-family-mono); fill: var(--kt-warn); }
+.kt-org__idea.is-matrix { fill: var(--kt-good); }
 .kt-org__voice { font: 700 12.5px var(--font-family-mono); fill: var(--kt-heading); }
 .kt-org__done { font: 700 14px var(--font-family-mono); fill: var(--kt-good); }
 

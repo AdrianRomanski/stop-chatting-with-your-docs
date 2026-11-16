@@ -24,9 +24,9 @@ const STYLES: Record<string, { does: string; banned?: string[]; turns: Turn[] }>
   socratic: {
     does: 'Pushes your rule to the extreme to find where it breaks. You explain the boundary.',
     turns: [
-      { who: 'me', label: 'you say', text: 'Highlighting helps me spot the important parts faster.' },
-      { who: 'coach', label: 'coach pushes back', text: 'What if you highlight half the page? Still faster?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'No, then nothing stands out. Each layer keeps only 10⁠–⁠20% of the one before.' },
+      { who: 'me', label: 'you say', text: 'Distilling makes my notes faster to use.' },
+      { who: 'coach', label: 'coach pushes back', text: 'Then why not distill every note down to one line?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'One line loses the context I need. Each layer keeps the best 10⁠–⁠20%, and I can drill back down.' },
     ],
   },
   cornell: {

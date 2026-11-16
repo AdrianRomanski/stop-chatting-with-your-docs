@@ -74,18 +74,18 @@ Fluency with a text. That's exactly what an AI summary gives you. That was my su
 
 <!--
 ⏱ 0:40 · script: [STAGE SynthesisMine "the one rule"] Never outsource *synthesis* to AI ⏱ 40s [^docs-200]
-Paced to the narration (SynthesisMine.vue). Merges the old "Pull a summary, or get pushed" (PullPush) into this slide. Left half, top, pull-based: the pile at 0:01, the pages fly into the AI 0:02–0:03, summary.md at 0:04, pulled to me (idle) at 0:05, FLUENCY ILLUSION at 0:07. Left half, bottom, push-based: from 0:07, my diagram 0:09–0:10, the AI pushes back at 0:12, my answer and the tick at 0:13, "mastering concepts" at 0:14. Right half: the next group meeting from 0:15, I draw it 0:16–0:19, the team asks from 0:20, Julia at 0:25, CLAP CLAP at 0:26.
+Left half static (both panels in their final state from the start: pull-based → fluency illusion, push-based → mastering concepts); only the right half animates: the whiteboard drawing, then the team impressed, Julia last, CLAP CLAP. Point at the left panels while talking.
 
 So here's the one rule of this talk. Same two hundred pages, two architectures. And the whole difference is who does the synthesis.
 
-Pull-based architecture. I hand the AI the wheel. (the pages fly into the AI) It reads, it decides what matters. (summary.md) I pull a summary. Clean. (pulled to me) And me? Idle. My thinking: flat. (FLUENCY ILLUSION) It looks great. And I feel like I get it. That's the fluency illusion.
+Pull-based architecture. I hand the AI the wheel. It reads, it decides what matters. I pull a summary. Clean. And me? Idle. My thinking: flat. It looks great. And I feel like I get it. That's the fluency illusion.
 
-(0:07) Push-based architecture. I keep the wheel. Same pages, me doing the work. (the diagram) I synthesize the concepts myself, layer on layer. Tokens, primitives, components, patterns. What builds on what.
+Push-based architecture. I keep the wheel. Same pages, me doing the work. I synthesize the concepts myself, layer on layer. Tokens, primitives, components, patterns. What builds on what.
 
-(0:12, the AI pushes back) And then the AI pushes back: "Why this way?" Now I have to defend it. That's cognitive sparring. (my answer, the tick) I answer, and my thinking is under load. That's where understanding gets built: when something pushes back.
+And then the AI pushes back: "Why this way?" Now I have to defend it. That's cognitive sparring. I answer, and my thinking is under load. That's where understanding gets built: when something pushes back.
 
-(mastering concepts) The synthesis stays mine. That's how you master a concept.
+The synthesis stays mine. That's how you master a concept.
 
-(0:15, the meeting) And it worked. At the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. (the team) "Wow, so that's how it works!" "Can you teach us this?" "Can you share guidelines?" (0:25) And Julia, the one who created it: "Will you write our guidelines?" (CLAP CLAP)
+(the meeting, animated) And it worked. At the next group meeting… (the board) I drew it. Tokens, primitives, components, patterns. (the team) "Wow, so that's how it works!" "Can you teach us this?" "Can you share guidelines?" And Julia, the one who created it: "Will you write our guidelines?" (CLAP CLAP)
 -->
 

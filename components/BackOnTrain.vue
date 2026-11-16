@@ -9,7 +9,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * 2. the train Wi-Fi comes back, a green chip counting down from 5 minutes; the chat dims, Argon
  *    judges ("judging…"), then "pass ✓ · next review in 7 days" (the ladder's first Tier 2 step)
  * 3. the Wi-Fi drops again ("no internet. again."): I was already judged
- * Beside it, the doubt from slide 4, "How can I know that I understand it?", is struck through and
+ * Beside it, the doubt from TrainOffline, "How can I know that I understand it?", is struck through and
  * answered: "I explain it." A dramatization of the loop, not a recorded session. Plays once.
  */
 const { t, at } = useTimeline(8)

@@ -133,7 +133,7 @@ class: kt-code-step
 <!--
 ⏱ 0:55 · script: [STAGE OrganizeFlow "O · Organize with PARA"] File by *actionability*, not topic ⏱ 55s
 
-Organize. Remember the train? The idea that lit up: I need an offline sparring partner. (the bulb) I didn't build anything that night. I wrote it into my daily note. (the thought becomes the note)
+Organize. Remember the train? The idea that lit up: a sparring partner, Matrix-style. Offline. (the bulb) I didn't build anything that night. I wrote it into my daily note. (the thought becomes the note)
 
 Now, where does it go? Most of us file like a library: Dewey decimal, this goes under Psychology. (shelf, struck out) Forte tried that himself, "even the Dewey decimal system used in libraries", and "every method I tried soon failed."
 
