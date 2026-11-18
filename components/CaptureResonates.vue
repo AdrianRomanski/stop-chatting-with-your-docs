@@ -11,7 +11,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * where I skipped). Right, that evening: the page is typed into today's daily note, the bridge to
  * Organize. The bold and highlight layers come later, on DistillLayers. No props, no numbers.
  */
-const { t, at } = useTimeline(12.2)
+const { t, at } = useTimeline(7.6)
 
 // the handwriting: one line at a time, the pen riding the end of the ink
 const lines = [
@@ -22,9 +22,9 @@ const lines = [
   'wonder, or excitement,',
   'and let that be your signal.”',
 ]
-const WRITE = 3.6
-const PER = 0.95
-const progress = (i: number) => Math.min(1, Math.max(0, (t.value - WRITE - i * PER) / (PER - 0.15)))
+const WRITE = 2.4
+const PER = 0.6
+const progress = (i: number) => Math.min(1, Math.max(0, (t.value - WRITE - i * PER) / (PER - 0.1)))
 const writing = computed(() => t.value >= WRITE && t.value < WRITE + lines.length * PER)
 const current = computed(() => Math.min(lines.length - 1, Math.max(0, Math.floor((t.value - WRITE) / PER))))
 const done = computed(() => at(WRITE + lines.length * PER))
@@ -39,7 +39,7 @@ const done = computed(() => at(WRITE + lines.length * PER))
       <i class="kt-cap__bar" style="width: 80%" />
       <i class="kt-cap__bar" style="width: 64%" />
     </div>
-    <div class="kt-cap__page kt-cap__part" :class="{ 'is-on': at(0.2), 'is-dim': at(2.0) }">
+    <div class="kt-cap__page kt-cap__part" :class="{ 'is-on': at(0.2), 'is-dim': at(1.4) }">
       <div class="kt-cap__src">Building a Second Brain · ch. 3</div>
       <p class="kt-cap__text">
         … You might email yourself a quick note, brainstorm some ideas in a document, or highlight quotes in a book you’re reading, but
@@ -53,7 +53,7 @@ const done = computed(() => at(WRITE + lines.length * PER))
       <p class="kt-cap__text">
         When something resonates, it moves you on an intuitive level. Often, the ideas that resonate are
         the ones that are most unusual, counterintuitive, interesting, or potentially useful.
-        <span class="kt-cap__passage" :class="{ 'is-hit': at(2.0) }">Don’t make it an analytical decision,
+        <span class="kt-cap__passage" :class="{ 'is-hit': at(1.4) }">Don’t make it an analytical decision,
         and don’t worry about why exactly it resonates—just look inside for a feeling of pleasure,
         curiosity, wonder, or excitement, and let that be your signal</span> for when it’s time to capture a
         passage, an image, a quote, or a fact.
@@ -61,14 +61,14 @@ const done = computed(() => at(WRITE + lines.length * PER))
     </div>
 
     <!-- it resonates: a heartbeat -->
-    <div class="kt-cap__heart" :class="{ 'is-on': at(2.3) }">
+    <div class="kt-cap__heart" :class="{ 'is-on': at(1.6) }">
       <i class="kt-cap__ripple" />
       <i class="kt-cap__ripple is-late" />
       <svg viewBox="0 -5 28 28"><path d="M14 22 c-10 -7 -14 -12 -14 -17 a6 6 0 0 1 14 -2 a6 6 0 0 1 14 2 c0 5 -4 10 -14 17z" /></svg>
     </div>
 
     <!-- the paper: written out by hand -->
-    <div class="kt-cap__paper" :class="{ 'is-on': at(3.0) }">
+    <div class="kt-cap__paper" :class="{ 'is-on': at(2.0) }">
       <div class="kt-cap__margin" />
       <div v-for="(l, i) in lines" :key="i" class="kt-cap__line">
         <span class="kt-cap__ink" :style="{ clipPath: `inset(0 ${(1 - progress(i)) * 100}% 0 0)` }">{{ l }}</span>
@@ -82,19 +82,19 @@ const done = computed(() => at(WRITE + lines.length * PER))
     </div>
 
     <!-- that evening: typed into today's daily note -->
-    <svg class="kt-cap__arrow kt-cap__part" :class="{ 'is-on': at(10.0) }" viewBox="0 0 40 20">
+    <svg class="kt-cap__arrow kt-cap__part" :class="{ 'is-on': at(6.3) }" viewBox="0 0 40 20">
       <path d="M2 10 h32 m-8 -7 l8 7 -8 7" />
     </svg>
-    <div class="kt-cap__daily kt-cap__part" :class="{ 'is-on': at(10.0) }">
+    <div class="kt-cap__daily kt-cap__part" :class="{ 'is-on': at(6.3) }">
       <div class="kt-cap__file">daily note · today</div>
       <i class="kt-cap__bar is-short" />
-      <div class="kt-cap__typed" :class="{ 'is-on': at(10.6) }">
+      <div class="kt-cap__typed" :class="{ 'is-on': at(6.8) }">
         <i v-for="w in [96, 88, 100, 72]" :key="w" class="kt-cap__bar is-hot" :style="{ width: `${w}%` }" />
       </div>
     </div>
 
     <div class="kt-cap__tag is-paper kt-cap__part" :class="{ 'is-on': done }"><b>keep what resonates</b> · by hand</div>
-    <div class="kt-cap__tag is-daily kt-cap__part" :class="{ 'is-on': at(11.0) }">typed in that evening</div>
+    <div class="kt-cap__tag is-daily kt-cap__part" :class="{ 'is-on': at(7.2) }">typed in that evening</div>
   </div>
 </template>
 

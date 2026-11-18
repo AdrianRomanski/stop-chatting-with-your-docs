@@ -28,7 +28,7 @@ And it was like the touch of God. (the AI agent and I meet, flash) Two hundred p
 
 # It's called the <span class="hot">fluency illusion</span>
 
-<div class="kt-center" style="margin-top: 22px">
+<div class="kt-center" style="margin-top: 90px">
   <FluencyIllusion />
 </div>
 
@@ -41,7 +41,7 @@ Let me read it. "Fluency illusions result from our tendency to mistake fluency w
 
 Fluency with a text. That's exactly what an AI summary gives you. That was my summary.md.
 
-(≠) Fluency: you explain complex concepts with precision, in the industry's terms, and technical colleagues easily follow. Mastery: you make those same ideas instantly clear to a child or an executive, with simple words and vivid analogies. They're not the same thing.
+(mastery underline) Fluency: you explain complex concepts with precision, in the industry's terms, and technical colleagues easily follow. Mastery: you make those same ideas instantly clear to a child or an executive, with simple words and vivid analogies. They're not the same thing.
 -->
 
 ---

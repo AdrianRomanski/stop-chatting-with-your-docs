@@ -20,28 +20,6 @@ And if even the claims feel too private: a switch in the config, includeAssertio
 -->
 
 ---
-status: in-progress
----
-
-# The loop inside <span class="hot">Retrieve</span>
-
-<div class="kt-center" style="margin-top: 14px">
-  <RetrieveLoop />
-</div>
-
-<!--
-⏱ 0:35 · script: [STEPS RetrieveLoop] The loop inside *Retrieve* | spar (Gemma 4B, offline, one of four styles) → fail: study session → spar again; pass: concept, question and answer to Argon, no notes → gaps: study session → spar again ⏱ 35s
-
-(spar) So that's the whole of step four, Retrieve, as one loop. It starts with sparring: the coach questions me, offline, with Gemma 4B. (the styles) And I pick how: one of four training styles. Feynman, socratic, cornell, devil.
-
-(fail) If I fail, I ask for a study session. (spar again) And then I spar again.
-
-(pass) If I pass, three things go to the judge: the concept, the question, and my answer. (notes struck) Not the notes. Argon judges without them.
-
-(the judge) Argon, online, looks for the gaps in my answer. (gaps) If there are any, I'm back in a study session. And after it, I spar again.
--->
-
----
 align: center
 status: in-progress
 ---

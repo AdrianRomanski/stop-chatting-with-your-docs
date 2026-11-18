@@ -5,10 +5,8 @@ import { useTimeline } from '../theme/composables/useTimeline'
 /**
  * The first three mistakes, told one after the other. Left: over-structuring. An empty folder tree
  * keeps branching (folders for every someday) and the first note hovers above it, unsure where to
- * go. Middle: holding it all in your head. A strained head with notes swaying around it grows an arm
- * to a vault (the doc stack from LearningFlow), the notes fly into it, the brain lights up, and
- * body, arm and vault take the same tint: the vault is part of you now (Forte Ch. 2 p. 22n, the
- * body map grows to include the tool). Right: overthinking the note. The note types and erases its
+ * go. Middle: holding it all in your head, in thin outlines and no labels: a person whose head is
+ * crammed with notes. Right: overthinking the note. The note types and erases its
  * lines ("is it worth saving?"); then a heart beats on it and sends out ripples, and the note
  * writes itself: keep what resonates, feeling over logic (Forte Ch. 3 p. 44–45). No props
  * but `still`, no numbers. `still` draws the end state with no motion, small (ExpressAssemble embeds it).
@@ -22,28 +20,17 @@ const folder = (x: number, y: number, w: number, h: number) =>
 const rows = [118, 168, 218, 268]
 const subs = [0, 1, 2, 3]
 
-// middle: the head, its notes, the vault
-const HEAD = { x: 458, y: 156 }
-const VAULT = { x: 632, y: 206 }
+// middle: a person, every note crammed inside the head
+const HEAD = { x: 517, y: 150, r: 62 }
 const notes = [
-  { x: -80, y: -26, r: -10 },
-  { x: -84, y: 42, r: 8 },
-  { x: -40, y: -74, r: 6 },
-  { x: 40, y: -76, r: -7 },
-  { x: 82, y: -30, r: 9 },
+  { x: -26, y: -22, r: -12 },
+  { x: 10, y: -32, r: 9 },
+  { x: 32, y: -6, r: -8 },
+  { x: -38, y: 10, r: 10 },
+  { x: -4, y: 2, r: 4 },
+  { x: 22, y: 26, r: -6 },
+  { x: -18, y: 32, r: 7 },
 ]
-const offloaded = computed(() => at(5.0))
-const relaxed = computed(() => at(5.9))
-const noteStyle = (n: typeof notes[number], i: number) => {
-  const moved = offloaded.value
-  return {
-    transform: moved
-      ? `translate(${VAULT.x}px, ${VAULT.y}px) scale(0.5)`
-      : `translate(${HEAD.x + n.x}px, ${HEAD.y + n.y}px) rotate(${n.r}deg)`,
-    opacity: moved ? 0 : 1,
-    transitionDelay: moved ? `${i * 0.12}s` : '0s',
-  }
-}
 
 // right: the note
 const lines = [
@@ -57,8 +44,8 @@ const free = computed(() => at(9.2))
 </script>
 
 <template>
-  <svg class="kt-fm" :class="{ 'is-relaxed': relaxed, 'is-free': free, 'is-still': still }" viewBox="0 0 1040 350" role="img"
-    aria-label="Three mistakes. One: an empty folder tree for every someday, built before the first note. Two: a head holding all its notes; it grows an arm to a vault, offloads the notes and lights up with ideas, the vault now part of the body. Three: overthinking the note; the note keeps typing and erasing itself, until a heart beats and the note writes itself: keep what resonates, feeling over logic.">
+  <svg class="kt-fm" :class="{ 'is-free': free, 'is-still': still }" viewBox="0 0 1040 350" role="img"
+    aria-label="Three mistakes. One: an empty folder tree for every someday, built before the first note. Two: a person holding all their notes, the head crammed full of them. Three: overthinking the note; the note keeps typing and erasing itself, until a heart beats and the note writes itself: keep what resonates, feeling over logic.">
     <!-- 1 · over-structuring -->
     <g class="kt-fm__part" :class="{ 'is-on': at(0.1) }">
       <text x="12" y="28" class="kt-fm__num">mistake 1</text>
@@ -102,47 +89,19 @@ const free = computed(() => at(9.2))
       <text x="362" y="52" class="kt-fm__title">holding it all in your head</text>
     </g>
 
-    <!-- the arm grows out to the vault: a new limb -->
-    <path d="M524 262 C 560 262, 588 236, 612 214" pathLength="1" class="kt-fm__arm is-outline" :class="{ 'is-on': at(4.2) }" />
-    <path d="M524 262 C 560 262, 588 236, 612 214" pathLength="1" class="kt-fm__arm" :class="{ 'is-on': at(4.2) }" />
-
-    <!-- the vault -->
-    <g class="kt-fm__part" :class="{ 'is-on': at(4.6) }">
-      <rect x="590" y="150" width="64" height="80" rx="7" class="kt-fm__doc is-back" />
-      <rect x="600" y="158" width="64" height="80" rx="7" class="kt-fm__doc is-back" />
-      <rect x="610" y="166" width="64" height="80" rx="7" class="kt-fm__doc is-front" />
-      <text x="620" y="190" class="kt-fm__hash">#</text>
-      <path d="M636 184 h28 M620 206 h44 M620 220 h36 M620 234 h40" class="kt-fm__lines" />
-      <text x="634" y="276" text-anchor="middle" class="kt-fm__name">second brain</text>
-    </g>
-    <text x="634" y="300" text-anchor="middle" class="kt-fm__tag is-hot kt-fm__part" :class="{ 'is-on': at(6.4) }">a new limb</text>
-
-    <!-- the body: head and shoulders -->
+    <!-- the person: head and shoulders, the head full of notes -->
     <g class="kt-fm__part" :class="{ 'is-on': at(3.3) }">
-      <path :d="`M${HEAD.x - 74} 306 q0 -78 74 -78 q74 0 74 78z`" class="kt-fm__body" />
-      <circle :cx="HEAD.x" :cy="HEAD.y" r="50" class="kt-fm__halo" />
-      <circle :cx="HEAD.x" :cy="HEAD.y" r="46" class="kt-fm__head" />
-      <g :transform="`translate(${HEAD.x} ${HEAD.y}) scale(0.95)`">
-        <g class="kt-fm__strain">
-          <path d="M0 -32 c-22 0 -38 14 -38 32 c0 18 16 32 38 32 c22 0 38 -14 38 -32 c0 -18 -16 -32 -38 -32z M0 -28 v56 M-22 -12 c8 4 8 12 0 16 M22 -12 c-8 4 -8 12 0 16" class="kt-fm__brain" />
+      <path :d="`M${HEAD.x - 80} 306 q0 -84 80 -84 q80 0 80 84z`" class="kt-fm__body" />
+      <circle :cx="HEAD.x" :cy="HEAD.y" :r="HEAD.r" class="kt-fm__head" />
+    </g>
+    <g :transform="`translate(${HEAD.x} ${HEAD.y})`">
+      <g class="kt-fm__strain">
+        <g v-for="(n, i) in notes" :key="i" class="kt-fm__part" :class="{ 'is-on': at(3.5 + i * 0.12) }"
+          :transform="`translate(${n.x} ${n.y}) rotate(${n.r}) scale(0.85)`">
+          <rect x="-13" y="-16" width="26" height="32" rx="3" class="kt-fm__ndoc" />
+          <path d="M-6 -6 h12 M-6 0 h12 M-6 6 h8" class="kt-fm__lines" />
         </g>
       </g>
-    </g>
-    <text :x="HEAD.x" y="330" text-anchor="middle" class="kt-fm__state kt-fm__part" :class="{ 'is-on': at(3.3), 'is-gone': relaxed }">holding</text>
-    <text :x="HEAD.x" y="330" text-anchor="middle" class="kt-fm__state is-hot" :class="{ 'is-gone': !relaxed }">having ideas</text>
-
-    <!-- the notes it's holding: they sway, then fly to the vault -->
-    <g v-for="(n, i) in notes" :key="i" class="kt-fm__note" :class="{ 'is-on': at(3.5 + i * 0.12) }" :style="noteStyle(n, i)">
-      <g class="kt-fm__sway" :style="{ animationDelay: `${i * -0.4}s` }">
-        <rect x="-13" y="-16" width="26" height="32" rx="3" class="kt-fm__ndoc" />
-        <path d="M-6 -6 h12 M-6 0 h12 M-6 6 h8" class="kt-fm__lines" />
-      </g>
-    </g>
-
-    <!-- the spark: an idea -->
-    <g class="kt-fm__spark" :class="{ 'is-on': at(6.1) }">
-      <path :d="`M${HEAD.x + 52} ${HEAD.y - 92} l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6z`" class="kt-fm__star" />
-      <path :d="`M${HEAD.x + 80} ${HEAD.y - 54} l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z`" class="kt-fm__star is-small" />
     </g>
 
     <path d="M694 16 V 334" class="kt-fm__split kt-fm__part" :class="{ 'is-on': at(0.1) }" />
@@ -206,7 +165,6 @@ const free = computed(() => at(9.2))
 .kt-fm__tag.is-warn { fill: var(--kt-warn); }
 .kt-fm__tag.is-hot { fill: var(--kt-hot); }
 .kt-fm__path { font: 15px var(--font-family-mono); fill: var(--kt-subtle); }
-.kt-fm__name { font-size: 18px; font-weight: 700; fill: var(--kt-heading); }
 
 .kt-fm__split { stroke: var(--kt-line); stroke-width: 2; stroke-dasharray: 4 8; }
 
@@ -236,68 +194,14 @@ const free = computed(() => at(9.2))
 .kt-fm__lines { stroke: var(--kt-subtle); stroke-width: 3; stroke-linecap: round; }
 .kt-fm__lines.is-first { stroke: var(--kt-hot); }
 
-/* the body, the arm and the vault: neutral, then one tint when the vault becomes part of you */
+/* 2 · the person: thin outlines, the head packed with notes */
 .kt-fm__body,
-.kt-fm__head {
-  fill: var(--kt-tint-neutral);
-  stroke: var(--kt-line-strong);
-  stroke-width: 2.4;
-  transition: fill 0.6s, stroke 0.6s;
-}
-
-.kt-fm.is-relaxed .kt-fm__body,
-.kt-fm.is-relaxed .kt-fm__head { fill: var(--kt-tint-primary); stroke: var(--kt-c-primary-soft); }
-
-.kt-fm__arm {
-  fill: none;
-  stroke: var(--kt-tint-neutral);
-  stroke-width: 14;
-  stroke-linecap: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 0.6s ease-out, stroke 0.6s;
-}
-
-.kt-fm__arm.is-outline { stroke: var(--kt-line-strong); stroke-width: 19; }
-.kt-fm__arm.is-on { stroke-dashoffset: 0; }
-.kt-fm.is-relaxed .kt-fm__arm { stroke: var(--kt-tint-primary); }
-.kt-fm.is-relaxed .kt-fm__arm.is-outline { stroke: var(--kt-c-primary-soft); }
-
-.kt-fm__doc { fill: var(--kt-card); stroke: var(--kt-line-strong); stroke-width: 2; transition: fill 0.6s, stroke 0.6s; }
-.kt-fm__doc.is-back { opacity: 0.5; }
-.kt-fm.is-relaxed .kt-fm__doc.is-front { fill: var(--kt-tint-primary); stroke: var(--kt-c-primary-soft); }
-.kt-fm__hash { font: 700 17px var(--font-family-mono); fill: var(--kt-c-primary-soft); }
-
-/* the brain: strained (warn), then relaxed and lit */
-.kt-fm__brain {
-  fill: var(--kt-tint-warning);
-  stroke: var(--kt-warn);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  transition: fill 0.6s, stroke 0.6s;
-}
-
-.kt-fm.is-relaxed .kt-fm__brain { fill: var(--kt-tint-primary); stroke: var(--kt-c-primary-soft); }
+.kt-fm__head { fill: none; stroke: var(--kt-line-strong); stroke-width: 2; }
 
 .kt-fm__strain { animation: kt-fm-strain 2.2s ease-in-out infinite; }
-.kt-fm.is-relaxed .kt-fm__strain { animation: none; }
 
 @keyframes kt-fm-strain {
   50% { transform: scale(1.05); }
-}
-
-.kt-fm__halo {
-  fill: var(--kt-c-primary);
-  opacity: 0;
-  transition: opacity 0.6s;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.kt-fm.is-relaxed .kt-fm__halo { opacity: 0.18; animation: kt-fm-pulse 2.4s ease-in-out infinite; }
-
-@keyframes kt-fm-pulse {
-  50% { opacity: 0.36; transform: scale(1.12); }
 }
 
 .kt-fm__state {
@@ -309,31 +213,6 @@ const free = computed(() => at(9.2))
 .kt-fm__state.is-hot { fill: var(--kt-hot); }
 .kt-fm__state.is-gone { opacity: 0; }
 
-.kt-fm__note {
-  opacity: 0;
-  transition: transform 0.7s ease-in-out, opacity 0.45s;
-}
-
-.kt-fm__note:not(.is-on) { opacity: 0 !important; }
-
-.kt-fm__sway { animation: kt-fm-sway 2.4s ease-in-out infinite; }
-
-@keyframes kt-fm-sway {
-  0%, 100% { transform: translate(0, 0) rotate(0); }
-  50% { transform: translate(0, -5px) rotate(4deg); }
-}
-
-.kt-fm__spark {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(0.4);
-  transition: opacity 0.35s, transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-
-.kt-fm__spark.is-on { opacity: 1; transform: none; }
-.kt-fm__star { fill: var(--kt-hot); }
-.kt-fm__star.is-small { opacity: 0.7; }
 
 /* 3 · the note */
 .kt-fm__card { fill: var(--kt-card); stroke: var(--kt-warn); stroke-width: 2; transition: fill 0.6s, stroke 0.6s; }

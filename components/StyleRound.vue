@@ -12,35 +12,41 @@ const props = defineProps<{ name: 'feynman' | 'socratic' | 'cornell' | 'devil' }
 
 type Turn = { who: 'me' | 'coach'; label: string; text: string; win?: boolean }
 
-const STYLES: Record<string, { does: string; banned?: string[]; turns: Turn[] }> = {
+// Keep it short: the slide shows keywords, the speaker says the rest (the notes).
+// size: the card text's font size in px, tuned so the text fills its card
+const STYLES: Record<string, { does: string; size: number; banned?: string[]; turns: Turn[] }> = {
   feynman: {
-    does: 'Bans buzzwords. You explain how the idea works in everyday words.',
+    size: 28,
+    does: 'No buzzwords. Everyday words.',
     banned: ['Progressive Summarization', 'Distillation', 'Executive summary'],
     turns: [
-      { who: 'coach', label: 'coach question', text: 'Without saying “Progressive Summarization”: how do you prep a long note so Future You finds the point in 10 seconds?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'Each visit I keep the best 10⁠–⁠20%: bold, then highlight the bold, then a two-line summary.' },
+      { who: 'coach', label: 'coach question', text: 'In plain words: how do you compress a note?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'Bold 10⁠–⁠20% of text, highlight the best. Sum it up.' },
     ],
   },
   socratic: {
-    does: 'Pushes your rule to the extreme to find where it breaks. You explain the boundary.',
+    size: 32,
+    does: 'Pushes your rule to the extreme.',
     turns: [
-      { who: 'me', label: 'you say', text: 'Distilling makes my notes faster to use.' },
-      { who: 'coach', label: 'coach pushes back', text: 'Then why not distill every note down to one line?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'One line loses the context I need. Each layer keeps the best 10⁠–⁠20%, and I can drill back down.' },
+      { who: 'me', label: 'you say', text: 'Marking makes notes easier.' },
+      { who: 'coach', label: 'coach pushes back', text: 'So mark 70%?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'Then nothing stands out.' },
     ],
   },
   cornell: {
-    does: 'For books and big ideas. Skips the details: what’s the author’s argument, and why this story?',
+    size: 32,
+    does: 'The author’s argument, not the details.',
     turns: [
-      { who: 'coach', label: 'coach question', text: 'Why does the author say you write notes for a Future You who has lost today’s context?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'In six months the context is gone. Without notes I’d reread it all from the start. With them, I just read my own summary.' },
+      { who: 'coach', label: 'coach question', text: 'What’s the author’s main claim about distilling?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'Notes are for Future You, not for today.' },
     ],
   },
   devil: {
-    does: 'A skeptical teammate in a design review: fine on a sunny day, but what about a bad week?',
+    size: 32,
+    does: 'Fine on a sunny day. And on a bad week?',
     turns: [
-      { who: 'coach', label: 'coach question', text: 'Distilling works on a quiet Sunday. What happens in a crunch week, when you have no time for it?' },
-      { who: 'me', label: 'winning answer', win: true, text: 'I distill only when a project needs it. In a crunch week I skip it and focus on the work. Notes are a marathon, not a sprint.' },
+      { who: 'coach', label: 'coach question', text: 'Crunch week, no time. Now what?' },
+      { who: 'me', label: 'winning answer', win: true, text: 'I distill only when a project needs it.' },
     ],
   },
 }
@@ -56,7 +62,7 @@ const label = computed(() => `The ${props.name} sparring style. ${s.value.does} 
       <div class="kt-sround__card">
         <div class="kt-sround__name">{{ name }}</div>
         <div class="kt-sround__key">what this sparring style does</div>
-        <p class="kt-sround__does">{{ s.does }}</p>
+        <p class="kt-sround__does" :style="{ fontSize: `${s.size}px` }">{{ s.does }}</p>
         <div v-if="s.banned" class="kt-sround__banned">
           <span v-for="w in s.banned" :key="w"><solar-forbidden-circle-bold />{{ w }}</span>
         </div>
@@ -101,14 +107,14 @@ const label = computed(() => `The ${props.name} sparring style. ${s.value.does} 
 .kt-sround__banned { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .kt-sround__banned span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 8px; border-radius: 999px; border: 1.5px solid var(--kt-bad); background: color-mix(in srgb, var(--kt-bad) 14%, transparent); color: var(--kt-heading); font-size: 16px; font-weight: 700; white-space: nowrap; }
 .kt-sround__banned svg { flex: none; width: 18px; height: 18px; color: var(--kt-bad); }
-.kt-sround__does { margin: 10px 0 0; font-size: 22px; line-height: 1.4; color: var(--kt-fg); }
+.kt-sround__does { margin: 10px 0 0; line-height: 1.32; color: var(--kt-fg); text-wrap: pretty; }
 
 /* the round */
 .kt-sround__turns { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
 .kt-sround__turn { display: flex; align-items: flex-start; gap: 10px; }
 .kt-sround__turn.is-me { flex-direction: row-reverse; }
 .kt-sround__turn img { flex: none; width: 34px; height: 34px; margin-top: 6px; border-radius: 50%; object-fit: cover; }
-.kt-sround__turn span { padding: 12px 18px; border-radius: 14px; font-size: 21px; line-height: 1.38; }
+.kt-sround__turn span { padding: 12px 18px; border-radius: 14px; font-size: 26px; line-height: 1.3; text-wrap: pretty; }
 .kt-sround__turn small { display: block; margin-bottom: 4px; font: 700 12px var(--font-family-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--kt-muted); }
 .kt-sround__turn.is-coach span { border: 1.5px solid var(--tone); border-top-left-radius: 3px; background: color-mix(in srgb, var(--tone) 12%, transparent); color: var(--kt-heading); font-weight: 700; }
 .kt-sround__turn.is-me span { border-top-right-radius: 3px; background: var(--kt-tint-secondary); color: var(--kt-fg); font-weight: 600; }

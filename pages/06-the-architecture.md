@@ -151,7 +151,7 @@ status: in-progress
 
 # Feynman: say it in <span class="hot">plain words</span>
 
-<div class="kt-center" style="margin-top: 16px">
+<div class="kt-center" style="margin-top: 36px">
   <StyleRound name="feynman" />
 </div>
 
@@ -160,9 +160,9 @@ status: in-progress
 
 (the card) Feynman stops me from hiding behind fancy buzzwords. We often think we understand a concept just because we know its name. So Feynman mode bans the main keywords from my note, and asks me to explain how the idea works in simple, everyday words.
 
-(the question) Without using the phrase "Progressive Summarization": how do you prepare a long note today, so that Future You finds the main point in 10 seconds, six months from now?
+(the question) In plain words: how do you compress a note?
 
-(winning answer) Each time I revisit the note, I mark only the best 10 to 20 percent: first I bold key sentences, then I highlight the best of the bold, and finally I write a two-sentence takeaway at the top, in my own words. So I never have to reread the whole page.
+(winning answer) I bold 10 to 20 percent of the text, the key sentences. Inside the bold, I highlight the best parts, a few words, a phrase, sometimes a whole sentence, so they jump out. Then I write a short summary at the top, in my own words, made from what I bolded and highlighted. So I never have to reread the whole page.
 -->
 
 ---
@@ -171,7 +171,7 @@ status: in-progress
 
 # Socratic: defend it against a <span class="hot">counterexample</span>
 
-<div class="kt-center" style="margin-top: 16px">
+<div class="kt-center" style="margin-top: 64px">
   <StyleRound name="socratic" />
 </div>
 
@@ -180,11 +180,11 @@ status: in-progress
 
 (the card) Socratic never asks "what is X". It tests the limits of what I say. I give a general rule that sounds right on the surface, and the coach pushes my own logic to an extreme, to see where it breaks.
 
-(you say) I say: distilling makes my notes faster to use.
+(you say) I say: bolding and highlighting make my notes easier to use.
 
-(the coach pushes back) If shorter is faster, why not distill every note down to one line?
+(the coach pushes back) If marking makes it easier, why not bold and highlight 70 percent of the text?
 
-(winning answer) Because one line loses the context I need to act on it. Each layer keeps only the best 10 to 20 percent of the one before, and the full note is still underneath: I can always drill back down.
+(winning answer) Because then nothing stands out. If 70 percent is marked, the marks tell me nothing, and I'm back to reading the whole page. Marks only work when they're rare: that's why I bold only 10 to 20 percent, and highlight only the best of that.
 -->
 
 ---
@@ -193,7 +193,7 @@ status: in-progress
 
 # Cornell: the author's <span class="hot">thesis</span>
 
-<div class="kt-center" style="margin-top: 16px">
+<div class="kt-center" style="margin-top: 64px">
   <StyleRound name="cornell" />
 </div>
 
@@ -202,9 +202,9 @@ status: in-progress
 
 (the card) Cornell is built for non-technical books, essays and big ideas. No nitpicking tiny mechanical details: the big picture. What is the author's main argument, and why did they use this story, this metaphor, to prove it?
 
-(the question) Why does the author say you write notes for a Future You who has lost today's context?
+(the question) What's the author's main claim about distilling?
 
-(winning answer) Because six months from now, the context I have in my head today is gone. Without notes, I'd have to read the whole thing again from the beginning to get it back. With notes, I just read my own notes and the summary I wrote, and I'm back in.
+(winning answer) Notes are for Future You, not for today. Today I know the context, so every note looks clear. In six months that context is gone. Distilling is how I write for that person: the point on top, ready the moment a project needs it.
 -->
 
 ---
@@ -213,7 +213,7 @@ status: in-progress
 
 # Devil's advocate: where does it <span class="hot">break</span>
 
-<div class="kt-center" style="margin-top: 16px">
+<div class="kt-center" style="margin-top: 64px">
   <StyleRound name="devil" />
 </div>
 
@@ -225,6 +225,28 @@ status: in-progress
 (the question) Distilling sounds great on a quiet Sunday. But what happens in a crunch week at work, when you have no time for it?
 
 (winning answer) I only distill a note when a project needs it, not the moment I save it. So I can skip a day, and in a crunch week I just focus on the work. Nothing breaks: notes are a marathon, not a sprint.
+-->
+
+---
+status: in-progress
+---
+
+# The loop inside <span class="hot">Retrieve</span>
+
+<div class="kt-center" style="margin-top: 14px">
+  <RetrieveLoop />
+</div>
+
+<!--
+⏱ 0:35 · script: [STEPS RetrieveLoop] The loop inside *Retrieve* | spar (Gemma 4B asks, Gemma 12B checks, offline, one of four styles) → fail: study session → spar again; pass: concept, question and answer to Argon, no notes → gaps: study session → spar again ⏱ 35s
+
+(spar) So that's the whole of step four, Retrieve, as one loop. It starts with sparring: the coach questions me, offline, with Gemma 4B, and Gemma 12B, also offline, checks my answer. (the styles) And I pick how: one of four training styles. Feynman, socratic, cornell, devil.
+
+(fail) If I fail, I ask for a study session. (spar again) And then I spar again.
+
+(pass) If I pass, three things go to the judge: the concept, the question, and my answer. (notes struck) Not the notes. Argon judges without them.
+
+(the judge) Argon, online, looks for the gaps in my answer. (gaps) If there are any, I'm back in a study session. And after it, I spar again.
 -->
 
 ---
