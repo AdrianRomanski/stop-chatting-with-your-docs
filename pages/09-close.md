@@ -25,40 +25,40 @@ One step is still open.
 
 ---
 
-# Five books, one <span class="hot">talk</span>
+# Five books, one <span class="hot">workshop</span>
 
 <div class="kt-center" style="margin-top: 4px; zoom: 0.95">
   <BooksToTalk />
 </div>
 
 <!--
-⏱ 0:20 · script: [STAGE BooksToTalk "how this talk was made"] Five books, one *talk* | the five covers land, their lines run into notes → distill → concepts → this talk ⏱ 20s
+⏱ 0:20 · script: [STAGE BooksToTalk "how this workshop was made"] Five books, one *workshop* | the five covers land, their lines run into notes → distill → concepts → this workshop ⏱ 20s
 
 (the books) Everything you heard today started here. Building a Second Brain: my notes are a resource, not a graveyard. Make It Stick: recalling beats rereading. Feynman: if you can't explain it plainly, you don't get it. Farnsworth's Socratic Method: claim, why, counterexample. And Tomorrowmind: hand all your thinking to AI and you lose the resilience to adapt; use it as a coach and you keep it.
 
 (notes) I read them and marked what resonated. (distill) I distilled the marks, layer by layer. (concepts) I turned them into concepts, one idea in my words, and the coach sparred with me on them.
 
-(this talk) And from those concepts, I built this talk.
+(this workshop) And from those concepts, I built this workshop.
 -->
 
 ---
 status: in-progress
 ---
 
-# The last step was this <span class="hot">talk</span>
+# The last step was this <span class="hot">workshop</span>
 
 <div class="kt-center" style="margin-top: 4px">
   <TeachTalk />
 </div>
 
 <!--
-⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *talk* | pays off slide 8's summit (TEACH, the Protégé Effect) and slide 28's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this talk"; below, a lecture hall, rows A–C, lights up: the students, you; the JS Poland logo and the venue, Multikino, at the foot ⏱ 25s
+⏱ 0:25 · script: [PAYOFF TeachTalk "climb step 7 · teach"] The last step was this *workshop* | pays off slide 9's summit (TEACH, the Protégé Effect) and slide 29's step 7: the stairs, on a cinema screen, light up to Teach, flag and confetti, "this workshop"; below, a lecture hall, rows A–C, lights up: the students, you; the GDG logo, DevFest Warsaw and the venue, Google for Startups Campus at Koneser, at the foot ⏱ 25s
 
 (the stairs light up, I hop) Remember the top of the stairs? Teach. The Protégé Effect: you understand something best when you have to explain it to someone else.
 
-(the flag) So, what about teaching? Ladies and gentlemen: I just did it. (this talk) The last step of my climb was this talk.
+(the flag) So, what about teaching? Ladies and gentlemen: I just did it. (this workshop) The last step of my climb was this workshop.
 
-(the hall lights up, row by row) And the students were you, here in this hall at JS Poland. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
+(the hall lights up, row by row) And the students were you, here in this hall at DevFest, at Koneser. Every slide, I had to explain it without the notes in front of me, and every question you'll ask me in a minute is the misconception check.
 
 Thank you.
 -->
@@ -102,4 +102,90 @@ align: center
 ⏱ 0:20 · script line 84: [END] | EndCard, QR to the coach's repo (github.com/push-based/ai-performance-coach); the thank-you to Julian Jandl for the slide-building skill, as a chat
 
 Thank you. And one more thank-you, to Julian. (his bubble) He told me: Adrian, you always spend too much time on slides, last time it was a hundred hours. Here, take my skill, it'll make it faster. (my bubble) And I was having so much fun with it that this one took a hundred and fifty. (laugh) I hope you enjoyed the presentation. And if you want to try the coach: the QR code is the repo.
+-->
+
+---
+layout: image
+image: /images/hobbies/machinekind-robodog.webp
+overlay: left
+class: kt-rd
+status: in-progress
+---
+
+<div class="kt-rd__kicker">Robotics Lab Wrocław</div>
+
+<div class="kt-rd__logos">
+  <img class="kt-rd__pb" src="/images/logos/PushBased-Logo-Wordmark-White.png" alt="PushBased">
+  <span class="kt-rd__x">×</span>
+  <img class="kt-rd__mk" src="/images/logos/machinekind.webp" alt="Machinekind">
+</div>
+
+# <span class="hot">Robotics</span><br>Division
+
+<div class="kt-rd__crew kt-stagger">
+  <div class="kt-rd__who">
+    <img src="/images/speaker.webp" alt="Adrian Romanski">
+    <div><b>Adrian Romanski</b><span>PushBased</span></div>
+  </div>
+  <div class="kt-rd__who">
+    <img src="/images/people/michal-pogoda-rosikon.jpeg" alt="Michał Pogoda-Rosikoń">
+    <div><b>Michał Pogoda-Rosikoń</b><span>Machinekind</span></div>
+  </div>
+</div>
+
+<style>
+/* the photo sits in the right 55% and fades into the dark on its left edge,
+   so the robodog stays whole and the text gets a clean panel (theme layout classes, hence :global) */
+:global(.kt-rd) { background: var(--kt-bg) !important; }
+:global(.kt-rd .kt-image__img) {
+  left: 45% !important;
+  width: 55% !important;
+  object-position: 26% center !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 18%);
+}
+:global(.kt-rd .kt-image__scrim) { display: none; }
+:global(.kt-rd .kt-image__body) { width: 44% !important; }
+:global(.kt-rd .kt-image__body h1) {
+  margin: 0 !important;
+  font-size: 54px !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.02em;
+}
+.kt-rd__kicker {
+  font: 700 13px var(--font-family-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--kt-good);
+}
+/* the two logos as one lockup; the hexagon is taller than the wordmark's cap height, so it is sized to match visually */
+.kt-rd__logos { display: flex; align-items: center; gap: 16px; margin: 18px 0 16px; }
+.kt-rd__pb { height: 32px; width: auto; }
+.kt-rd__mk { height: 44px; width: auto; }
+.kt-rd__x { font: 300 26px var(--font-family-mono); color: var(--kt-muted); }
+/* one row per side: the face, the name, the side */
+.kt-rd__crew { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+.kt-rd__who { display: flex; align-items: center; gap: 14px; }
+.kt-rd__who img {
+  width: 62px;
+  height: 62px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--kt-card-line);
+}
+.kt-rd__who div { display: flex; flex-direction: column; }
+.kt-rd__who b { font-size: 21px; font-weight: 800; color: var(--kt-heading); white-space: nowrap; }
+.kt-rd__who span {
+  margin-top: 3px;
+  font: 600 12px var(--font-family-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--kt-muted);
+}
+</style>
+
+<!--
+⏱ 0:00 · script: [STATEMENT] PushBased *Robotics* Division | a picture slide: the PushBased wordmark × the Machinekind logo, "Robotics Division", Adrian (PushBased) and Michał Pogoda-Rosikoń (Machinekind), next to Machinekind's robodog walking in the lab (photo: machinekind.ai, poster of the "lab-wstaje-i-idzie" video)
+Status: not part of the workshop yet; hide or move it once the picture is taken.
 -->

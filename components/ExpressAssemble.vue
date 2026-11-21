@@ -3,9 +3,9 @@ import { useTimeline } from '../theme/composables/useTimeline'
 import FirstMistakes from './FirstMistakes.vue'
 
 /**
- * E · Express, the example is this talk: three intermediate packets (distilled notes from Building
+ * E · Express, the example is this workshop: three intermediate packets (distilled notes from Building
  * a Second Brain, Ch. 5, Ch. 1 epigraph, Ch. 3) fly one by one into an empty slide frame and fill
- * its three panels of a still, miniature FirstMistakes: slide 12, "The first three mistakes", which the audience saw a few minutes
+ * its three panels of a still, miniature FirstMistakes: slide 13, "The first three mistakes", which the audience saw a few minutes
  * earlier. Each packet stays, dimmed and ticked, while a copy of it flies. All three packets look
  * the same: none is special.
  * The third packet is the note captured, organized and distilled on the slides before.
@@ -29,7 +29,7 @@ const slots = [
 
 <template>
   <div class="kt-expr" role="img"
-    aria-label="Express: three distilled notes are assembled into a slide of this talk, The first three mistakes, instead of writing it from a blank page.">
+    aria-label="Express: three distilled notes are assembled into a slide of this workshop, The first three mistakes, instead of writing it from a blank page.">
     <!-- the packets -->
     <template v-for="(p, i) in packets" :key="i">
       <div class="kt-expr__packet" :class="{ 'is-on': at(0.2 + i * 0.3), 'is-used': at(flyAt(i)) }"

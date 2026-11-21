@@ -14,7 +14,7 @@
  *   brighter: questioned in one style, then in more, OUTPUT for Teach), two or three
  *   words on what I do, and the helper's mark at the foot (NO AI for Read and Teach, Gemma, Gemma + Argon in a red ring;
  *   Argon uses gemini-mark-centered.png, the mark cropped so the star sits in the middle).
- * - under each card: OFFLINE, ON SITE for Teach (in front of people, like this talk), or
+ * - under each card: OFFLINE, ON SITE for Teach (in front of people, like this workshop), or
  *   OFF | ONLINE for Retrieve and Space (spar offline, then the judge online).
  * Motion: none, the whole flow is there when the slide is shown.
  * Source: ai-performance-coach docs/guide/the-climb.md (steps, who does what), ADR-0047. No props.

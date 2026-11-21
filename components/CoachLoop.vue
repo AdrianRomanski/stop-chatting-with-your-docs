@@ -32,7 +32,7 @@ const lead: (Box & { bridge?: boolean; done: number })[] = [
 ]
 const before: Box[] = [
   { name: 'group', does: 'layers I name', x: 432, cy: CY, step: 2, on: 1.35, tone: 'plain', ai: 'gemma' },
-  { name: 'generate', does: 'guess first', x: 590, cy: CY, step: 3, on: 1.6, tone: 'plain', ai: 'gemma' },
+  { name: 'generate', does: 'write first', x: 590, cy: CY, step: 3, on: 1.6, tone: 'plain', ai: 'gemma' },
 ]
 
 // the ring: an ellipse through the centres of spar (top), judge, study and review, clockwise
@@ -83,7 +83,7 @@ const tags = [...lead, ...before, ...ring, ...off].map(b => ({
 
 <template>
   <svg class="kt-coachloop" viewBox="-8 -34 892 428" role="img"
-    aria-label="The loop inside the climb, with the seven climb steps on it. In the knowledge base, the second brain in Obsidian and kb-template: step 1 read, distill, and synthesize, the bridge that makes concept notes: done. In ai-coach, before the loop, on a book's concepts: step 2 group, into layers I name; step 3 generate, guess first. Then the loop: spar offline, judge online, study what you missed: together step 4, Retrieve; review when due is step 6, Space, and back to spar. Off the loop: step 5 elaborate, after a round; step 7 teach, after a spaced pass. The review ladder: fail, tomorrow; first pass, tomorrow; tier 1 pass, 3 days; tier 2 pass, 7, 14, 30 up to 365 days.">
+    aria-label="The loop inside the climb, with the seven climb steps on it. In the knowledge base, the second brain in Obsidian and kb-template: step 1 read, distill, and synthesize, the bridge that makes concept notes: done. In ai-coach, before the loop, on a book's concepts: step 2 group, into layers I name; step 3 generate, write all I know first. Then the loop: spar offline, judge online, study what you missed: together step 4, Retrieve; review when due is step 6, Space, and back to spar. Off the loop: step 5 elaborate, after a round; step 7 teach, after a spaced pass. The review ladder: fail, tomorrow; first pass, tomorrow; tier 1 pass, 3 days; tier 2 pass, 7, 14, 30 up to 365 days.">
     <defs>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M1 1 L 9 5 L 1 9" class="kt-coachloop__head" />

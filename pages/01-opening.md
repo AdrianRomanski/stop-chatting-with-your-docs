@@ -2,10 +2,10 @@
 layout: cover
 scheme: light
 surface: soft
-# the JS Poland logo sits by my name here; in the corner it would land on the illustration
+# the GDG logo sits by my name here; in the corner it would land on the illustration
 frame: false
-partner: /images/logos/js-poland.webp
-partnerLabel: 'JS Poland · 18 Nov 2026'
+partner: /images/logos/gdg.png
+partnerLabel: 'GDG DevFest Warsaw · 21 Nov 2026'
 subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & Gemini 4 Argon"
 ---
 
@@ -19,17 +19,59 @@ subtitle: "Architecting a Local-First AI Mind Coach in TypeScript with Gemma & G
 :global(.kt-cover__sub) { max-width: 600px; }
 :global(.kt-cover__by) { font-size: 22px; gap: 18px; }
 :global(.kt-cover__logo) { height: 40px; }
-/* the event, JS Poland, above the title: the bottom belongs to the illustration */
+/* the event, GDG DevFest Warsaw, above the title: the bottom belongs to the illustration */
 :global(.slidev-layout.kt-cover) { justify-content: flex-start !important; padding-top: 58px !important; }
 :global(.kt-cover__body) { display: flex; flex-direction: column; }
 :global(.kt-cover__partner) { order: -1; margin: 0 0 18px !important; }
-:global(.kt-cover__partner img) { height: 44px !important; width: auto; object-fit: contain; }
+/* gdg.png is the mark plus a white wordmark, unreadable on the light cover: show only the mark */
+:global(.kt-cover__partner img) { height: 44px !important; width: 91px; object-fit: cover; object-position: left center; }
 </style>
 
 <!--
 ⏱ 0:20 · script line 11: [COVER] Stop Chatting with *Your Docs*
-Status: READY (speaker sign-off 2026-10-22). Light soft cover on a dark talk: a deliberate single-slide override (scheme: light).
+Status: READY (speaker sign-off 2026-10-22). Light soft cover on a dark workshop: a deliberate single-slide override (scheme: light).
 The background (CoverWeave) plays once (~20 s) and then holds: a learner links notes from a book, they slide into the .md vault, the brain wires up, then Gemma (local sparring partner) asks and Argon (cloud judge, blind) grades: four checks, one gap redrawn. Then the payoff: the tested brain fills with Matrix code rain (the letters of MATRIX, ones and zeros) that keeps falling while the cover is up. It sets up the Matrix loading scene (NeoGrind), two slides later, after the train. Re-enter the slide to replay.
+-->
+
+---
+status: in-progress
+---
+
+# Install it <span class="hot">while I talk</span>
+
+<div class="kt-setup kt-stagger">
+  <div class="kt-setup__card">
+    <div class="kt-setup__head"><carbon-logo-github class="kt-setup__icon" /><span>1 · the coach</span></div>
+    <QR url="https://github.com/push-based/ai-performance-coach" :size="190" />
+    <code>github.com/push-based/<br>ai-performance-coach</code>
+  </div>
+  <div class="kt-setup__card">
+    <div class="kt-setup__head"><img src="/images/logos/obsidian.webp" alt=""><span>2 · no Obsidian yet?</span></div>
+    <QR url="https://obsidian.md/download" :size="190" />
+    <code>obsidian.md/download</code>
+  </div>
+</div>
+
+<p class="kt-setup__also">Also: <b>Node.js 24+</b> · <b>Ollama</b>, then <code>ollama pull gemma3</code> (big, start it now)</p>
+
+<style>
+/* the setup slide: two QR cards side by side, the rest of the setup in one line under them */
+.kt-setup { display: flex; justify-content: center; gap: 48px; margin-top: 10px; }
+.kt-setup__card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 26px 16px; border-radius: var(--radius-lg); background: var(--kt-card); border: 1.5px solid var(--kt-card-line); }
+.kt-setup__head { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; color: var(--kt-heading); }
+.kt-setup__head img, .kt-setup__icon { height: 28px; width: auto; }
+.kt-setup__icon { width: 28px; color: var(--kt-heading); }
+.kt-setup__card code { font: 600 14px/1.35 var(--font-family-mono); color: var(--kt-muted); text-align: center; background: none; }
+.kt-setup__also { margin-top: 18px !important; text-align: center; font-size: 17px; color: var(--kt-muted); }
+.kt-setup__also b { color: var(--kt-heading); }
+.kt-setup__also code { font: 600 15px var(--font-family-mono); color: var(--kt-hot); }
+</style>
+
+<!--
+⏱ 0:30 · script: [STAGE QR "setup"] Install it *while I talk* | two QR cards fade in: the coach's repo on GitHub, and the Obsidian download for anyone without it; under them, Node.js 24+, Ollama and ollama pull gemma3 ⏱ 30s
+Workshop: leave this up while people scan. The model download is the slow part, so it starts now.
+
+This is a workshop, so let's get the slow part going first. (repo QR) Scan this one: it's the coach, the repo on GitHub. Clone it, the README has the quick setup. (Obsidian QR) No Obsidian yet? This one is the download, it's free. (the line below) And you'll need Node 24 and Ollama. Start ollama pull gemma3 now: it's a few gigabytes, and by the time we need it, it'll be there. While that runs, let me tell you how this all started.
 -->
 
 ---
@@ -43,10 +85,10 @@ status: done
 </div>
 
 <!--
-⏱ 0:50 · script line 14: [STAGE TrainOffline "how this talk started"] Born on a train / with *no signal* | one thought cloud, four thoughts: "I'm bored…", "ADHD won't let me sit still", "Let's organize my notes", then the bulb: "A sparring partner, Matrix-style. Offline!", and the person's head and body fill with Matrix code rain (keeps falling); the laptop stays on PKP Intercity, no internet ⏱ 50s
+⏱ 0:50 · script line 14: [STAGE TrainOffline "how this workshop started"] Born on a train / with *no signal* | one thought cloud, four thoughts: "I'm bored…", "ADHD won't let me sit still", "Let's organize my notes", then the bulb: "A sparring partner, Matrix-style. Offline!", and the person's head and body fill with Matrix code rain (keeps falling); the laptop stays on PKP Intercity, no internet ⏱ 50s
 Comedic, quick; let the animation land each beat.
 
-So: this talk was born on a train. PKP Intercity, for the locals. (beat)
+So: this workshop was born on a train. PKP Intercity, for the locals. (beat)
 
 I'd just finished the book. Closed it, fired up, let's build something! (book snaps shut)
 

@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue'
 
 /**
- * Cover background, variant "the weave": the talk's story in one calm loop.
+ * Cover background, variant "the weave": the workshop's story in one calm loop.
  * 1. A person at a book: notes peel off it and their pen links them into a small graph.
  * 2. The linked notes slide along a dashed wire into the Markdown vault (bottom right).
  * 3. Challenges ("?") rise from the vault to a brain, whose neurons light up and link one by one.

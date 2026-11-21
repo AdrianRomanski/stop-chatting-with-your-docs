@@ -3,14 +3,14 @@ import { computed, useId } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The payoff of the climb (MasteryStairs, ClimbCheckpoint): the last step, Teach, is this talk, given at
- * GDG JS Poland 2026, in a lecture hall at Multikino (Komandorska 118/120, Wrocław).
+ * The payoff of the climb (MasteryStairs, ClimbCheckpoint): the last step, Teach, is this workshop, given at
+ * GDG DevFest Warsaw 2026, in a lecture hall at Google for Startups Campus (Koneser, Plac Konesera 10, Warsaw).
  * 1. On the projector screen, the stairs of ClimbCheckpoint (Read, the Synthesize bridge, Group … Space, Teach)
  *    light up block by block as I hop up them; on Teach (the Protégé Effect, yellow) a flag and confetti,
- *    and under its name "this talk".
+ *    and under its name "this workshop".
  * 2. Below the screen, the hall: stepped rows of seats (rows A–C, two aisles), people in them;
  *    row by row they light up warm: the students. "the students: you".
- * 3. At the foot, the JS Poland logo with JS Poland, and the venue.
+ * 3. At the foot, the GDG logo with DevFest Warsaw, and the venue.
  * No props.
  */
 const { t, at } = useTimeline(7)
@@ -84,7 +84,7 @@ const rowsX = 440 - rowW / 2 - 18
 
 <template>
   <svg class="kt-teachtalk" viewBox="0 0 880 400" role="img"
-    aria-label="A lecture hall at JS Poland, at Multikino. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this talk. Below the screen, rows A to C of seats with people in them light up: the students, you. At the bottom, the JS Poland logo, JS Poland, and the venue.">
+    aria-label="A lecture hall at GDG DevFest Warsaw, at Google for Startups Campus. On the screen, the climb lights up step by step as I hop up it: Read, the Synthesize bridge, Group, Generate, Retrieve, Elaborate, Space, and on top Teach, the Protégé Effect: a flag and confetti, and under it: this workshop. Below the screen, rows A to C of seats with people in them light up: the students, you. At the bottom, the GDG logo, DevFest Warsaw, and the venue.">
     <defs>
       <clipPath :id="face" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
       <linearGradient v-for="(g, i) in striped" :id="`${crop}-st${i}`" :key="`st${i}`" x1="0" y1="0" x2="1" y2="0">
@@ -113,7 +113,7 @@ const rowsX = 440 - rowW / 2 - 18
       <text :x="b.x + 7" :y="b.top + 18" class="kt-teachtalk__name" :class="{ 'is-lit': at(LIT(b.i)) }">{{ b.name }}</text>
     </g>
     <g class="kt-teachtalk__fade" :class="{ 'is-on': at(TOP + 0.2) }">
-      <text :x="summit.x + 7" :y="summit.top + 36" class="kt-teachtalk__this">this talk</text>
+      <text :x="summit.x + 7" :y="summit.top + 36" class="kt-teachtalk__this">this workshop</text>
       <text :x="summit.x + 7" :y="summit.top + 53" class="kt-teachtalk__effect">Protégé</text>
       <text :x="summit.x + 7" :y="summit.top + 65" class="kt-teachtalk__effect">Effect</text>
     </g>
@@ -148,10 +148,10 @@ const rowsX = 440 - rowW / 2 - 18
     <!-- the room, and who's in it -->
     <g class="kt-teachtalk__fade" :class="{ 'is-on': at(LIGHT + 0.5) }">
       <path d="M22 352 H 858" class="kt-teachtalk__floor" />
-      <image href="/images/logos/js-poland.webp" x="26" y="362" width="29" height="24" preserveAspectRatio="xMinYMid meet" />
-      <text x="62" y="381" class="kt-teachtalk__event">JS Poland</text>
+      <image href="/images/logos/gdg.png" x="26" y="362" width="112" height="24" preserveAspectRatio="xMinYMid meet" />
+      <text x="148" y="381" class="kt-teachtalk__event">DevFest Warsaw</text>
       <text x="440" y="383" text-anchor="middle" class="kt-teachtalk__you">the students: <tspan class="is-hot">you</tspan></text>
-      <text x="858" y="381" text-anchor="end" class="kt-teachtalk__event">Multikino</text>
+      <text x="858" y="381" text-anchor="end" class="kt-teachtalk__event">Google for Startups Campus</text>
     </g>
   </svg>
 </template>
@@ -183,7 +183,7 @@ const rowsX = 440 - rowW / 2 - 18
 .kt-teachtalk__stop.is-tm { stop-color: var(--kt-heading); }
 .kt-teachtalk__name { font-size: 13px; font-weight: 800; fill: var(--kt-muted); transition: fill 0.3s; }
 .kt-teachtalk__name.is-lit { fill: var(--kt-heading); }
-.kt-teachtalk__this { font: 800 12px var(--font-family-mono); fill: var(--kt-warn); }
+.kt-teachtalk__this { font: 800 10px var(--font-family-mono); fill: var(--kt-warn); }
 .kt-teachtalk__effect { font: 700 10.5px var(--font-family-mono); fill: var(--kt-warn); opacity: 0.85; }
 
 .kt-teachtalk__flag { opacity: 0; transition: opacity 0.3s; }
@@ -203,7 +203,7 @@ const rowsX = 440 - rowW / 2 - 18
 .kt-teachtalk__ring { fill: none; stroke: var(--kt-c-primary-soft); stroke-width: 3; transition: stroke 0.4s; }
 .kt-teachtalk__ring.is-top { stroke: var(--kt-warn); }
 
-/* the hall: seats in the talk's hot color, people in them */
+/* the hall: seats in the workshop's hot color, people in them */
 .kt-teachtalk__rowname { font: 800 12px var(--font-family-mono); fill: var(--kt-muted); }
 .kt-teachtalk__tier { stroke: var(--kt-line); stroke-width: 1.5; }
 .kt-teachtalk__seat { opacity: 0; transition: opacity 0.4s; }

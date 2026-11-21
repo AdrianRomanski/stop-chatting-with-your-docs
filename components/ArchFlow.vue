@@ -13,7 +13,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *   read        a page, notes → kb-template → coach; my notes and summary back. No AI.
  *   synthesize  my marks to Gemma 4B; it asks, I answer; a concept note (◆) back to the vault
  *   group       the book's concepts to 4B; it asks about my layers; the structure note back
- *   generate    the title only; my guess, checked by Gemma 12B
+ *   generate    the name only; all I know, checked by Gemma 12B
  *   spar        4B asks, a weak answer, a follow-up, a better answer; 12B checks the round: Tier 1 passed
  *   judge       answer + claims over the gate to Argon: Tier 2 failed, the gaps
  *   study       4B, study partner: a hint, my explanation: gaps closed
@@ -79,11 +79,11 @@ ride('layers', 'ask', S.group + 3.8, 0.8, true)
 toVault('layers', S.group + 4.6, true)
 status('✓ 4 layers I named', 'pass', S.group + 6.2, S.generate)
 
-// 3 · Generate: the title only, my guess, Gemma 12B checks my "got it"s
+// 3 · Generate: the name only, all I know, Gemma 12B checks my "got it"s
 cmd('coach generate', S.generate); chips.push({ text: '3 · Generate', at: S.generate })
 glow('vault', S.generate + 0.6, S.generate + 2.2)
 fromVault('concept', S.generate + 0.8)
-status('title only, guess first', 'plain', S.generate + 2.0, S.generate + 3.6)
+status('name only, write first', 'plain', S.generate + 2.0, S.generate + 3.6)
 ride('ans', 'ans', S.generate + 3.0, 1.0)
 glow('12b', S.generate + 4.0, S.generate + 5.6, 'check')
 status('✓ checked · not graded', 'pass', S.generate + 4.6, S.spar)
@@ -191,7 +191,7 @@ const lines = computed(() => cmds.filter(c => t.value >= c.at).slice(-9).map((c,
 
 <template>
   <svg class="kt-arch" viewBox="-24 0 928 456" role="img"
-    aria-label="The application, one story up the climb through the architecture. On the laptop, offline: the second brain, my notes in Obsidian; kb-template's MCP vault server, the only way to the notes; and ai-coach: the coach CLI, and on Ollama Gemma 4B and Gemma 12B. In the cloud, still part of ai-coach: Gemini 4 Argon, the judge. Step 1, Read: coach read; a page comes from the vault, my notes and summary go back; no AI. The bridge, Synthesize: my marks go to Gemma 4B, it asks, I answer, a concept note goes back to the vault. Step 2, Group: the concepts go to Gemma 4B, it asks about my layers, the structure goes back. Step 3, Generate: the title only; my guess, checked by Gemma 12B. Step 4, Retrieve: coach spar; Gemma 4B asks, my weak answer gets a follow-up, my better answer is checked by Gemma 12B: Tier 1 passed. coach judge: my answer and claims cross to Argon: Tier 2 failed, the gaps. coach study: a hint, my explanation, gaps closed. coach judge again: Tier 2 passed. Step 5, Elaborate: Gemma asks why, my answer goes into the note. Step 6, Space: a day later the concept is due; spar and judge again; passed, back in 7 days, then 14, 30, up to 365. Then a note tries to leave and is stopped at the lock: notes stay private.">
+    aria-label="The application, one story up the climb through the architecture. On the laptop, offline: the second brain, my notes in Obsidian; kb-template's MCP vault server, the only way to the notes; and ai-coach: the coach CLI, and on Ollama Gemma 4B and Gemma 12B. In the cloud, still part of ai-coach: Gemini 4 Argon, the judge. Step 1, Read: coach read; a page comes from the vault, my notes and summary go back; no AI. The bridge, Synthesize: my marks go to Gemma 4B, it asks, I answer, a concept note goes back to the vault. Step 2, Group: the concepts go to Gemma 4B, it asks about my layers, the structure goes back. Step 3, Generate: the name only; all I know, checked by Gemma 12B. Step 4, Retrieve: coach spar; Gemma 4B asks, my weak answer gets a follow-up, my better answer is checked by Gemma 12B: Tier 1 passed. coach judge: my answer and claims cross to Argon: Tier 2 failed, the gaps. coach study: a hint, my explanation, gaps closed. coach judge again: Tier 2 passed. Step 5, Elaborate: Gemma asks why, my answer goes into the note. Step 6, Space: a day later the concept is due; spar and judge again; passed, back in 7 days, then 14, 30, up to 365. Then a note tries to leave and is stopped at the lock: notes stay private.">
     <defs>
       <clipPath :id="id('face')" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5" /></clipPath>
       <marker :id="id('head')" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

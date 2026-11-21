@@ -2,7 +2,7 @@
 import { useId } from 'vue'
 
 /**
- * The talk's cover background: the thesis in motion. Markdown notes drift on the left; challenges
+ * The workshop's cover background: the thesis in motion. Markdown notes drift on the left; challenges
  * ("?") travel from them along dashed wires to a brain on the right, which glows as they land.
  * Push, not pull. Calm loops, brand roles only, no props. Use it in the cover's `::bg::` slot.
  */

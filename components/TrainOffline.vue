@@ -3,7 +3,7 @@ import { computed, useId } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The talk's origin story, plays once, one short thought cloud over the person:
+ * The workshop's origin story, plays once, one short thought cloud over the person:
  * 1. on the train, the book snaps shut into its real cover (Building a Second Brain): finished
  * 2. the laptop opens on the PKP Intercity Wi-Fi: "connecting…", then PKP Intercity "no internet", which stays
  *    on the screen to the end; the person: "I'm bored…"

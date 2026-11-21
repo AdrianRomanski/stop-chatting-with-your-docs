@@ -3,7 +3,7 @@ import { computed, useId } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * Where the concept stands on the climb (MasteryStairs) after a phase of the talk, and what that phase gave it.
+ * Where the concept stands on the climb (MasteryStairs) after a phase of the workshop, and what that phase gave it.
  * 1. the seven steps, dim, with Synthesize between Read and Group: not one of the climb's steps in the code
  *    (coach synthesize is the bridge that makes the concept notes the climb runs on), so it is a block of its
  *    own with the concept's diamond, in hot. The ones done light up in their book's color (Read Second Brain

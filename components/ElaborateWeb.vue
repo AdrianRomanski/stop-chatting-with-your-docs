@@ -3,14 +3,14 @@ import { computed } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * Climb step 5, Elaborate, set against step 4, Retrieve, on the concept the talk follows: Distillation.
+ * Climb step 5, Elaborate, set against step 4, Retrieve, on the concept the workshop follows: Distillation.
  * The speaker's framing (vault note "Climbing"): Retrieve looks inward, is it in my head? Elaborate looks
  * outward, how does it fit into my world?
  * 1. The concept note, in the middle.
  * 2. Left, Retrieve: one thread from the note into my head, a dot runs in: "is it in my head?"
  * 3. Right, Elaborate: three threads grow out of the note, one per question of `coach elaborate`
  *    (ai-performance-coach ADR-0041, domain elaborate.ts): why → a reason ("because…"), like → another
- *    note ([[Executive summary]]), use → a project (this talk, under 1.Projects). A dot runs out along each.
+ *    note ([[Executive summary]]), use → a project (this workshop, under 1.Projects). A dot runs out along each.
  * 4. At the foot, Make It Stick on elaboration: it "multiplies the mental cues available to you for later
  *    recall" (p. 207, as quoted in ADR-0041).
  * No props.
@@ -39,7 +39,7 @@ const NODE = { x: 612, w: 268, h: 40 }
 const outs = [
   { kind: 'why', text: 'a reason: “because …”', link: false },
   { kind: 'like', text: '[[Executive summary]]', link: true },
-  { kind: 'use', text: '1.Projects: this talk', link: true },
+  { kind: 'use', text: '1.Projects: this workshop', link: true },
 ].map((o, i) => {
   const cy = 90 + i * 58
   const grow = B.elaborate + 0.4 + i * 0.6
@@ -64,7 +64,7 @@ const outDots = computed(() => outs.map((o) => {
 
 <template>
   <svg class="kt-eweb" viewBox="0 0 880 330" role="img"
-    aria-label="Retrieve looks in, Elaborate looks out, on the Distillation concept note. Left, Retrieve: one thread from the note into my head: is it in my head? Right, Elaborate: three threads out of the note, one per question of coach elaborate. Why leads to a reason, because. Like leads to another note, Executive summary. Use leads to a project, this talk. Each one is one more way back to the idea. At the foot, Make It Stick: elaboration multiplies the mental cues available to you for later recall, page 207.">
+    aria-label="Retrieve looks in, Elaborate looks out, on the Distillation concept note. Left, Retrieve: one thread from the note into my head: is it in my head? Right, Elaborate: three threads out of the note, one per question of coach elaborate. Why leads to a reason, because. Like leads to another note, Executive summary. Use leads to a project, this workshop. Each one is one more way back to the idea. At the foot, Make It Stick: elaboration multiplies the mental cues available to you for later recall, page 207.">
     <!-- ── Retrieve: looks in ── -->
     <g class="kt-eweb__fade" :class="{ 'is-on': at(B.retrieve) }">
       <text :x="HEAD.cx + 115" y="34" text-anchor="middle" class="kt-eweb__kicker">retrieve · looks in</text>

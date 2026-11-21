@@ -139,11 +139,11 @@ Now, where does it go? Most of us file like a library: Dewey decimal, this goes 
 
 His fix is PARA, and it's not a set of folders, it's a flow. Every note answers the same questions, in this order: project, area, resource, and if none of them, archive. (the flow comes in, folders empty)
 
-My sparring partner. Is it for a project, something with a deadline? (the note travels) Yes. This talk. (green)
+My sparring partner. Is it for a project, something with a deadline? (the note travels) Yes. This workshop. (green)
 
 Next note in the same daily note: "I want to find my voice on stage and mature as a speaker." Project? No, it never ends. Area? Yes. Public speaking, a standard I keep up. (green)
 
-And the books I read for this talk: Building a Second Brain, Make It Stick, Richard Feynman's Mental Models, The Socratic Method, Tomorrowmind. Project? No. Area? No. Resource? Yes. (books land)
+And the books I read for this workshop: Building a Second Brain, Make It Stick, Richard Feynman's Mental Models, The Socratic Method, Tomorrowmind. Project? No. Area? No. Resource? Yes. (books land)
 
 None of those? Archive it. My last talk lives there: that project is finished. (daily note: all filed)
 

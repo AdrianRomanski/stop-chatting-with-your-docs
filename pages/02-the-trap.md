@@ -76,7 +76,7 @@ Fluency with a text. That's exactly what an AI summary gives you. That was my su
 ⏱ 0:40 · script: [STAGE SynthesisMine "the one rule"] Never outsource *synthesis* to AI ⏱ 40s [^docs-200]
 Left half static (both panels in their final state from the start: pull-based → fluency illusion, push-based → mastering concepts); only the right half animates: the whiteboard drawing, then the team impressed, Julia last, CLAP CLAP. Point at the left panels while talking.
 
-So here's the one rule of this talk. Same two hundred pages, two architectures. And the whole difference is who does the synthesis.
+So here's the one rule of this workshop. Same two hundred pages, two architectures. And the whole difference is who does the synthesis.
 
 Pull-based architecture. I hand the AI the wheel. It reads, it decides what matters. I pull a summary. Clean. And me? Idle. My thinking: flat. It looks great. And I feel like I get it. That's the fluency illusion.
 

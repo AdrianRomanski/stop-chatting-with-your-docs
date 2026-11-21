@@ -10,7 +10,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * Right (primary): the Gigachad photo (public/images/memes/giga-chad.webp, Sleek'N'Tears) in a
  * circle; the AI fires "?" challenges at him, a ring of connections links up around his head one
  * node at a time, the panel glows, sparks twinkle and pixel "deal with it" shades drop on.
- * Last, the payoff of "Never outsource synthesis" (slide 7) lands under both: "Don't outsource
+ * Last, the payoff of "Never outsource synthesis" (slide 8) lands under both: "Don't outsource
  * your understanding".
  */
 const { t, at } = useTimeline(5)

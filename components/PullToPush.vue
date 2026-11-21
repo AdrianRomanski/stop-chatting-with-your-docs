@@ -2,10 +2,10 @@
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The talk's promise in one picture (talk.md: "Before: hoard, summarize, nod, forget. After:
+ * The workshop's promise in one picture (talk.md: "Before: hoard, summarize, nod, forget. After:
  * retrieve, explain in your own words, get judged, review on schedule"). Top, PULL: four steps land,
  * then the row greys out and a line strikes through it. Bottom, PUSH: the same four beats,
- * flipped, light up one by one, each naming the part of the talk that does it. No props, no numbers.
+ * flipped, light up one by one, each naming the part of the workshop that does it. No props, no numbers.
  */
 const { at } = useTimeline(6)
 

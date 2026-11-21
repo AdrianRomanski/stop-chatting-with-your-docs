@@ -28,7 +28,7 @@ const cols: { kind: string; q: string; a: Part[]; check: string; needs: string }
   {
     kind: 'apply',
     q: 'Where would you use it in your own work this month?',
-    a: [{ s: 'In ' }, { s: 'Stop Chatting with Your Docs', link: true }, { s: ': five books of notes become this talk.' }],
+    a: [{ s: 'In ' }, { s: 'Stop Chatting with Your Docs', link: true }, { s: ': five books of notes become this workshop.' }],
     check: '✓ 1.Projects',
     needs: 'a project',
   },
@@ -37,7 +37,7 @@ const cols: { kind: string; q: string; a: Part[]; check: string; needs: string }
 
 <template>
   <div class="kt-eall" role="img"
-    aria-label="Elaborate on Distillation, three questions in order. One, why: why is it built this way, what would break if it were not? My answer: thin layers, because Future Me has ten seconds, not ten minutes; otherwise the note gets skipped. Accepted: a reason. Two, connect: what everyday thing is it like, no jargon? My answer: like reducing a sauce: simmer it down until only the flavor is left, the way an Executive summary keeps one decision. Accepted: linked, to any note, project or area. Three, apply: where would you use it in your own work this month? My answer: in Stop Chatting with Your Docs, five books of notes become this talk. Accepted: a project.">
+    aria-label="Elaborate on Distillation, three questions in order. One, why: why is it built this way, what would break if it were not? My answer: thin layers, because Future Me has ten seconds, not ten minutes; otherwise the note gets skipped. Accepted: a reason. Two, connect: what everyday thing is it like, no jargon? My answer: like reducing a sauce: simmer it down until only the flavor is left, the way an Executive summary keeps one decision. Accepted: linked, to any note, project or area. Three, apply: where would you use it in your own work this month? My answer: in Stop Chatting with Your Docs, five books of notes become this workshop. Accepted: a project.">
     <div class="kt-eall__row">
       <div v-for="(c, i) in cols" :key="c.kind" class="kt-eall__col">
         <div class="kt-eall__head"><b>{{ i + 1 }}</b>{{ c.kind }}</div>

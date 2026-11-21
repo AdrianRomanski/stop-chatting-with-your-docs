@@ -64,7 +64,7 @@ const confetti = Array.from({ length: 14 }, (_, i) => {
 
 // --- each block, once landed, in the colors of the books behind it, as vertical stripes (as on the later
 // climb checkpoints): Building a Second Brain blue, Make It Stick green, the styles' books and Feynman's
-// Mental Models yellow, Tomorrowmind white. Here colors only, no labels: the books come later in the talk.
+// Mental Models yellow, Tomorrowmind white. Here colors only, no labels: the books come later in the workshop.
 const STRIPES = [
   ['basb', 'tm'], ['basb', 'mis', 'tm'], ['basb', 'mis', 'tm'],
   ['mis', 'style', 'tm'], ['mis', 'style', 'tm'], ['mis', 'style', 'tm'],
@@ -320,7 +320,7 @@ const CLAP_AT = ASK_AT + 5.6
         <text x="200" y="92" text-anchor="middle" class="kt-mstairs__qtext">?</text>
       </g>
       <g class="kt-mstairs__in" style="transition-delay: 1.6s">
-        <text x="230" y="80" class="kt-mstairs__cardline is-strong">my guess first,</text>
+        <text x="230" y="80" class="kt-mstairs__cardline is-strong">all I know first,</text>
         <text x="230" y="102" class="kt-mstairs__cardline">then check the docs</text>
         <text x="230" y="124" class="kt-mstairs__cardline">and fix what's wrong</text>
       </g>

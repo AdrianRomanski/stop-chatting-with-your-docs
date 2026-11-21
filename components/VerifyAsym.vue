@@ -7,7 +7,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * Left, ASK: Gemma 4B fires questions in the four styles; one is off ("so-so"), and it still makes
  * me think: a spark. Right, CHECK: Gemma 12B goes through my six core assertions, one at a time,
  * temperature 0, each ticked only with my own words as evidence (ADR-0027). A small model's
- * "pass ✓" tries to slip in and is struck: a false pass is the fluency illusion again (slide 6).
+ * "pass ✓" tries to slip in and is struck: a false pass is the fluency illusion again (slide 7).
  * Under both, a seesaw: the cost of a mistake, light on ask, heavy on check; it tips to check.
  * No props.
  */

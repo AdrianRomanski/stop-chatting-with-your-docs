@@ -28,7 +28,7 @@ const STYLES: Record<string, { does: string; size: number; banned?: string[]; tu
     size: 32,
     does: 'Pushes your rule to the extreme.',
     turns: [
-      { who: 'me', label: 'you say', text: 'Marking makes notes easier.' },
+      { who: 'me', label: 'you say', text: 'Marking makes notes faster to scan.' },
       { who: 'coach', label: 'coach pushes back', text: 'So mark 70%?' },
       { who: 'me', label: 'winning answer', win: true, text: 'Then nothing stands out.' },
     ],

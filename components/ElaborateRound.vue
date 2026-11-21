@@ -11,7 +11,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *    follow-ups, "What has to be true for that to work?", and my answer to it.
  * 2. like: the feynman connect question (the code's fixed wording). My first answer has no link: ✗, and the
  *    code's message: connect it to something outside this note. I link [[Executive summary]]: ✓ linked.
- * 3. use: the apply question. My answer links the talk's own project, under 1.Projects: ✓.
+ * 3. use: the apply question. My answer links the workshop's own project, under 1.Projects: ✓.
  * The questions on the cards are shortened from the code's wording (see context/elaborate.md).
  * 4. Right, the concept note: the three answers land under "## My elaborations", the links in the cool
  *    color; then "✓ Elaborate" on the climb, and "not graded · no review".

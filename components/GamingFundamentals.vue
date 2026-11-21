@@ -3,7 +3,7 @@
  * What gaming taught me: three game cards (Counter-Strike 1.6, League of Legends, World of
  * Warcraft), each ticking off the fundamentals that game is won on. Then two formulas: talent +
  * dedication levels off at "good", fundamentals + talent + dedication climbs to "world class".
- * Last, the banner that hands over to the next section: this talk's fundamental is an Organized
+ * Last, the banner that hands over to the next section: this workshop's fundamental is an Organized
  * Second Brain. Static: everything shows at once, no animation. No props.
  */
 const games = [
@@ -53,7 +53,7 @@ const games = [
           <path d="M0 -32 c-22 0 -38 14 -38 32 c0 18 16 32 38 32 c22 0 38 -14 38 -32 c0 -18 -16 -32 -38 -32z M0 -28 v56 M-22 -12 c8 4 8 12 0 16 M22 -12 c-8 4 -8 12 0 16" />
         </svg>
         <div>
-          <div class="kt-gf__tag">this talk's fundamental</div>
+          <div class="kt-gf__tag">this workshop's fundamental</div>
           <div class="kt-gf__big is-hot">Organized</div>
           <div class="kt-gf__big is-hot">Second Brain</div>
         </div>

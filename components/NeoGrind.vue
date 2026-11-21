@@ -19,7 +19,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  *   5. Neo's fist stops at Morpheus' face. WON.
  * Under both, the slide's only line (no headline): what we build, a grinding system, not a magic summary
  * machine.
- * The lost/won framing is the talk's, not the film's: in the film the ten hours come first and Neo
+ * The lost/won framing is the workshop's, not the film's: in the film the ten hours come first and Neo
  * loses the first bout anyway. Stills: The Matrix (1999), Warner Bros.; 1, 2, 5 from screenmusings.org
  * (Blu-ray captures 064, 066, 068), resized to webp in public/images/memes/matrix-*; 3 and 4 are the
  * speaker's own frames (neo-in-pain.webp, morpheus-tank-together.webp). No props.

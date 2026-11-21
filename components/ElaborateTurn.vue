@@ -4,7 +4,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
  * One question of climb step 5, Elaborate, up close: one slide per kind after ElaborateSteps, on the
- * concept the talk follows, Distillation (`coach elaborate Distillation`, feynman style).
+ * concept the workshop follows, Distillation (`coach elaborate Distillation`, feynman style).
  * On top, the three kinds (why · connect · apply), the current one lit. Below, the round as a chat:
  * Gemma's question, my answer, and the code's check on it (a badge on the answer; no model checks).
  * - why: the fixed question, my answer (✓ a reason: "because", "otherwise"); then the follow-up
@@ -12,7 +12,7 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * Links to other notes show as pills (🔗 + the note's name, no brackets, no folder path).
  * - connect: the feynman question; my first try, the soup, links to nothing: the code refuses it
  *   with its fixed message; the second try links [[Executive summary]] and [[Fluency illusion]]: ✓.
- * - apply: the fixed question; my answer links the talk's own project under 1.Projects: ✓.
+ * - apply: the fixed question; my answer links the workshop's own project under 1.Projects: ✓.
  * Questions and refusal: the code's fixed wording (ai-performance-coach `fallbackQuestions`, domain
  * elaborate.ts, ADR-0041, ADR-0046). The answers are the speaker's (written 2026-11-14), not a
  * recorded session.
@@ -45,7 +45,7 @@ const ROUNDS: Record<string, { dur: number; turns: Turn[] }> = {
     dur: 6,
     turns: [
       { who: 'coach', label: 'apply', text: 'Where would you use Distillation in your own work this month?', at: 0.3 },
-      { who: 'me', label: 'my answer', check: '✓ 1.Projects', text: 'In [[1.Projects/Stop Chatting with Your Docs]], when I turn my raw chapter notes from five books into the slides for this talk, without re-reading 1,200 pages the night before JS Poland.', at: 2.2 },
+      { who: 'me', label: 'my answer', check: '✓ 1.Projects', text: 'In [[1.Projects/Stop Chatting with Your Docs]], when I turn my raw chapter notes from five books into the slides for this workshop, without re-reading 1,200 pages the night before DevFest.', at: 2.2 },
     ],
   },
 }

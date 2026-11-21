@@ -63,28 +63,30 @@ status: in-progress
 status: in-progress
 ---
 
-# Guess before you <span class="hot">look</span>
+# A name, a blank page, all you <span class="hot">know</span>
 
 <div class="kt-center" style="margin-top: 6px">
   <GenerateGuess />
 </div>
 
 <!--
-⏱ 0:45 · script: [STAGE GenerateGuess "climb step 3 · coach generate"] Guess before you *look* | five beats: title only (Reveal grey, "guess first") → my guess, 16 words → reveal: three real core assertions → mark each against a line of my guess: got it / wrong + my correction / got it → Gemma 12B checks each got it against my words ⏱ 45s
+⏱ 0:45 · script: [STAGE GenerateGuess "climb step 3 · coach generate"] A name, a blank page, all you *know* | five beats: name only (Reveal grey, "write first") → I write all I know → reveal: three real core assertions → mark each against what I wrote: got it / wrong / got it → Gemma 12B checks: both got its hold, the wrong one gets a hint on what's wrong → my correction in my own words → solved, passed ⏱ 45s
 
 (3, Generate) The second quiet step: Generate. And it's the strangest one: I answer before I study.
 
-(1, title only) coach generate, on one concept. The note stays closed: I see only its title, Distillation. The Reveal button is grey. The code won't open the note until I've guessed.
+(1, name only) coach generate, on one concept. All I get is its name, Distillation, and a blank page. The note stays closed, the Reveal button is grey. The code won't open the note until I've written.
 
-(2, the guess types) So I guess. What does it say? I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Ten words at least; I can type /idk if I really have no idea. (attempted) Stamped.
+(2, the page fills) So I write down everything I know about it. I bold what I find interesting, then highlight whole paragraphs, and write a summary on top. Ten words at least; I can type /idk if I really know nothing. (attempted) Stamped.
 
 (3, reveal) Now the note opens: its core assertions.
 
-(4, the lines) I mark each one against my guess, myself. Bolding: got it. (red) Highlighting: wrong. It's not whole paragraphs, only parts of the bold. And a wrong mark needs a correction, in my own words: copy six words from the note and it's refused. Summary: got it.
+(4, the lines) I mark each one against what I wrote, myself. Bolding: got it. (red) Highlighting: wrong. Summary: got it.
 
-(5, Gemma 12B) Then the check: was each "got it" really in my guess? Gemma 12B looks for it in my words. Both hold. If one didn't, it would turn into "missed".
+(5, Gemma 12B) Then the check. Gemma 12B looks for each "got it" in my words: both hold. And on the wrong one, it doesn't tell me the answer. It gives me a hint on what's wrong: "whole paragraphs". So what do I highlight instead?
 
-(the footer) Not graded. But a wrong guess, corrected, sticks better than a right answer I just read. And the idea comes back tomorrow, for its first spar.
+(the correction) So I fix it myself, in my own words: only parts of the bold get highlighted, not whole paragraphs. Copy six words from the note and it's refused. Gemma checks it: solved. (passed) Passed.
+
+(the close) Not graded. A wrong line, fixed by me, sticks better than a right answer I just read. And the idea comes back tomorrow, for its first spar.
 -->
 
 ---
@@ -180,9 +182,9 @@ status: in-progress
 
 (the card) Socratic never asks "what is X". It tests the limits of what I say. I give a general rule that sounds right on the surface, and the coach pushes my own logic to an extreme, to see where it breaks.
 
-(you say) I say: bolding and highlighting make my notes easier to use.
+(you say) I say: bolding and highlighting make my notes faster to scan. I see the point without rereading the page.
 
-(the coach pushes back) If marking makes it easier, why not bold and highlight 70 percent of the text?
+(the coach pushes back) If marking makes scanning faster, why not bold and highlight 70 percent of the text?
 
 (winning answer) Because then nothing stands out. If 70 percent is marked, the marks tell me nothing, and I'm back to reading the whole page. Marks only work when they're rare: that's why I bold only 10 to 20 percent, and highlight only the best of that.
 -->

@@ -80,7 +80,7 @@ Retrieve asks: is it in my head? Step five looks the other way. Elaborate asks: 
 
 (2, connect) The note is in the Feynman style, so: what everyday thing is it like? No jargon. (my answer) Like reducing a sauce: you simmer it down until only the flavor is left. The way an Executive summary keeps just the one decision that matters. (✓ linked) A real link: connect takes a link to anything: a note, a project, an area. A nice metaphor that links to nothing is still an island. This is the only question the sparring style changes.
 
-(3, apply) Where would you use it this month? In my project, Stop Chatting with Your Docs: five books of notes become this talk, without re-reading twelve hundred pages the night before JS Poland. (✓ 1.Projects) Apply only counts with a project: accepted.
+(3, apply) Where would you use it this month? In my project, Stop Chatting with Your Docs: five books of notes become this workshop, without re-reading twelve hundred pages the night before DevFest. (✓ 1.Projects) Apply only counts with a project: accepted.
 
 (the foot) No model checks these: plain TypeScript does. Nothing is graded, no review gets scheduled. The answers go into the note, under My elaborations. Step five: done.
 -->

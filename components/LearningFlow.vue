@@ -3,7 +3,7 @@ import { computed, useId } from 'vue'
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The talk's core flip, drawn twice with the same nodes in the same places: vault → AI → you.
+ * The workshop's core flip, drawn twice with the same nodes in the same places: vault → AI → you.
  * - `mode`: 'pull' (muted: you ask "summarize", summaries flow back, your brain stays idle) |
  *   'push' (vivid: the coach reads the vault and pushes "?" challenges, your brain lights up)
  * The architecture slide reuses these shapes.

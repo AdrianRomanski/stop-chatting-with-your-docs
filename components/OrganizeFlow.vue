@@ -8,15 +8,15 @@ import { useTimeline } from '../theme/composables/useTimeline'
  * Matrix-style. Offline!" (Matrix-style in green, as on the train) and its bulb; the thought turns into today's daily note and the person makes
  * way for the Dewey shelf ("by topic"), struck out. The flow comes in: project? → area? →
  * resource? → else Archives, all folders empty. Then three things travel it, stopping at every
- * question until one says yes (green): the idea → Projects (this talk); a second note, "I want to
+ * question until one says yes (green): the idea → Projects (this workshop); a second note, "I want to
  * find my voice on stage and mature as a speaker" → Areas (public speaking); the five books behind
- * this talk, from the left → Resources. Last, my last talk shows up in Archives: project finished.
+ * this workshop, from the left → Resources. Last, my last talk shows up in Archives: project finished.
  * Each note sits in the daily note long enough to read and narrate (the idea until 7 s, the voice note
  * 8.9–12.4 s) before it travels. Replaces DeweyShelf and ParaBuckets on stage. No props, no numbers.
  */
 const { t, at } = useTimeline(17.8) // the two notes stay up long enough to read and narrate
 const steps = [
-  { cx: 250, q: 'project?', name: 'Projects', rule: 'has a deadline', ex: 'this talk', catchAt: 7.6, fileAt: 8.3 },
+  { cx: 250, q: 'project?', name: 'Projects', rule: 'has a deadline', ex: 'this workshop', catchAt: 7.6, fileAt: 8.3 },
   { cx: 440, q: 'area?', name: 'Areas', rule: 'no end date', ex: 'public speaking', catchAt: 13.2, fileAt: 13.9 },
   { cx: 630, q: 'resource?', name: 'Resources', rule: 'might be useful', ex: '', catchAt: 15.9, fileAt: 16.5 },
   { cx: 800, q: '', name: 'Archives', rule: 'inactive', ex: 'my last talk', why: 'project finished', catchAt: 99, fileAt: 17.1 },
@@ -70,7 +70,7 @@ const bookStops = (i: number, fx: number): Stop[] => {
 
 <template>
   <svg class="kt-org" :class="{ 'is-noted': noted }" viewBox="0 0 880 340" role="img"
-    aria-label="PARA as a flow. The idea from the train, a sparring partner, Matrix-style, offline, becomes today's daily note. Not by topic like a library shelf. Is it a project? an area? a resource? If none, archive it. The idea is a project: this talk. I want to find my voice on stage is an area: public speaking. The books behind this talk are resources. My last talk is archived: project finished.">
+    aria-label="PARA as a flow. The idea from the train, a sparring partner, Matrix-style, offline, becomes today's daily note. Not by topic like a library shelf. Is it a project? an area? a resource? If none, archive it. The idea is a project: this workshop. I want to find my voice on stage is an area: public speaking. The books behind this workshop are resources. My last talk is archived: project finished.">
     <defs>
       <radialGradient id="kt-org-bulbglow">
         <stop offset="0%" class="kt-org__glow-in" />

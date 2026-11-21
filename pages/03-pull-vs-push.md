@@ -40,5 +40,5 @@ And here's what I learned the hard way. Talent plus dedication? You get good. An
 
 The world-class players have the same talent and the same hours. What they have on top is fundamentals. (world class) Without them, you never get there. Talent alone isn't enough. Dedication alone isn't enough.
 
-So what's the fundamental of this talk? (banner) An Organized Second Brain. Without it, no AI coach will save you. So let's build one.
+So what's the fundamental of this workshop? (banner) An Organized Second Brain. Without it, no AI coach will save you. So let's build one.
 -->

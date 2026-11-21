@@ -2,10 +2,10 @@
 import { useTimeline } from '../theme/composables/useTimeline'
 
 /**
- * The whole pipeline behind this talk, from what I read to what you just saw. Top: the five books
+ * The whole pipeline behind this workshop, from what I read to what you just saw. Top: the five books
  * land one by one (Building a Second Brain, Make It Stick, Richard Feynman's Mental Models, The
- * Socratic Method, Tomorrowmind), each with one line on what it gave the talk. Their lines run together into one pipeline: notes → distill →
- * concepts → this talk, each step lighting up in turn; "this talk" glows last. No props, no numbers.
+ * Socratic Method, Tomorrowmind), each with one line on what it gave the workshop. Their lines run together into one pipeline: notes → distill →
+ * concepts → this workshop, each step lighting up in turn; "this workshop" glows last. No props, no numbers.
  */
 const { at } = useTimeline(5)
 
@@ -23,13 +23,13 @@ const steps = [
   { name: 'notes', does: 'highlights in Obsidian', icon: 'pen' },
   { name: 'distill', does: 'bold · highlight · summary', icon: 'filter' },
   { name: 'concepts', does: 'one idea, in my words', icon: 'bulb' },
-  { name: 'this talk', does: 'built from the concepts', icon: 'talk' },
+  { name: 'this workshop', does: 'built from the concepts', icon: 'talk' },
 ]
 </script>
 
 <template>
   <div class="kt-b2t" role="img"
-    aria-label="Five books, Building a Second Brain, Make It Stick, Richard Feynman's Mental Models, The Socratic Method and Tomorrowmind, run together into one pipeline: notes, distill, concepts, and this talk.">
+    aria-label="Five books, Building a Second Brain, Make It Stick, Richard Feynman's Mental Models, The Socratic Method and Tomorrowmind, run together into one pipeline: notes, distill, concepts, and this workshop.">
     <div class="kt-b2t__books">
       <figure v-for="(b, i) in books" :key="b.src" class="kt-b2t__fig" :class="{ 'is-on': at(0.2 + i * 0.25) }">
         <img :src="b.src" :alt="b.alt" class="kt-b2t__book" :style="{ '--r': `${b.r}deg` }">
